@@ -1,4 +1,11 @@
 import { UserDto } from "@/core/application/users/dtos/create-user.dto";
+import { Role } from "@/core/domain/users/enums/role.enum";
+
+const roleLabels: Record<Role, string> = {
+  admin: "Admin",
+  member: "Membre",
+  reader: "Lecteur",
+};
 
 export const UserCard = ({ user }: { user: UserDto }) => {
   const initials = user.name
@@ -25,7 +32,7 @@ export const UserCard = ({ user }: { user: UserDto }) => {
 
       <div className="mt-3 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
         <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600 dark:bg-slate-800/70 dark:text-slate-300">
-          {user.role}
+          {roleLabels[user.role]}
         </span>
       </div>
 
