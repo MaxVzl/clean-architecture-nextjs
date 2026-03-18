@@ -31,7 +31,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
     <main className="min-h-[calc(100vh-6rem)] bg-slate-50 px-4 py-8 dark:bg-slate-950 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
         <UserDetailHeader user={user} monthlyTotal={monthlyTotal} />
-        <UserLicensesList licenses={licenses} />
+        <UserLicensesList licenses={licenses} groupBySoftware />
       </div>
     </main>
   );
