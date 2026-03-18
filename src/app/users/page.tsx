@@ -20,18 +20,26 @@ export default async function UsersPage() {
             </p>
           </div>
 
-          <div className="mt-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-            <span className="inline-flex items-center rounded-full border border-dashed border-slate-300 px-3 py-1 dark:border-slate-700">
-              <span className="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              Vue en temps réel
-            </span>
-
+          <div className="mt-2 flex flex-col items-end gap-2 text-xs text-slate-500 dark:text-slate-400">
             <Link
-              href="/users/new"
-              className="inline-flex h-9 items-center justify-center rounded-xl bg-sky-600 px-3 text-xs font-semibold text-white shadow-sm transition hover:bg-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:bg-sky-500 dark:hover:bg-sky-400 dark:focus-visible:ring-offset-slate-900"
+              href="/"
+              className="text-[11px] font-medium text-sky-600 underline-offset-2 hover:underline dark:text-sky-400"
             >
-              + Nouvel utilisateur
+              ← Retour au dashboard
             </Link>
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center rounded-full border border-dashed border-slate-300 px-3 py-1 dark:border-slate-700">
+                <span className="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                Vue en temps réel
+              </span>
+
+              <Link
+                href="/users/new"
+                className="inline-flex h-9 items-center justify-center rounded-xl bg-sky-600 px-3 text-xs font-semibold text-white shadow-sm transition hover:bg-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:bg-sky-500 dark:hover:bg-sky-400 dark:focus-visible:ring-offset-slate-900"
+              >
+                + Nouvel utilisateur
+              </Link>
+            </div>
           </div>
         </header>
 

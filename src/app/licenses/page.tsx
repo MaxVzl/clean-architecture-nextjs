@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { getAllLicensesMock } from "@/lib/user-licenses.mock";
 import { UserLicensesList } from "@/components/features/users/user-licenses-list";
 
@@ -19,6 +21,15 @@ export default function LicensesPage() {
               Vue globale de toutes les licences logicielles utilisées par
               l&apos;équipe, pour suivre et optimiser vos dépenses.
             </p>
+          </div>
+
+          <div className="mt-2 flex flex-col items-end gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <Link
+              href="/"
+              className="text-[11px] font-medium text-sky-600 underline-offset-2 hover:underline dark:text-sky-400"
+            >
+              ← Retour au dashboard
+            </Link>
           </div>
         </header>
 
