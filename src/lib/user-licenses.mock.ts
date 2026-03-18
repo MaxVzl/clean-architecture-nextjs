@@ -94,9 +94,15 @@ const memberExtras: UserLicense[] = [
   },
 ];
 
+const notionLicense = baseLicenses[0];
+
 export function getUserLicensesMock(user: UserDto): UserLicense[] {
   if (user.role === "admin") {
-    return [...baseLicenses, ...adminExtras];
+    const secondNotion: UserLicense = {
+      ...notionLicense,
+      id: "notion-basic-2",
+    };
+    return [...baseLicenses, secondNotion, ...adminExtras];
   }
 
   if (user.role === "member") {
