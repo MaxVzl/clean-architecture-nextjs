@@ -4,7 +4,7 @@ import { useAction } from "next-safe-action/hooks";
 import { useState, FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createUserAction } from "@/actions/users.actions";
+import { createUserAction } from "@/app/users/new/actions";
 import { Role } from "@/core/domain/users/enums/role.enum";
 
 export default function NewUserPage() {

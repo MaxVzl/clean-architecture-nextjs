@@ -1,8 +1,8 @@
-import { getUsersAction } from "@/actions/users.actions";
 import { UserCard } from "./user-card";
+import { getUsersUseCase } from "@/factories/users.factories";
 
 export const UsersList = async () => {
-  const { data: users } = await getUsersAction();
+  const users = await getUsersUseCase.execute();
   return (
     <section className="space-y-4">
       <header className="flex items-baseline justify-between gap-2">
