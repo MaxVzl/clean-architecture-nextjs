@@ -1,9 +1,10 @@
+import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import { Role } from "@/core/domain/users/enums/role.enum";
 import { emailSchema } from "@/core/domain/users/value-objects/email.vo";
 import z from "zod";
 
 export const userSchema = z.object({
-  id: z.string(),
+  id: uuidSchema,
   name: z.string(),
   email: emailSchema,
   role: z.enum(Role),
