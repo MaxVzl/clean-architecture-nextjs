@@ -96,8 +96,8 @@ export function UserLicensesList({
           <div className="min-w-[640px] overflow-hidden rounded-xl border border-slate-200 bg-slate-50/60 text-sm dark:border-slate-800 dark:bg-slate-900/60">
             <div className="grid grid-cols-6 border-b border-slate-200 bg-slate-100/80 px-3 py-2 text-xs font-medium uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-400">
               <span className="col-span-2">Logiciel</span>
-              <span>Fournisseur</span>
-              <span>Type de licence</span>
+              <span>Cycle de facturation</span>
+              <span>Type de facturation</span>
               <span>Coût mensuel</span>
               <span>Statut</span>
             </div>
@@ -118,20 +118,30 @@ export function UserLicensesList({
                         : representative.softwareName}
                     </p>
                     <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                      Facturation{" "}
-                      {representative.billingCycle === "monthly"
-                        ? "mensuelle"
-                        : "annuelle"}
+                      {representative.vendor}
                       {count > 1 && (
                         <span className="ml-1.5 inline-flex items-center text-amber-600 dark:text-amber-400">
-                          <span className="mr-1 size-3.5 rounded-full bg-amber-400 dark:bg-amber-500" aria-hidden />
+                          <span
+                            className="mr-1 size-3.5 rounded-full bg-amber-400 dark:bg-amber-500"
+                            aria-hidden
+                          />
                           Plusieurs licences
                         </span>
                       )}
                     </p>
                   </div>
                   <div>
-                    <p>{representative.vendor}</p>
+                    <span
+                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                        representative.billingCycle === "monthly"
+                          ? "bg-violet-50 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300"
+                          : "bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300"
+                      }`}
+                    >
+                      {representative.billingCycle === "monthly"
+                        ? "Mensuelle"
+                        : "Annuelle"}
+                    </span>
                   </div>
                   <div>
                     <span
@@ -178,33 +188,39 @@ export function UserLicensesList({
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <div className="min-w-[640px] overflow-hidden rounded-xl border border-slate-200 bg-slate-50/60 text-sm dark:border-slate-800 dark:bg-slate-900/60">
-            <div className="grid grid-cols-6 border-b border-slate-200 bg-slate-100/80 px-3 py-2 text-xs font-medium uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-400">
+          <div className="min-w-[560px] overflow-hidden rounded-xl border border-slate-200 bg-slate-50/60 text-sm dark:border-slate-800 dark:bg-slate-900/60">
+            <div className="grid grid-cols-5 border-b border-slate-200 bg-slate-100/80 px-3 py-2 text-xs font-medium uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-400">
               <span className="col-span-2">Logiciel</span>
-              <span>Fournisseur</span>
-              <span>Type de licence</span>
-              <span>Coût mensuel</span>
-              <span>Statut</span>
+              <span>Cycle de facturation</span>
+              <span>Type de facturation</span>
+              <span>Prix unitaire</span>
             </div>
             <ul className="divide-y divide-slate-200 dark:divide-slate-800">
               {licenses.map((license) => (
                 <li
                   key={license.id}
-                  className="grid grid-cols-6 items-center px-3 py-3 text-xs text-slate-700 dark:text-slate-200"
+                  className="grid grid-cols-5 items-center px-3 py-3 text-xs text-slate-700 dark:text-slate-200"
                 >
                   <div className="col-span-2">
                     <p className="font-medium text-slate-900 dark:text-slate-50">
                       {license.softwareName}
                     </p>
                     <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                      Facturation{" "}
-                      {license.billingCycle === "monthly"
-                        ? "mensuelle"
-                        : "annuelle"}
+                      {license.vendor}
                     </p>
                   </div>
                   <div>
-                    <p>{license.vendor}</p>
+                    <span
+                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                        license.billingCycle === "monthly"
+                          ? "bg-violet-50 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300"
+                          : "bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300"
+                      }`}
+                    >
+                      {license.billingCycle === "monthly"
+                        ? "Mensuelle"
+                        : "Annuelle"}
+                    </span>
                   </div>
                   <div>
                     <span
@@ -220,17 +236,6 @@ export function UserLicensesList({
                       {license.monthlyCost.toFixed(2)}{" "}
                       {license.currency === "EUR" ? "€" : license.currency}
                     </p>
-                  </div>
-                  <div>
-                    <span
-                      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                        license.status === "active"
-                          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
-                          : "bg-slate-100 text-slate-600 dark:bg-slate-800/70 dark:text-slate-300"
-                      }`}
-                    >
-                      {license.status === "active" ? "Active" : "Inactive"}
-                    </span>
                   </div>
                 </li>
               ))}

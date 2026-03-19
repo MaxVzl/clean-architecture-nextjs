@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { UserDto } from "@/core/application/users/dtos/create-user.dto";
 import { Role } from "@/core/domain/users/enums/role.enum";
+import { getUserLicensesMock } from "@/lib/user-licenses.mock";
 
 const roleLabels: Record<Role, string> = {
   admin: "Admin",
@@ -15,6 +16,8 @@ export const UserCard = ({ user }: { user: UserDto }) => {
     .map((part) => part[0])
     .join("")
     .toUpperCase();
+
+  const licensesCount = getUserLicensesMock(user).length;
 
   return (
     <Link
@@ -37,9 +40,16 @@ export const UserCard = ({ user }: { user: UserDto }) => {
         </div>
 
         <div className="mt-3 flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
-          <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600 dark:bg-slate-800/70 dark:text-slate-300">
-            {roleLabels[user.role]}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600 dark:bg-slate-800/70 dark:text-slate-300">
+              {roleLabels[user.role]}
+            </span>
+            <span className="inline-flex items-center rounded-full bg-slate-50 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800/60 dark:text-slate-200">
+              <span className="mr-1 h-1.5 w-1.5 rounded-full bg-sky-500" />
+              {licensesCount} licence{licensesCount > 1 ? "s" : ""}
+            </span>
+          </div>
+
           <span className="inline-flex items-center text-[11px] font-medium text-sky-600 group-hover:underline dark:text-sky-400">
             Voir le détail
           </span>
@@ -50,4 +60,3 @@ export const UserCard = ({ user }: { user: UserDto }) => {
     </Link>
   );
 };
-
