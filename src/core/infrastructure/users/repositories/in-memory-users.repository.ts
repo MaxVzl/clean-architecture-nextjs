@@ -55,6 +55,12 @@ export class InMemoryUsersRepository implements UsersRepository {
     return Promise.resolve(usersStore);
   }
 
+  getUser(id: UUID): Promise<User | null> {
+    return Promise.resolve(
+      usersStore.find((user) => user.id.equals(id)) ?? null,
+    );
+  }
+
   createUser(user: User): Promise<User> {
     usersStore.push(user);
     return Promise.resolve(user);
