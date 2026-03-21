@@ -4,16 +4,24 @@ import { UseCase } from "@/core/application/common/use-case.base";
 import { User } from "@/core/domain/users/entities/user.entity";
 import { Email } from "@/core/domain/users/value-objects/email.vo";
 
+export interface CreateUserUseCaseDeps {
+  usersRepository: UsersRepository;
+}
+
+export interface CreateUserUseCaseParams {
+  data: CreateUserDto;
+}
+
 export class CreateUserUseCase extends UseCase<
-  { usersRepository: UsersRepository },
+  CreateUserUseCaseDeps,
   UserDto,
-  CreateUserDto
+  CreateUserUseCaseParams
 > {
-  async execute(createUserDto: CreateUserDto): Promise<UserDto> {
+  async execute({ data }: CreateUserUseCaseParams): Promise<UserDto> {
     const user = await User.create({
-      name: createUserDto.name,
-      email: Email.create(createUserDto.email),
-      role: createUserDto.role,
+      name: data.name,
+      email: Email.create(data.email),
+      role: data.role,
     });
     const createdUser = await this.deps.usersRepository.save(user);
     return createdUser.toDto();

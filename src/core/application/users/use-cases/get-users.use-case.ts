@@ -2,8 +2,12 @@ import { UsersRepository } from "@/core/domain/users/repositories/users.reposito
 import { UseCase } from "@/core/application/common/use-case.base";
 import { UserDto } from "../dtos/create-user.dto";
 
+export interface GetUsersUseCaseDeps {
+  usersRepository: UsersRepository;
+}
+
 export class GetUsersUseCase extends UseCase<
-  { usersRepository: UsersRepository },
+  GetUsersUseCaseDeps,
   UserDto[],
   void
 > {
