@@ -1,4 +1,5 @@
 import { sdk } from "@/lib/skd";
+import Link from "next/link";
 
 export default async function UserPage({
   params,
@@ -11,6 +12,7 @@ export default async function UserPage({
     <main>
       <h1>User</h1>
       <p>{user.name}</p>
+      <Link href={`/users/${userId}/posts`}>Posts</Link>
     </main>
   );
 }

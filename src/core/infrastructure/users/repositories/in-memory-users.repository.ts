@@ -50,6 +50,10 @@ const usersStore: User[] =
   globalForUsers.__inMemoryUsers__ ||
   (globalForUsers.__inMemoryUsers__ = [...defaultUsers]);
 
+export function getUsersStore(): User[] {
+  return usersStore;
+}
+
 export class InMemoryUsersRepository implements UsersRepository {
   findAll(): Promise<User[]> {
     return Promise.resolve(usersStore);
