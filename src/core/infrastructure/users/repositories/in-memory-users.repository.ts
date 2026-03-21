@@ -51,18 +51,23 @@ const usersStore: User[] =
   (globalForUsers.__inMemoryUsers__ = [...defaultUsers]);
 
 export class InMemoryUsersRepository implements UsersRepository {
-  getUsers(): Promise<User[]> {
+  findAll(): Promise<User[]> {
     return Promise.resolve(usersStore);
   }
 
-  getUser(id: UUID): Promise<User | null> {
+  findById(id: UUID): Promise<User | null> {
     return Promise.resolve(
       usersStore.find((user) => user.id.equals(id)) ?? null,
     );
   }
 
-  createUser(user: User): Promise<User> {
-    usersStore.push(user);
+  save(user: User): Promise<User> {
+    const index = usersStore.findIndex((u) => u.id.equals(user.id));
+    if (index >= 0) {
+      usersStore[index] = user;
+    } else {
+      usersStore.push(user);
+    }
     return Promise.resolve(user);
   }
 }

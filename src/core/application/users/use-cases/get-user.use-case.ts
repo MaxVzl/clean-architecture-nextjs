@@ -9,7 +9,7 @@ export class GetUserUseCase extends UseCase<
   { id: string }
 > {
   async execute({ id }: { id: string }): Promise<UserDto> {
-    const user = await this.deps.usersRepository.getUser(UUID.create(id));
+    const user = await this.deps.usersRepository.findById(UUID.create(id));
     if (!user) {
       throw new Error("User not found");
     }

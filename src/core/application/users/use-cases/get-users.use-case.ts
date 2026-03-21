@@ -8,7 +8,7 @@ export class GetUsersUseCase extends UseCase<
   void
 > {
   async execute(): Promise<UserDto[]> {
-    const users = await this.deps.usersRepository.getUsers();
+    const users = await this.deps.usersRepository.findAll();
     return users.map((user) => user.toDto());
   }
 }

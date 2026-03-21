@@ -15,7 +15,7 @@ export class CreateUserUseCase extends UseCase<
       email: Email.create(createUserDto.email),
       role: createUserDto.role,
     });
-    const createdUser = await this.deps.usersRepository.createUser(user);
+    const createdUser = await this.deps.usersRepository.save(user);
     return createdUser.toDto();
   }
 }
