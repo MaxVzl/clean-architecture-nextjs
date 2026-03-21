@@ -1,4 +1,4 @@
-import { UserDto } from "@/core/application/users/dtos/create-user.dto";
+import { UserDto } from "@/core/application/users/dtos/user.dto";
 import { Role } from "@/core/domain/users/enums/role.enum";
 
 export const withAuth = async <T>(

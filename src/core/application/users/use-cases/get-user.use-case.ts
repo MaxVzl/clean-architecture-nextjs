@@ -1,6 +1,6 @@
 import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
 import { UseCase } from "@/core/application/common/use-case.base";
-import { UserDto } from "../dtos/create-user.dto";
+import { UserDto } from "../dtos/user.dto";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 
 export interface GetUserUseCaseDeps {
