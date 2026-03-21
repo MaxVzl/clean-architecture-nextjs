@@ -2,7 +2,7 @@ type PropsOf<E> = E extends Entity<infer P, infer _I> ? P : never;
 type IdOf<E> = E extends Entity<infer _P, infer I> ? I : never;
 type Newable<TProps, TId, TEntity> = new (props: TProps, id: TId) => TEntity;
 
-export abstract class Entity<TProps, TId, TDtoe = unknown> {
+export abstract class Entity<TProps, TId, TDto = unknown> {
   protected _id: TId;
   protected _props: TProps;
 
@@ -30,5 +30,5 @@ export abstract class Entity<TProps, TId, TDtoe = unknown> {
     return this === entity;
   }
 
-  abstract toDto(): TDtoe;
+  abstract toDto(): TDto;
 }
