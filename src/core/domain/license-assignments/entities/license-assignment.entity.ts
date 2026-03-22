@@ -1,7 +1,6 @@
-import { LicenseAssignmentDto } from "@/core/application/license-assignments/dtos/license-assignment.dto";
 import { Entity } from "../../common/entity.base";
 import { UUID } from "../../common/value-objects/uuid.vo";
-import { Status } from "@/core/domain/license-assignments/enums/status.enum";
+import { Status } from "../enums/status.enum";
 
 export type LicenseAssignmentProps = {
   employeeId: UUID;
@@ -9,23 +8,20 @@ export type LicenseAssignmentProps = {
   status: Status;
 };
 
-export class LicenseAssignment extends Entity<
-  LicenseAssignmentProps,
-  UUID,
-  LicenseAssignmentDto
-> {
-  static async create(
-    props: LicenseAssignmentProps,
-  ): Promise<LicenseAssignment> {
+export class LicenseAssignment extends Entity<LicenseAssignmentProps, UUID> {
+  static create(props: LicenseAssignmentProps): LicenseAssignment {
     return new LicenseAssignment(props, UUID.generate());
   }
 
-  toDto(): LicenseAssignmentDto {
-    return {
-      id: this.id.value,
-      employeeId: this._props.employeeId.value,
-      subscriptionId: this._props.subscriptionId.value,
-      status: this._props.status,
-    };
+  get employeeId(): UUID {
+    return this._props.employeeId;
+  }
+
+  get subscriptionId(): UUID {
+    return this._props.subscriptionId;
+  }
+
+  get status(): Status {
+    return this._props.status;
   }
 }

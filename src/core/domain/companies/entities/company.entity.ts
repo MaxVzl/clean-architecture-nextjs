@@ -1,4 +1,3 @@
-import { CompanyDto } from "@/core/application/companies/dtos/company.dto";
 import { Entity } from "../../common/entity.base";
 import { UUID } from "../../common/value-objects/uuid.vo";
 
@@ -7,16 +6,16 @@ export type CompanyProps = {
   createdAt: Date;
 };
 
-export class Company extends Entity<CompanyProps, UUID, CompanyDto> {
-  static async create(props: CompanyProps): Promise<Company> {
+export class Company extends Entity<CompanyProps, UUID> {
+  static create(props: CompanyProps): Company {
     return new Company(props, UUID.generate());
   }
 
-  toDto(): CompanyDto {
-    return {
-      id: this.id.value,
-      name: this._props.name,
-      createdAt: this._props.createdAt,
-    };
+  get name(): string {
+    return this._props.name;
+  }
+
+  get createdAt(): Date {
+    return this._props.createdAt;
   }
 }

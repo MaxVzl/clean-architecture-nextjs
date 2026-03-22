@@ -1,4 +1,3 @@
-import { SoftwareDto } from "@/core/application/software/dtos/software.dto";
 import { Entity } from "../../common/entity.base";
 import { UUID } from "../../common/value-objects/uuid.vo";
 
@@ -9,18 +8,24 @@ export type SoftwareProps = {
   category: string;
 };
 
-export class Software extends Entity<SoftwareProps, UUID, SoftwareDto> {
-  static async create(props: SoftwareProps): Promise<Software> {
+export class Software extends Entity<SoftwareProps, UUID> {
+  static create(props: SoftwareProps): Software {
     return new Software(props, UUID.generate());
   }
 
-  toDto(): SoftwareDto {
-    return {
-      id: this.id.value,
-      companyId: this._props.companyId.value,
-      name: this._props.name,
-      websiteUrl: this._props.websiteUrl,
-      category: this._props.category,
-    };
+  get companyId(): UUID {
+    return this._props.companyId;
+  }
+
+  get name(): string {
+    return this._props.name;
+  }
+
+  get websiteUrl(): string {
+    return this._props.websiteUrl;
+  }
+
+  get category(): string {
+    return this._props.category;
   }
 }
