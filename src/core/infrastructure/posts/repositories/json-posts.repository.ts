@@ -12,7 +12,7 @@ type PostJsonRow = {
   description: string;
 };
 
-export class InMemoryPostsRepository implements PostsRepository {
+export class JsonPostsRepository implements PostsRepository {
   async findByUserId(userId: UUID): Promise<Post[]> {
     const rows = await readJsonArray<PostJsonRow>(POSTS_FILE);
     return rows

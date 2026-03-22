@@ -2,12 +2,12 @@ import { CreateUserUseCase } from "@/core/application/users/use-cases/create-use
 import { GetUserUseCase } from "@/core/application/users/use-cases/get-user.use-case";
 import { GetUsersUseCase } from "@/core/application/users/use-cases/get-users.use-case";
 import { GetUserPostsUseCase } from "@/core/application/posts/use-cases/get-user-posts.use-case";
-import { InMemoryPostsRepository } from "@/core/infrastructure/posts/repositories/in-memory-posts.repository";
-import { InMemoryUsersRepository } from "@/core/infrastructure/users/repositories/in-memory-users.repository";
+import { JsonPostsRepository } from "@/core/infrastructure/posts/repositories/json-posts.repository";
+import { JsonUsersRepository } from "@/core/infrastructure/users/repositories/json-users.repository";
 
 // 1. Instanciation des dépendances (Singletons)
-export const usersRepository = new InMemoryUsersRepository();
-export const postsRepository = new InMemoryPostsRepository();
+export const usersRepository = new JsonUsersRepository();
+export const postsRepository = new JsonPostsRepository();
 
 // 2. Instanciation des Use Cases (Une seule fois au démarrage)
 export const getUsersUseCase = new GetUsersUseCase({ usersRepository });

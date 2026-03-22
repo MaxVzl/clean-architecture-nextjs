@@ -17,7 +17,7 @@ type UserJsonRow = {
   role: Role;
 };
 
-export class InMemoryUsersRepository implements UsersRepository {
+export class JsonUsersRepository implements UsersRepository {
   async findAll(): Promise<User[]> {
     const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
     return rows.map((row) =>
