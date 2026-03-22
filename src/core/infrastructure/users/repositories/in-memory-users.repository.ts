@@ -1,118 +1,66 @@
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
-import { User, type UserProps } from "@/core/domain/users/entities/user.entity";
+import { User } from "@/core/domain/users/entities/user.entity";
+import type { Role } from "@/core/domain/users/enums/role.enum";
 import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
 import { Email } from "@/core/domain/users/value-objects/email.vo";
+import {
+  readJsonArray,
+  writeJsonArray,
+} from "@/core/infrastructure/database/json-file-store";
 
-declare global {
-  var __inMemoryUsers__: User[] | undefined;
-}
+const USERS_FILE = "users.json";
 
-const defaultUsers: User[] = [
-  User.restore(
-    {
-      name: "John Doe",
-      email: Email.create("john.doe@example.com"),
-      role: "admin",
-    },
-    UUID.generate(),
-  ),
-  User.restore(
-    {
-      name: "Jane Doe",
-      email: Email.create("jane.doe@example.com"),
-      role: "member",
-    },
-    UUID.generate(),
-  ),
-  User.restore(
-    {
-      name: "John Smith",
-      email: Email.create("john.smith@example.com"),
-      role: "reader",
-    },
-    UUID.generate(),
-  ),
-  User.restore(
-    {
-      name: "Jane Smith",
-      email: Email.create("jane.smith@example.com"),
-      role: "admin",
-    },
-    UUID.generate(),
-  ),
-];
-
-const globalForUsers = globalThis as typeof globalThis & {
-  __inMemoryUsers__?: User[];
+type UserJsonRow = {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
 };
 
-/**
- * `[]` est truthy en JS : l'ancien `global || defaults` ne remplissait jamais
- * le store quand `__inMemoryUsers__` était déjà un tableau vide (ex. état global persistant).
- */
-function ensureUsersStore(): void {
-  if (!globalForUsers.__inMemoryUsers__?.length) {
-    globalForUsers.__inMemoryUsers__ = [...defaultUsers];
-  }
-}
-
-/**
- * Après un hot-reload, les instances gardées dans `global` peuvent ne plus
- * correspondre aux classes `User` / `Email` courantes (getters ou instanceof
- * incohérents). On réhydrate pour garantir des entités alignées avec le code chargé.
- */
-function rehydrateUser(user: User): User {
-  const emailVo =
-    user.email ??
-    (user as unknown as { _props?: Partial<UserProps> })._props?.email;
-
-  if (!emailVo) {
-    throw new Error(
-      `Utilisateur corrompu en mémoire (id=${user.id.value}) : email manquant. Redémarrez le serveur de dev pour réinitialiser le store.`,
+export class InMemoryUsersRepository implements UsersRepository {
+  async findAll(): Promise<User[]> {
+    const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
+    return rows.map((row) =>
+      User.restore(
+        {
+          name: row.name,
+          email: Email.create(row.email),
+          role: row.role,
+        },
+        UUID.create(row.id),
+      ),
     );
   }
 
-  const emailString =
-    typeof emailVo === "object" &&
-    emailVo !== null &&
-    "value" in emailVo &&
-    typeof (emailVo as Email).value === "string"
-      ? (emailVo as Email).value
-      : String(emailVo);
+  async findById(id: UUID): Promise<User | null> {
+    const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
+    const row = rows.find((r) => r.id === id.value) ?? null;
+    if (!row) return null;
+    return User.restore(
+      {
+        name: row.name,
+        email: Email.create(row.email),
+        role: row.role,
+      },
+      UUID.create(row.id),
+    );
+  }
 
-  return User.restore(
-    {
+  async save(user: User): Promise<User> {
+    const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
+    const next = {
+      id: user.id.value,
       name: user.name,
-      email: Email.create(emailString),
+      email: user.email.value,
       role: user.role,
-    },
-    user.id,
-  );
-}
-
-export function getUsersStore(): User[] {
-  ensureUsersStore();
-  return globalForUsers.__inMemoryUsers__!;
-}
-
-export class InMemoryUsersRepository implements UsersRepository {
-  findAll(): Promise<User[]> {
-    return Promise.resolve(getUsersStore().map(rehydrateUser));
-  }
-
-  findById(id: UUID): Promise<User | null> {
-    const found = getUsersStore().find((user) => user.id.equals(id)) ?? null;
-    return Promise.resolve(found ? rehydrateUser(found) : null);
-  }
-
-  save(user: User): Promise<User> {
-    const store = getUsersStore();
-    const index = store.findIndex((u) => u.id.equals(user.id));
+    };
+    const index = rows.findIndex((r) => r.id === next.id);
     if (index >= 0) {
-      store[index] = user;
+      rows[index] = next;
     } else {
-      store.push(user);
+      rows.push(next);
     }
-    return Promise.resolve(user);
+    await writeJsonArray(USERS_FILE, rows);
+    return user;
   }
 }
