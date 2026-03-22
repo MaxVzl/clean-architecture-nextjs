@@ -46,7 +46,7 @@ export class JsonUsersRepository implements UsersRepository {
     );
   }
 
-  async save(user: User): Promise<User> {
+  async save(user: User): Promise<void> {
     const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
     const next = {
       id: user.id.value,
@@ -61,6 +61,5 @@ export class JsonUsersRepository implements UsersRepository {
       rows.push(next);
     }
     await writeJsonArray(USERS_FILE, rows);
-    return user;
   }
 }

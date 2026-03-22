@@ -5,5 +5,5 @@ export interface LicenseAssignmentsRepository {
   findByEmployeeId(employeeId: UUID): Promise<LicenseAssignment[]>;
   findBySubscriptionId(subscriptionId: UUID): Promise<LicenseAssignment[]>;
   findById(id: UUID): Promise<LicenseAssignment | null>;
-  save(licenseAssignment: LicenseAssignment): Promise<LicenseAssignment>;
+  save(licenseAssignment: LicenseAssignment): Promise<void>;
 }

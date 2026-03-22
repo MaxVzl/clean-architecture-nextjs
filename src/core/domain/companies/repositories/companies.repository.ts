@@ -4,5 +4,5 @@ import { Company } from "../entities/company.entity";
 export interface CompaniesRepository {
   findAll(): Promise<Company[]>;
   findById(id: UUID): Promise<Company | null>;
-  save(company: Company): Promise<Company>;
+  save(company: Company): Promise<void>;
 }

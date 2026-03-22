@@ -4,5 +4,5 @@ import { Employee } from "../entities/employee.entity";
 export interface EmployeesRepository {
   findByCompanyId(companyId: UUID): Promise<Employee[]>;
   findById(id: UUID): Promise<Employee | null>;
-  save(employee: Employee): Promise<Employee>;
+  save(employee: Employee): Promise<void>;
 }
