@@ -20,7 +20,7 @@ export class CreateUserUseCase extends UseCase<
   CreateUserUseCaseParams
 > {
   async execute({ data }: CreateUserUseCaseParams): Promise<UserDto> {
-    const user = await User.create({
+    const user = User.create({
       name: data.name,
       email: Email.create(data.email),
       role: data.role,
