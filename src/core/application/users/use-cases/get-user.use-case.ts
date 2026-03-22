@@ -2,6 +2,7 @@ import { UsersRepository } from "@/core/domain/users/repositories/users.reposito
 import { UseCase } from "@/core/application/common/use-case.base";
 import { UserDto } from "../dtos/user.dto";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
+import { UserMapper } from "@/core/application/users/mappers/user.mapper";
 
 export interface GetUserUseCaseDeps {
   usersRepository: UsersRepository;
@@ -21,6 +22,6 @@ export class GetUserUseCase extends UseCase<
     if (!user) {
       throw new Error("User not found");
     }
-    return user.toDto();
+    return UserMapper.toDto(user);
   }
 }

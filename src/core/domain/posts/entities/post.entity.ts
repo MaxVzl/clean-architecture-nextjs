@@ -1,4 +1,3 @@
-import { PostDto } from "@/core/application/posts/dtos/post.dto";
 import { Entity } from "../../common/entity.base";
 import { UUID } from "../../common/value-objects/uuid.vo";
 
@@ -8,7 +7,7 @@ export type PostProps = {
   description: string;
 };
 
-export class Post extends Entity<PostProps, UUID, PostDto> {
+export class Post extends Entity<PostProps, UUID> {
   static create(props: PostProps): Post {
     return new Post(props, UUID.generate());
   }
@@ -17,11 +16,11 @@ export class Post extends Entity<PostProps, UUID, PostDto> {
     return this._props.userId;
   }
 
-  toDto(): PostDto {
-    return {
-      id: this.id.value,
-      title: this._props.title,
-      description: this._props.description,
-    };
+  get title(): string {
+    return this._props.title;
+  }
+
+  get description(): string {
+    return this._props.description;
   }
 }

@@ -1,4 +1,3 @@
-import { UserDto } from "@/core/application/users/dtos/user.dto";
 import { Entity } from "../../common/entity.base";
 import { Role } from "../enums/role.enum";
 import { UUID } from "../../common/value-objects/uuid.vo";
@@ -10,17 +9,20 @@ export type UserProps = {
   role: Role;
 };
 
-export class User extends Entity<UserProps, UUID, UserDto> {
-  static async create(props: UserProps): Promise<User> {
+export class User extends Entity<UserProps, UUID> {
+  static create(props: UserProps): User {
     return new User(props, UUID.generate());
   }
 
-  toDto(): UserDto {
-    return {
-      id: this.id.value,
-      name: this._props.name,
-      email: this._props.email.value,
-      role: this._props.role,
-    };
+  get name(): string {
+    return this._props.name;
+  }
+
+  get email(): Email {
+    return this._props.email;
+  }
+
+  get role(): Role {
+    return this._props.role;
   }
 }

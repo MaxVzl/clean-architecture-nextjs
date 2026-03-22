@@ -4,6 +4,7 @@ import { UserDto } from "../dtos/user.dto";
 import { UseCase } from "@/core/application/common/use-case.base";
 import { User } from "@/core/domain/users/entities/user.entity";
 import { Email } from "@/core/domain/users/value-objects/email.vo";
+import { UserMapper } from "@/core/application/users/mappers/user.mapper";
 
 export interface CreateUserUseCaseDeps {
   usersRepository: UsersRepository;
@@ -24,7 +25,7 @@ export class CreateUserUseCase extends UseCase<
       email: Email.create(data.email),
       role: data.role,
     });
-    const createdUser = await this.deps.usersRepository.save(user);
-    return createdUser.toDto();
+    await this.deps.usersRepository.save(user);
+    return UserMapper.toDto(user);
   }
 }
