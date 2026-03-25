@@ -1,4 +1,4 @@
-import { sdk } from "@/lib/skd";
+import { sdk } from "@/lib/sdk";
 
 export default async function MePage() {
   const user = await sdk.me();

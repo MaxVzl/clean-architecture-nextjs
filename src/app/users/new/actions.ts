@@ -2,7 +2,7 @@
 
 import { createUserSchema } from "@/core/application/users/dtos/create-user.dto";
 import { actionClient } from "@/lib/safe-action";
-import { sdk } from "@/lib/skd";
+import { sdk } from "@/lib/sdk";
 
 export const createUserAction = actionClient
   .inputSchema(createUserSchema)

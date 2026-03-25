@@ -1,4 +1,4 @@
-import { sdk } from "@/lib/skd";
+import { sdk } from "@/lib/sdk";
 import Link from "next/link";
 
 export default async function UserPage({
