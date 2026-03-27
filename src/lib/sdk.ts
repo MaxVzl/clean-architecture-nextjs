@@ -6,7 +6,7 @@ import {
   getUserUseCase,
   createUserUseCase,
   getUserPostsUseCase,
-} from "@/factories";
+} from "@/lib/factories";
 import { withAuth, withRoles } from "@/lib/utils";
 
 export const sdk = {
