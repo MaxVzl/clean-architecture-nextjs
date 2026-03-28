@@ -12,6 +12,7 @@
   "dependencies": {
     "next": "16.1.7",
     "next-safe-action": "^8.1.8",
+    "nuqs": "^2.8.9",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "uuid": "^13.0.0",
