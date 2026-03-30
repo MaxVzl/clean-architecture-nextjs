@@ -1,19 +1,8 @@
 import { UsersSearchBar } from "@/app/users/users-search-bar";
 import { sdk } from "@/lib/sdk";
 import Link from "next/link";
-import {
-  createLoader,
-  parseAsInteger,
-  parseAsString,
-  SearchParams,
-} from "nuqs/server";
-
-export const searchParams = {
-  search: parseAsString.withDefault(""),
-  offset: parseAsInteger.withDefault(1),
-  limit: parseAsInteger.withDefault(10),
-};
-export const loadSearchParams = createLoader(searchParams);
+import { SearchParams } from "nuqs/server";
+import { loadSearchParams } from "@/app/users/search-params";
 
 export default async function UsersPage({
   searchParams,
