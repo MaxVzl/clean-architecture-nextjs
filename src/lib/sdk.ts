@@ -1,21 +1,22 @@
-import { CreateUserUseCaseParams } from "@/core/application/users/use-cases/create-users.use-case";
-import { GetUserUseCaseParams } from "@/core/application/users/use-cases/get-user.use-case";
 import { Role } from "@/core/domain/users/enums/role.enum";
 import {
-  getUsersUseCase,
   getUserUseCase,
   createUserUseCase,
   getUserPostsUseCase,
+  listUsersUseCase,
 } from "@/lib/factories";
 import { withAuth, withRoles } from "@/lib/utils";
+import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
+import { CreateUserCommand } from "@/core/application/users/commands/create-user.command";
+import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
 
 export const sdk = {
   me: () => withAuth(async (user) => user),
   users: {
-    list: () => getUsersUseCase.execute(),
-    show: (params: GetUserUseCaseParams) => getUserUseCase.execute(params),
-    create: (params: CreateUserUseCaseParams) =>
-      withRoles([Role.ADMIN], (user) => createUserUseCase.execute(params)),
+    list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
+    show: (query: GetUserQuery) => getUserUseCase.execute(query),
+    create: (command: CreateUserCommand) =>
+      withRoles([Role.ADMIN], (user) => createUserUseCase.execute(command)),
     posts: {
       list: (userId: string) => getUserPostsUseCase.execute({ userId }),
     },
