@@ -18,20 +18,6 @@ type UserJsonRow = {
 };
 
 export class JsonUsersRepository implements UsersRepository {
-  async findAll(): Promise<User[]> {
-    const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
-    return rows.map((row) =>
-      User.restore(
-        {
-          name: row.name,
-          email: Email.create(row.email),
-          role: row.role,
-        },
-        UUID.create(row.id),
-      ),
-    );
-  }
-
   async findById(id: UUID): Promise<User | null> {
     const rows = await readJsonArray<UserJsonRow>(USERS_FILE);
     const row = rows.find((r) => r.id === id.value) ?? null;
