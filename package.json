@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "better-auth": "^1.6.5",
     "next": "16.1.7",
     "next-safe-action": "^8.1.8",
     "nuqs": "^2.8.9",
