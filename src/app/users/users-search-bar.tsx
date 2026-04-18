@@ -1,18 +1,15 @@
 "use client";
 
-import { useQueryState } from "nuqs";
+import { useSearchUsers } from "@/hooks/features/users/use-search-users";
 
 export const UsersSearchBar = () => {
-  const [search, setSearch] = useQueryState("search", {
-    defaultValue: "",
-    shallow: false,
-  });
+  const [{ search }, setSearch] = useSearchUsers();
 
   return (
     <input
       value={search}
       placeholder="Search"
-      onChange={(e) => setSearch(e.target.value || null)}
+      onChange={(e) => setSearch({ search: e.target.value })}
     />
   );
 };

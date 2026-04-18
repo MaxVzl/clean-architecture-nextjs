@@ -3,28 +3,23 @@ import { sdk } from "@/lib/sdk";
 import Link from "next/link";
 import { SearchParams } from "nuqs/server";
 import { loadSearchParams } from "@/app/users/search-params";
+import { Paginated } from "@/components/paginated";
 
 export default async function UsersPage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const {
-    search,
-    limit: limitParam,
-    offset: offsetParam,
-  } = await loadSearchParams(searchParams);
+  const { search, limit, offset } = await loadSearchParams(searchParams);
 
   const {
     data: users,
     total,
-    offset,
-    limit,
     pages,
   } = await sdk.users.list({
     params: { search },
-    limit: limitParam,
-    offset: offsetParam,
+    limit,
+    offset,
   });
 
   return (
@@ -38,12 +33,7 @@ export default async function UsersPage({
           </li>
         ))}
       </ul>
-      <div>
-        <p>Total: {total}</p>
-        <p>Offset: {offset}</p>
-        <p>Limit: {limit}</p>
-        <p>Pages: {pages}</p>
-      </div>
+      <Paginated total={total} pages={pages} />
     </main>
   );
 }
