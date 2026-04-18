@@ -5,6 +5,7 @@ import { CheckCircle } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 
 import type { UserDto } from "@/core/application/users/dtos/user.dto";
+import { Role } from "@/core/domain/users/enums/role.enum";
 import {
   Avatar,
   AvatarBadge,
@@ -20,12 +21,6 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import {
-  dicebearAvatarUrl,
-  getMockedUserExtras,
-  roleLabelFr,
-} from "./user-card-mocks";
-
 function initialsFromName(name: string): string {
   const parts = name.trim().split(/\s+/);
   if (parts.length >= 2 && parts[0] && parts[1]) {
@@ -35,9 +30,6 @@ function initialsFromName(name: string): string {
 }
 
 export function UserCard({ user }: { user: UserDto }) {
-  const extras = getMockedUserExtras(user.id);
-  const avatarUrl = dicebearAvatarUrl(extras.avatarSeed);
-
   return (
     <Link
       href={`/users/${user.id}`}
@@ -53,18 +45,16 @@ export function UserCard({ user }: { user: UserDto }) {
         )}
       >
         <CardHeader className="flex flex-col items-center gap-3 text-center">
-          <div
-            className={cn(
-              "rounded-full bg-linear-to-br p-0.5",
-              extras.gradientRing,
-            )}
-          >
+          <div className="rounded-full p-0.5 ring-2 ring-border">
             <Avatar size="lg" className="size-20 ring-2 ring-background">
-              <AvatarImage src={avatarUrl} alt="" />
+              <AvatarImage
+                src={user.image ?? undefined}
+                alt=""
+              />
               <AvatarFallback className="text-base font-medium">
                 {initialsFromName(user.name)}
               </AvatarFallback>
-              {extras.emailVerified ? (
+              {user.emailVerified ? (
                 <AvatarBadge
                   className="bg-emerald-500 text-white ring-background"
                   title="Email vérifié"
@@ -86,7 +76,9 @@ export function UserCard({ user }: { user: UserDto }) {
               {user.email}
             </CardDescription>
           </div>
-          <Badge variant="secondary">{roleLabelFr(user.role)}</Badge>
+          <Badge variant="secondary">
+            {user.role === Role.ADMIN ? "Administrateur" : "Utilisateur"}
+          </Badge>
         </CardHeader>
       </Card>
     </Link>

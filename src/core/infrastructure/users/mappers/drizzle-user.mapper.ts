@@ -18,6 +18,8 @@ export class DrizzleUserMapper {
       id: row.id,
       name: row.name,
       email: row.email,
+      image: row.image,
+      emailVerified: row.emailVerified,
       role: DrizzleUserMapper.toRole(row.role),
     };
   }
@@ -28,6 +30,8 @@ export class DrizzleUserMapper {
         name: user.name,
         email: Email.create(user.email),
         role: DrizzleUserMapper.toRole(user.role),
+        image: user.image,
+        emailVerified: user.emailVerified,
       },
       UUID.create(user.id),
     );
@@ -39,6 +43,8 @@ export class DrizzleUserMapper {
       name: user.name,
       email: user.email.value,
       role: user.role,
+      image: user.image,
+      emailVerified: user.emailVerified,
     };
   }
 }

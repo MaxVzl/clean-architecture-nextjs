@@ -20,20 +20,18 @@ export class DrizzleUsersRepository implements UsersRepository {
   }
 
   async save(userEntity: User): Promise<void> {
+    const row = DrizzleUserMapper.toPersistence(userEntity);
     await db
       .insert(user)
-      .values({
-        id: userEntity.id.value,
-        name: userEntity.name,
-        email: userEntity.email.value,
-        role: userEntity.role,
-      })
+      .values(row)
       .onConflictDoUpdate({
         target: user.id,
         set: {
-          name: userEntity.name,
-          email: userEntity.email.value,
-          role: userEntity.role,
+          name: row.name,
+          email: row.email,
+          role: row.role,
+          image: row.image,
+          emailVerified: row.emailVerified,
         },
       });
   }

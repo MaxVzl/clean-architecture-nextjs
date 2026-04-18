@@ -7,11 +7,22 @@ export type UserProps = {
   name: string;
   email: Email;
   role: Role;
+  image: string | null;
+  emailVerified: boolean;
 };
 
 export class User extends Entity<UserProps, UUID> {
-  static create(props: UserProps): User {
-    return new User(props, UUID.generate());
+  static create(
+    props: Omit<UserProps, "image" | "emailVerified">,
+  ): User {
+    return new User(
+      {
+        ...props,
+        image: null,
+        emailVerified: false,
+      },
+      UUID.generate(),
+    );
   }
 
   get name(): string {
@@ -24,5 +35,13 @@ export class User extends Entity<UserProps, UUID> {
 
   get role(): Role {
     return this._props.role;
+  }
+
+  get image(): string | null {
+    return this._props.image;
+  }
+
+  get emailVerified(): boolean {
+    return this._props.emailVerified;
   }
 }
