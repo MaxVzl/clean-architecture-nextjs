@@ -3,16 +3,16 @@ import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { User } from "@/core/domain/users/entities/user.entity";
 import { Role } from "@/core/domain/users/enums/role.enum";
 import { Email } from "@/core/domain/users/value-objects/email.vo";
-import { user as userTable } from "@/core/infrastructure/database/schemas/auth.schema";
+import { user as usersTable } from "@/core/infrastructure/database/schemas/auth.schema";
 
 export class DrizzleUserMapper {
-  private static toRole(role: (typeof userTable.$inferSelect)["role"]): Role {
+  private static toRole(role: (typeof usersTable.$inferSelect)["role"]): Role {
     return role === Role.ADMIN || role === Role.MEMBER || role === Role.READER
       ? role
       : Role.MEMBER;
   }
 
-  static toDto(row: typeof userTable.$inferSelect): UserDto {
+  static toDto(row: typeof usersTable.$inferSelect): UserDto {
     return {
       id: row.id,
       name: row.name,
@@ -21,7 +21,7 @@ export class DrizzleUserMapper {
     };
   }
 
-  static toDomain(user: typeof userTable.$inferSelect): User {
+  static toDomain(user: typeof usersTable.$inferSelect): User {
     return User.restore(
       {
         name: user.name,
@@ -32,7 +32,7 @@ export class DrizzleUserMapper {
     );
   }
 
-  static toPersistence(user: User): typeof userTable.$inferInsert {
+  static toPersistence(user: User): typeof usersTable.$inferInsert {
     return {
       id: user.id.value,
       name: user.name,
