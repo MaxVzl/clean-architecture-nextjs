@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { usePaginated } from "@/hooks/use-paginated";
 
 export const Paginated = ({
@@ -18,18 +19,18 @@ export const Paginated = ({
         <p>Limit: {limit}</p>
         <p>Pages: {pages}</p>
       </div>
-      <button
+      <Button
         onClick={() => setPaginated({ offset: offset - 1 })}
         disabled={offset === 1}
       >
         Previous
-      </button>
-      <button
+      </Button>
+      <Button
         onClick={() => setPaginated({ offset: offset + 1 })}
         disabled={offset === pages}
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 };
