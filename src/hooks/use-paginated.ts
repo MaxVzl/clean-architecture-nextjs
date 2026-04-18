@@ -1,11 +1,13 @@
 "use client";
 
-import { useQueryStates, parseAsInteger } from "nuqs";
+import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from "@/config/pagination";
+import { parseAsInteger, parseAsNumberLiteral, useQueryStates } from "nuqs";
 
 export const usePaginated = () => {
   return useQueryStates(
     {
-      limit: parseAsInteger.withDefault(10),
+      limit:
+        parseAsNumberLiteral(PAGE_SIZE_OPTIONS).withDefault(DEFAULT_PAGE_SIZE),
       offset: parseAsInteger.withDefault(1),
     },
     {
