@@ -1,9 +1,9 @@
-import { UsersSearchBar } from "@/app/users/users-search-bar";
-import { sdk } from "@/lib/sdk";
-import Link from "next/link";
-import { SearchParams } from "nuqs/server";
+import { UserCard } from "@/app/users/_components/user-card";
+import { UsersSearchBar } from "@/app/users/_components/users-search-bar";
 import { loadSearchParams } from "@/app/users/search-params";
 import { Paginated } from "@/components/paginated";
+import { sdk } from "@/lib/sdk";
+import { SearchParams } from "nuqs/server";
 
 export default async function UsersPage({
   searchParams,
@@ -23,17 +23,15 @@ export default async function UsersPage({
   });
 
   return (
-    <main>
-      <h1>Users</h1>
+    <main className="flex flex-col gap-6 p-6">
+      <h1 className="font-heading text-2xl font-semibold">Utilisateurs</h1>
       <UsersSearchBar />
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <Link href={`/users/${user.id}`}>{user.name}</Link>
-          </li>
-        ))}
-      </ul>
       <Paginated total={total} pages={pages} />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {users.map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
+      </div>
     </main>
   );
 }
