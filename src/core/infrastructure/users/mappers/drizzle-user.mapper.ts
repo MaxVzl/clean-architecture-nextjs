@@ -7,9 +7,10 @@ import { user as usersTable } from "@/core/infrastructure/database/schemas/auth.
 
 export class DrizzleUserMapper {
   private static toRole(role: (typeof usersTable.$inferSelect)["role"]): Role {
-    return role === Role.ADMIN || role === Role.MEMBER || role === Role.READER
-      ? role
-      : Role.MEMBER;
+    if (role === Role.ADMIN || role === Role.USER) {
+      return role;
+    }
+    return Role.USER;
   }
 
   static toDto(row: typeof usersTable.$inferSelect): UserDto {

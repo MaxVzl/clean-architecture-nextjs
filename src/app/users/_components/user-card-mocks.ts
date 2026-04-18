@@ -29,10 +29,8 @@ export function roleLabelFr(role: Role): string {
   switch (role) {
     case Role.ADMIN:
       return "Administrateur";
-    case Role.MEMBER:
-      return "Membre";
-    case Role.READER:
-      return "Lecteur";
+    case Role.USER:
+      return "Utilisateur";
   }
 }
 

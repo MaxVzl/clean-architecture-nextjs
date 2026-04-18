@@ -16,9 +16,11 @@ export default function NewUserPage() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     execute({
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      role: formData.get("role") as Role,
+      data: {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        role: formData.get("role") as Role,
+      },
     });
   };
   return (
@@ -27,7 +29,10 @@ export default function NewUserPage() {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" placeholder="Name" />
         <input type="email" name="email" placeholder="Email" />
-        <input type="text" name="role" placeholder="Role" />
+        <select name="role" defaultValue={Role.USER}>
+          <option value={Role.ADMIN}>Administrateur</option>
+          <option value={Role.USER}>Utilisateur</option>
+        </select>
         <button type="submit">Create</button>
       </form>
     </main>
