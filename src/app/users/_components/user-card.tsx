@@ -47,10 +47,7 @@ export function UserCard({ user }: { user: UserDto }) {
         <CardHeader className="flex flex-col items-center gap-3 text-center">
           <div className="rounded-full p-0.5 ring-2 ring-border">
             <Avatar size="lg" className="size-20 ring-2 ring-background">
-              <AvatarImage
-                src={user.image ?? undefined}
-                alt=""
-              />
+              <AvatarImage src={user.image ?? undefined} alt="" />
               <AvatarFallback className="text-base font-medium">
                 {initialsFromName(user.name)}
               </AvatarFallback>
