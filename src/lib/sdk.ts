@@ -5,7 +5,7 @@ import {
   listUserPostsUseCase,
   listUsersUseCase,
 } from "@/lib/factories";
-import { withAuth, withRoles } from "@/lib/server-auth";
+import { withAuth, withRoles } from "@/middlewares/auth.middleware";
 import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
 import { CreateUserCommand } from "@/core/application/users/commands/create-user.command";
 import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
