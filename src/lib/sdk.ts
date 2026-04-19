@@ -22,7 +22,7 @@ export const sdk = {
       withAuth(async ({ user }) =>
         listUserPostsUseCase.execute({ userId: user.id }),
       ),
-    create: (command: CreatePostCommand) =>
+    create: (command: Omit<CreatePostCommand, "userId">) =>
       withAuth(async ({ user }) =>
         createPostUseCase.execute({ userId: user.id, ...command }),
       ),

@@ -8,18 +8,16 @@ export interface CreatePostUseCaseDeps {
   postsRepository: PostsRepository;
 }
 
-export type CreatePostInput = CreatePostCommand & { userId: string };
-
 export class CreatePostUseCase extends UseCase<
   CreatePostUseCaseDeps,
   string,
-  CreatePostInput
+  CreatePostCommand
 > {
-  async execute(input: CreatePostInput): Promise<string> {
+  async execute(command: CreatePostCommand): Promise<string> {
     const post = Post.create({
-      userId: UUID.create(input.userId),
-      title: input.data.title,
-      description: input.data.description,
+      userId: UUID.create(command.userId),
+      title: command.data.title,
+      description: command.data.description,
     });
     await this.deps.postsRepository.save(post);
     return post.id.value;
