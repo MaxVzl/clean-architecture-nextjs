@@ -1,26 +1,43 @@
+import { CreatePostCommand } from "@/core/application/posts/commands/create-post.command";
+import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
+import { CreateUserCommand } from "@/core/application/users/commands/create-user.command";
+import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
+import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
 import { Role } from "@/core/domain/users/enums/role.enum";
 import {
-  getUserUseCase,
+  createPostUseCase,
   createUserUseCase,
+  getUserUseCase,
   listUserPostsUseCase,
   listUsersUseCase,
 } from "@/lib/factories";
 import { withAuth, withRoles } from "@/middlewares/auth.middleware";
-import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
-import { CreateUserCommand } from "@/core/application/users/commands/create-user.command";
-import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
-import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
 
 export const sdk = {
   me: () =>
     withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
-  users: {
-    list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
-    show: (query: GetUserQuery) => getUserUseCase.execute(query),
-    create: (command: CreateUserCommand) =>
-      withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
-    posts: {
-      list: (query: ListUserPostsQuery) => listUserPostsUseCase.execute(query),
+
+  posts: {
+    list: () =>
+      withAuth(async ({ user }) =>
+        listUserPostsUseCase.execute({ userId: user.id }),
+      ),
+    create: (command: CreatePostCommand) =>
+      withAuth(async ({ user }) =>
+        createPostUseCase.execute({ userId: user.id, ...command }),
+      ),
+  },
+
+  public: {
+    users: {
+      list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
+      show: (query: GetUserQuery) => getUserUseCase.execute(query),
+      create: (command: CreateUserCommand) =>
+        withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
+      posts: {
+        list: (query: ListUserPostsQuery) =>
+          listUserPostsUseCase.execute(query),
+      },
     },
   },
 };

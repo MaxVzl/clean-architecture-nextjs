@@ -22,4 +22,13 @@ export class DrizzlePostMapper {
       UUID.create(row.id),
     );
   }
+
+  static toPersistence(post: Post): typeof postsTable.$inferInsert {
+    return {
+      id: post.id.value,
+      userId: post.userId.value,
+      title: post.title,
+      description: post.description,
+    };
+  }
 }

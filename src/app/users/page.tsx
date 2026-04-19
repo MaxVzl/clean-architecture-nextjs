@@ -16,7 +16,7 @@ export default async function UsersPage({
     data: users,
     total,
     pages,
-  } = await sdk.users.list({
+  } = await sdk.public.users.list({
     params: { search },
     limit,
     offset,

@@ -3,4 +3,5 @@ import { Post } from "../entities/post.entity";
 
 export interface PostsRepository {
   findByUserId(userId: UUID): Promise<Post[]>;
+  save(post: Post): Promise<void>;
 }

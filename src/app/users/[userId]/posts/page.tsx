@@ -6,7 +6,7 @@ export default async function PostsPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const posts = await sdk.users.posts.list({ userId });
+  const posts = await sdk.public.users.posts.list({ userId });
   return (
     <main>
       <h1>Posts</h1>
