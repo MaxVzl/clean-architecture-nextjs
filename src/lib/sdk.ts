@@ -12,12 +12,13 @@ import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
 import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
 
 export const sdk = {
-  me: () => withAuth(async (user) => user),
+  me: () =>
+    withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
   users: {
     list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
     show: (query: GetUserQuery) => getUserUseCase.execute(query),
     create: (command: CreateUserCommand) =>
-      withRoles([Role.ADMIN], (user) => createUserUseCase.execute(command)),
+      withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
       list: (query: ListUserPostsQuery) => listUserPostsUseCase.execute(query),
     },
