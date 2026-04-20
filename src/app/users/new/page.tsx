@@ -16,11 +16,9 @@ export default function NewUserPage() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     execute({
-      data: {
-        name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        role: formData.get("role") as Role,
-      },
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      role: formData.get("role") as Role,
     });
   };
   return (

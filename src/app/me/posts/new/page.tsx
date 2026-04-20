@@ -15,10 +15,8 @@ export default function NewMePostPage() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     execute({
-      data: {
-        title: formData.get("title") as string,
-        description: formData.get("description") as string,
-      },
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
     });
   };
   return (

@@ -20,8 +20,8 @@ export class CreatePostUseCase extends UseCase<
   ): Promise<string> {
     const post = Post.create({
       userId: UUID.create(context.userId),
-      title: command.data.title,
-      description: command.data.description,
+      title: command.title,
+      description: command.description,
     });
     await this.deps.postsRepository.save(post);
     return post.id.value;
