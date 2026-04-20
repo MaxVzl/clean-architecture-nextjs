@@ -1,6 +1,6 @@
 import { UseCase } from "@/core/application/common/use-case.base";
 import { PostDto } from "@/core/application/posts/dtos/post.dto";
-import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
+import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.query";
 import { PostsQueryService } from "@/core/application/posts/services/posts-query.service";
 
 export interface ListUserPostsUseCaseDeps {
@@ -10,9 +10,13 @@ export interface ListUserPostsUseCaseDeps {
 export class ListUserPostsUseCase extends UseCase<
   ListUserPostsUseCaseDeps,
   PostDto[],
-  ListUserPostsQuery
+  ListPostsQuery,
+  { userId: string }
 > {
-  async execute(query: ListUserPostsQuery): Promise<PostDto[]> {
-    return this.deps.postsQueryService.findByUserId(query);
+  async execute(
+    query: ListPostsQuery,
+    context: { userId: string },
+  ): Promise<PostDto[]> {
+    return this.deps.postsQueryService.findByUserId(query, context.userId);
   }
 }

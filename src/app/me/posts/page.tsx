@@ -3,7 +3,7 @@ import Link from "next/link";
 import { sdk } from "@/lib/sdk";
 
 export default async function MePostsPage() {
-  const posts = await sdk.posts.list();
+  const posts = await sdk.posts.list({});
   return (
     <main>
       <h1>Mes posts</h1>
