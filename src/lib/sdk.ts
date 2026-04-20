@@ -9,6 +9,7 @@ import {
   createPostUseCase,
   createUserUseCase,
   getUserUseCase,
+  listMyPostsUseCase,
   listUserPostsUseCase,
   listUsersUseCase,
 } from "@/lib/factories";
@@ -21,7 +22,7 @@ export const sdk = {
   posts: {
     list: (query: ListMyPostsQuery) =>
       withAuth(async ({ user }) =>
-        listUserPostsUseCase.execute({ ...query, userId: user.id }),
+        listMyPostsUseCase.execute(query, { userId: user.id }),
       ),
     create: (command: CreatePostCommand) =>
       withAuth(async ({ user }) =>

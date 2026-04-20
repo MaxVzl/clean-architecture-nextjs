@@ -1,4 +1,5 @@
 import { CreatePostUseCase } from "@/core/application/posts/use-cases/create-post.use-case";
+import { ListMyPostsUseCase } from "@/core/application/posts/use-cases/list-my-posts.use-case";
 import { ListUserPostsUseCase } from "@/core/application/posts/use-cases/list-user-posts.use-case";
 import { CreateUserUseCase } from "@/core/application/users/use-cases/create-users.use-case";
 import { GetUserUseCase } from "@/core/application/users/use-cases/get-user.use-case";
@@ -19,6 +20,9 @@ export const getUserUseCase = new GetUserUseCase({ usersQueryService });
 export const createUserUseCase = new CreateUserUseCase({ usersRepository });
 export const createPostUseCase = new CreatePostUseCase({ postsRepository });
 export const listUserPostsUseCase = new ListUserPostsUseCase({
+  postsQueryService,
+});
+export const listMyPostsUseCase = new ListMyPostsUseCase({
   postsQueryService,
 });
 
