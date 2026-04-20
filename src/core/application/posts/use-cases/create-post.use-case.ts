@@ -11,11 +11,15 @@ export interface CreatePostUseCaseDeps {
 export class CreatePostUseCase extends UseCase<
   CreatePostUseCaseDeps,
   string,
-  CreatePostCommand
+  CreatePostCommand,
+  { userId: string }
 > {
-  async execute(command: CreatePostCommand): Promise<string> {
+  async execute(
+    command: CreatePostCommand,
+    context: { userId: string },
+  ): Promise<string> {
     const post = Post.create({
-      userId: UUID.create(command.userId),
+      userId: UUID.create(context.userId),
       title: command.data.title,
       description: command.data.description,
     });

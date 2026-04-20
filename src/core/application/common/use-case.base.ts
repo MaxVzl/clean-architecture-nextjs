@@ -1,5 +1,13 @@
-export abstract class UseCase<Dependencies, ReturnType, InputType = void> {
+export abstract class UseCase<
+  Dependencies,
+  ReturnType,
+  InputType = void,
+  ContextType = void,
+> {
   constructor(protected readonly deps: Dependencies) {}
 
-  abstract execute(params: InputType): Promise<ReturnType> | ReturnType;
+  abstract execute(
+    params: InputType,
+    context?: ContextType,
+  ): Promise<ReturnType> | ReturnType;
 }

@@ -5,7 +5,7 @@ import { actionClient } from "@/lib/safe-action";
 import { sdk } from "@/lib/sdk";
 
 export const createPostAction = actionClient
-  .inputSchema(createPostSchema.omit({ userId: true }))
+  .inputSchema(createPostSchema)
   .action(async ({ parsedInput }) => {
     await sdk.posts.create(parsedInput);
   });

@@ -18,13 +18,13 @@ export const sdk = {
     withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
 
   posts: {
-    list: () =>
+    list: (query: ListUserPostsQuery) =>
       withAuth(async ({ user }) =>
         listUserPostsUseCase.execute({ userId: user.id }),
       ),
-    create: (command: Omit<CreatePostCommand, "userId">) =>
+    create: (command: CreatePostCommand) =>
       withAuth(async ({ user }) =>
-        createPostUseCase.execute({ userId: user.id, ...command }),
+        createPostUseCase.execute(command, { userId: user.id }),
       ),
   },
 
