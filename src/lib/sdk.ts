@@ -18,7 +18,7 @@ export const sdk = {
     withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
 
   posts: {
-    list: (query: ListUserPostsQuery) =>
+    list: () =>
       withAuth(async ({ user }) =>
         listUserPostsUseCase.execute({ userId: user.id }),
       ),
