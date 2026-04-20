@@ -1,6 +1,6 @@
 import { PostDto } from "@/core/application/posts/dtos/post.dto";
-import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.query";
+import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
 
 export interface PostsQueryService {
-  findByUserId(query: ListPostsQuery, userId: string): Promise<PostDto[]>;
+  findByUserId(query: ListUserPostsQuery): Promise<PostDto[]>;
 }
