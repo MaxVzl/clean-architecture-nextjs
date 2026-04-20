@@ -20,7 +20,7 @@ export class DrizzleUsersQueryService implements UsersQueryService {
     const page = Math.max(1, query.offset ?? 1);
     const start = (page - 1) * limit;
 
-    const term = query.params?.search?.trim().toLowerCase();
+    const term = query.search?.trim().toLowerCase();
     const whereClause = term && term.length > 0 ? searchWhere(term) : undefined;
 
     const rows = await db
