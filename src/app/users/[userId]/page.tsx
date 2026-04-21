@@ -7,7 +7,7 @@ export default async function UserPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const user = await sdk.public.users.show({ id: userId });
+  const user = await sdk.users.show({ id: userId });
   return (
     <main>
       <h1>User</h1>

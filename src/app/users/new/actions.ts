@@ -7,5 +7,5 @@ import { sdk } from "@/lib/sdk";
 export const createUserAction = actionClient
   .inputSchema(createUserSchema)
   .action(async ({ parsedInput }) => {
-    await sdk.public.users.create(parsedInput);
+    await sdk.users.create(parsedInput);
   });

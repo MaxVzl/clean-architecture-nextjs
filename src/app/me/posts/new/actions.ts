@@ -7,5 +7,5 @@ import { sdk } from "@/lib/sdk";
 export const createPostAction = actionClient
   .inputSchema(createPostSchema)
   .action(async ({ parsedInput }) => {
-    await sdk.posts.create(parsedInput);
+    await sdk.me.posts.create(parsedInput);
   });

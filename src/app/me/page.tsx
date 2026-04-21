@@ -1,7 +1,7 @@
 import { sdk } from "@/lib/sdk";
 
 export default async function MePage() {
-  const user = await sdk.me();
+  const user = await sdk.me.get();
   return (
     <main>
       <h1>Me</h1>

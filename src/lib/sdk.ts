@@ -16,30 +16,28 @@ import {
 import { withAuth, withRoles } from "@/middlewares/auth.middleware";
 
 export const sdk = {
-  me: () =>
-    withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
-
-  posts: {
-    list: (query: ListMyPostsQuery) =>
-      withAuth(async ({ user }) =>
-        listMyPostsUseCase.execute(query, { userId: user.id }),
-      ),
-    create: (command: CreatePostCommand) =>
-      withAuth(async ({ user }) =>
-        createPostUseCase.execute(command, { userId: user.id }),
-      ),
+  me: {
+    get: () =>
+      withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
+    posts: {
+      list: (query: ListMyPostsQuery) =>
+        withAuth(async ({ user }) =>
+          listMyPostsUseCase.execute(query, { userId: user.id }),
+        ),
+      create: (command: CreatePostCommand) =>
+        withAuth(async ({ user }) =>
+          createPostUseCase.execute(command, { userId: user.id }),
+        ),
+    },
   },
 
-  public: {
-    users: {
-      list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
-      show: (query: GetUserQuery) => getUserUseCase.execute(query),
-      create: (command: CreateUserCommand) =>
-        withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
-      posts: {
-        list: (query: ListUserPostsQuery) =>
-          listUserPostsUseCase.execute(query),
-      },
+  users: {
+    list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
+    show: (query: GetUserQuery) => getUserUseCase.execute(query),
+    create: (command: CreateUserCommand) =>
+      withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
+    posts: {
+      list: (query: ListUserPostsQuery) => listUserPostsUseCase.execute(query),
     },
   },
 };
