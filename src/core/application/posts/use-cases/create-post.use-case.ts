@@ -1,5 +1,6 @@
 import { UseCase } from "@/core/application/common/use-case.base";
 import { CreatePostCommand } from "@/core/application/posts/commands/create-post.command";
+import { UserPostContext } from "@/core/application/posts/contexts/user-post.context";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/posts/entities/post.entity";
 import { PostsRepository } from "@/core/domain/posts/repositories/posts.repository";
@@ -12,11 +13,11 @@ export class CreatePostUseCase extends UseCase<
   CreatePostUseCaseDeps,
   string,
   CreatePostCommand,
-  { userId: string }
+  UserPostContext
 > {
   async execute(
     command: CreatePostCommand,
-    context: { userId: string },
+    context: UserPostContext,
   ): Promise<string> {
     const post = Post.create({
       userId: UUID.create(context.userId),

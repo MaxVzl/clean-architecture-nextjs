@@ -12,6 +12,7 @@ import {
   listUsersUseCase,
 } from "@/lib/factories";
 import { withAuth, withRoles } from "@/middlewares/auth.middleware";
+import { UserPostContext } from "@/core/application/posts/contexts/user-post.context";
 
 export const sdk = {
   me: {
@@ -28,6 +29,15 @@ export const sdk = {
         ),
     },
   },
+  // me: withAuth(async ({ user }) => ({
+  //   get: () => getUserUseCase.execute({ id: user.id }),
+  //   posts: {
+  //     list: (query: ListUserPostsQuery) =>
+  //       listUserPostsUseCase.execute(query, { userId: user.id }),
+  //     create: (command: CreatePostCommand) =>
+  //       createPostUseCase.execute(command, { userId: user.id }),
+  //   },
+  // })),
 
   users: {
     list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
@@ -35,7 +45,7 @@ export const sdk = {
     create: (command: CreateUserCommand) =>
       withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
-      list: (query: ListUserPostsQuery, context: { userId: string }) =>
+      list: (query: ListUserPostsQuery, context: UserPostContext) =>
         listUserPostsUseCase.execute(query, context),
     },
   },

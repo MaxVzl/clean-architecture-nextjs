@@ -6,11 +6,12 @@ import { PostsQueryService } from "@/core/application/posts/services/posts-query
 import { db } from "@/core/infrastructure/database";
 import { postsTable } from "@/core/infrastructure/database/schemas/posts.schema";
 import { DrizzlePostMapper } from "@/core/infrastructure/posts/mappers/drizzle-post.mapper";
+import { UserPostContext } from "@/core/application/posts/contexts/user-post.context";
 
 export class DrizzlePostsQueryService implements PostsQueryService {
   async findByUserId(
     query: ListUserPostsQuery,
-    context: { userId: string },
+    context: UserPostContext,
   ): Promise<PostDto[]> {
     const rows = await db
       .select()
