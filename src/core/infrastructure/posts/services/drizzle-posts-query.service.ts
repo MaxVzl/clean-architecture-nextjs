@@ -8,11 +8,14 @@ import { postsTable } from "@/core/infrastructure/database/schemas/posts.schema"
 import { DrizzlePostMapper } from "@/core/infrastructure/posts/mappers/drizzle-post.mapper";
 
 export class DrizzlePostsQueryService implements PostsQueryService {
-  async findByUserId(query: ListUserPostsQuery): Promise<PostDto[]> {
+  async findByUserId(
+    query: ListUserPostsQuery,
+    context: { userId: string },
+  ): Promise<PostDto[]> {
     const rows = await db
       .select()
       .from(postsTable)
-      .where(eq(postsTable.userId, query.userId));
+      .where(eq(postsTable.userId, context.userId));
     return rows.map(DrizzlePostMapper.toDto);
   }
 }

@@ -10,9 +10,13 @@ export interface ListUserPostsUseCaseDeps {
 export class ListUserPostsUseCase extends UseCase<
   ListUserPostsUseCaseDeps,
   PostDto[],
-  ListUserPostsQuery
+  ListUserPostsQuery,
+  { userId: string }
 > {
-  async execute(query: ListUserPostsQuery): Promise<PostDto[]> {
-    return this.deps.postsQueryService.findByUserId(query);
+  async execute(
+    query: ListUserPostsQuery,
+    context: { userId: string },
+  ): Promise<PostDto[]> {
+    return this.deps.postsQueryService.findByUserId(query, context);
   }
 }
