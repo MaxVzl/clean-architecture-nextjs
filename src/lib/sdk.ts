@@ -33,7 +33,7 @@ export const sdk = {
 
   users: {
     list: (query: ListUsersQuery) => listUsersUseCase.execute(query),
-    show: (query: GetUserQuery) => getUserUseCase.execute(query),
+    get: (query: GetUserQuery) => getUserUseCase.execute(query),
     create: (command: CreateUserCommand) =>
       withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
