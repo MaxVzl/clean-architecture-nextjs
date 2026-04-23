@@ -18,6 +18,13 @@ export class ListUserPostsUseCase extends UseCase<
     query: ListUserPostsQuery,
     context: UserPostContext,
   ): Promise<PostDto[]> {
-    return this.deps.postsQueryService.findByUserId(query, context);
+    return this.deps.postsQueryService.find({
+      userId: context.userId,
+      titleContains: query.search,
+      pagination: {
+        limit: query.limit,
+        offset: query.offset,
+      },
+    });
   }
 }

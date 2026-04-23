@@ -1,10 +1,6 @@
-import { UserPostContext } from "@/core/application/posts/contexts/user-post.context";
 import { PostDto } from "@/core/application/posts/dtos/post.dto";
-import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
+import { PostQueryFilter } from "@/core/application/posts/filters/post-query.filter";
 
 export interface PostsQueryService {
-  findByUserId(
-    query: ListUserPostsQuery,
-    context: UserPostContext,
-  ): Promise<PostDto[]>;
+  find(filter: PostQueryFilter): Promise<PostDto[]>;
 }
