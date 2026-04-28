@@ -1,9 +1,8 @@
 import { Paginated } from "@/core/application/common/paginated.base";
 import { UserDto } from "@/core/application/users/dtos/user.dto";
-import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
-import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
+import { UserQueryFilter } from "@/core/application/users/filters/user-query.filter";
 
 export interface UsersQueryService {
-  search(query: ListUsersQuery): Promise<Paginated<UserDto>>;
-  findById(query: GetUserQuery): Promise<UserDto | null>;
+  find(filter: UserQueryFilter): Promise<Paginated<UserDto>>;
+  findById(id: string): Promise<UserDto | null>;
 }

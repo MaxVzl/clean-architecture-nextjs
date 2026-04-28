@@ -1,7 +1,6 @@
 import { UseCase } from "@/core/application/common/use-case.base";
 import { UserDto } from "../dtos/user.dto";
 import { UserNotFoundError } from "@/core/domain/users/errors/user-not-found.error";
-import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
 import { UsersQueryService } from "@/core/application/users/services/users-query.service";
 
 export interface GetUserUseCaseDeps {
@@ -11,12 +10,12 @@ export interface GetUserUseCaseDeps {
 export class GetUserUseCase extends UseCase<
   GetUserUseCaseDeps,
   UserDto,
-  GetUserQuery
+  string
 > {
-  async execute(query: GetUserQuery): Promise<UserDto> {
-    const user = await this.deps.usersQueryService.findById(query);
+  async execute(id: string): Promise<UserDto> {
+    const user = await this.deps.usersQueryService.findById(id);
     if (!user) {
-      throw new UserNotFoundError({ identifier: query.id });
+      throw new UserNotFoundError({ identifier: id });
     }
     return user;
   }

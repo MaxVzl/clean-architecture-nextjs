@@ -1,6 +1,6 @@
 import { CreatePostUseCase } from "@/core/application/posts/use-cases/create-post.use-case";
 import { ListUserPostsUseCase } from "@/core/application/posts/use-cases/list-user-posts.use-case";
-import { CreateUserUseCase } from "@/core/application/users/use-cases/create-users.use-case";
+import { CreateUserUseCase } from "@/core/application/users/use-cases/create-user.use-case";
 import { GetUserUseCase } from "@/core/application/users/use-cases/get-user.use-case";
 import { ListUsersUseCase } from "@/core/application/users/use-cases/list-users.use-case";
 import { DrizzlePostsRepository } from "@/core/infrastructure/posts/repositories/drizzle-posts.repository";

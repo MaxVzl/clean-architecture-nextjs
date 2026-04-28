@@ -2,26 +2,40 @@ import { asc, count, eq, like, or, SQL } from "drizzle-orm";
 
 import { Paginated } from "@/core/application/common/paginated.base";
 import { UserDto } from "@/core/application/users/dtos/user.dto";
-import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
-import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
+import { UserQueryFilter } from "@/core/application/users/filters/user-query.filter";
 import { UsersQueryService } from "@/core/application/users/services/users-query.service";
 import { db } from "@/core/infrastructure/database";
 import { user } from "@/core/infrastructure/database/schemas/auth.schema";
 import { DrizzleUserMapper } from "@/core/infrastructure/users/mappers/drizzle-user.mapper";
 
-function searchWhere(term: string): SQL {
-  const pattern = `%${term}%`;
-  return or(like(user.name, pattern), like(user.email, pattern))!;
+function containsWhere(filter: {
+  nameContains?: string | undefined;
+  emailContains?: string | undefined;
+}): SQL | undefined {
+  const nameTerm = filter.nameContains?.trim().toLowerCase();
+  const emailTerm = filter.emailContains?.trim().toLowerCase();
+  const parts: SQL[] = [];
+  if (nameTerm) {
+    parts.push(like(user.name, `%${nameTerm}%`));
+  }
+  if (emailTerm) {
+    parts.push(like(user.email, `%${emailTerm}%`));
+  }
+  if (parts.length === 0) return undefined;
+  if (parts.length === 1) return parts[0];
+  return or(...parts)!;
 }
 
 export class DrizzleUsersQueryService implements UsersQueryService {
-  async search(query: ListUsersQuery): Promise<Paginated<UserDto>> {
-    const limit = Math.max(1, query.limit ?? 10);
-    const page = Math.max(1, query.offset ?? 1);
+  async find(filter: UserQueryFilter): Promise<Paginated<UserDto>> {
+    const limit = Math.max(1, filter.pagination?.limit ?? 10);
+    const page = Math.max(1, filter.pagination?.offset ?? 1);
     const start = (page - 1) * limit;
 
-    const term = query.search?.trim().toLowerCase();
-    const whereClause = term && term.length > 0 ? searchWhere(term) : undefined;
+    const whereClause = containsWhere({
+      nameContains: filter.nameContains,
+      emailContains: filter.emailContains,
+    });
 
     const rows = await db
       .select()
@@ -44,12 +58,8 @@ export class DrizzleUsersQueryService implements UsersQueryService {
     });
   }
 
-  async findById(query: GetUserQuery): Promise<UserDto | null> {
-    const rows = await db
-      .select()
-      .from(user)
-      .where(eq(user.id, query.id))
-      .limit(1);
+  async findById(id: string): Promise<UserDto | null> {
+    const rows = await db.select().from(user).where(eq(user.id, id)).limit(1);
     const row = rows[0];
     return row ? DrizzleUserMapper.toDto(row) : null;
   }
