@@ -1,5 +1,5 @@
 import { CreatePostCommand } from "@/core/application/posts/commands/create-post.command";
-import { ListUserPostsQuery } from "@/core/application/posts/queries/list-user-posts.query";
+import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.query";
 import { CreateUserCommand } from "@/core/application/users/commands/create-user.command";
 import { GetUserQuery } from "@/core/application/users/queries/get-user.query";
 import { ListUsersQuery } from "@/core/application/users/queries/list-users.query";
@@ -19,7 +19,7 @@ export const sdk = {
     get: () =>
       withAuth(async ({ user }) => getUserUseCase.execute({ id: user.id })),
     posts: {
-      list: (query: ListUserPostsQuery) =>
+      list: (query: ListPostsQuery) =>
         withAuth(async ({ user }) =>
           listUserPostsUseCase.execute(query, { userId: user.id }),
         ),
@@ -45,7 +45,7 @@ export const sdk = {
     create: (command: CreateUserCommand) =>
       withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
-      list: (query: ListUserPostsQuery, context: UserPostContext) =>
+      list: (query: ListPostsQuery, context: UserPostContext) =>
         listUserPostsUseCase.execute(query, context),
     },
   },
