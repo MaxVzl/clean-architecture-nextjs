@@ -11,7 +11,6 @@ import {
   listUsersUseCase,
 } from "@/lib/factories";
 import { withAuth, withRoles } from "@/middlewares/auth.middleware";
-import { UserPostContext } from "@/core/application/posts/contexts/user-post.context";
 
 export const sdk = {
   me: {
@@ -43,8 +42,8 @@ export const sdk = {
     create: (command: CreateUserCommand) =>
       withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
-      list: (query: ListPostsQuery, context: UserPostContext) =>
-        listUserPostsUseCase.execute(query, context),
+      list: (userId: string, query: ListPostsQuery) =>
+        listUserPostsUseCase.execute(query, { userId }),
     },
   },
 };
