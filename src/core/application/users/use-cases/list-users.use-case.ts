@@ -14,14 +14,6 @@ export class ListUsersUseCase extends UseCase<
   ListUsersQuery
 > {
   async execute(query: ListUsersQuery): Promise<Paginated<UserDto>> {
-    const term = query.search?.trim();
-    return this.deps.usersQueryService.find({
-      nameContains: term,
-      emailContains: term,
-      pagination: {
-        limit: query.limit,
-        offset: query.offset,
-      },
-    });
+    return this.deps.usersQueryService.find(query);
   }
 }

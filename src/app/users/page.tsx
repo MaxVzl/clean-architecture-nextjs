@@ -12,14 +12,15 @@ export default async function UsersPage({
 }) {
   const { search, limit, offset } = await loadSearchParams(searchParams);
 
+  const term = search.trim() || undefined;
   const {
     data: users,
     total,
     pages,
   } = await sdk.users.list({
-    search,
-    limit,
-    offset,
+    nameContains: term,
+    emailContains: term,
+    pagination: { limit, offset },
   });
 
   return (
