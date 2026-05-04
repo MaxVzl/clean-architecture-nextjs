@@ -16,9 +16,9 @@ export const sdk = {
   me: {
     get: () => withAuth(async ({ user }) => getUserUseCase.execute(user.id)),
     posts: {
-      list: (query: ListPostsQuery) =>
+      list: (query: Omit<ListPostsQuery, "userId">) =>
         withAuth(async ({ user }) =>
-          listUserPostsUseCase.execute(query, { userId: user.id }),
+          listUserPostsUseCase.execute({ ...query, userId: user.id }),
         ),
       create: (command: CreatePostCommand) =>
         withAuth(async ({ user }) =>
@@ -42,8 +42,7 @@ export const sdk = {
     create: (command: CreateUserCommand) =>
       withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
-      list: (userId: string, query: ListPostsQuery) =>
-        listUserPostsUseCase.execute(query, { userId }),
+      list: (query: ListPostsQuery) => listUserPostsUseCase.execute(query),
     },
   },
 };

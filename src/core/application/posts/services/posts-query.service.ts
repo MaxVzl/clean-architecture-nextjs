@@ -1,6 +1,6 @@
 import { PostDto } from "@/core/application/posts/dtos/post.dto";
-import { PostQueryFilter } from "@/core/application/posts/filters/post-query.filter";
+import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.query";
 
 export interface PostsQueryService {
-  find(filter: PostQueryFilter): Promise<PostDto[]>;
+  find(query: ListPostsQuery): Promise<PostDto[]>;
 }
