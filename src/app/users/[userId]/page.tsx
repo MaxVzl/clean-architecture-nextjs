@@ -1,5 +1,7 @@
-import { getUserUseCase } from "@/lib/factories";
+import { container } from "@/lib/container/container.prod";
 import Link from "next/link";
+
+const { getUserUseCase } = container;
 
 export default async function UserPage({
   params,

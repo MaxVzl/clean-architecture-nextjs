@@ -2,8 +2,10 @@
 
 import { createUserSchema } from "@/core/application/users/commands/create-user.command";
 import { Role } from "@/core/domain/users/enums/role.enum";
-import { createUserUseCase } from "@/lib/factories";
+import { container } from "@/lib/container/container.prod";
 import { rolesClient } from "@/lib/safe-action";
+
+const { createUserUseCase } = container;
 
 export const createUserAction = rolesClient([Role.ADMIN])
   .inputSchema(createUserSchema)

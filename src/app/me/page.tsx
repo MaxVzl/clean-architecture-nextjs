@@ -1,5 +1,7 @@
 import { getSession } from "@/lib/auth";
-import { getUserUseCase } from "@/lib/factories";
+import { container } from "@/lib/container/container.prod";
+
+const { getUserUseCase } = container;
 
 export default async function MePage() {
   const session = await getSession();

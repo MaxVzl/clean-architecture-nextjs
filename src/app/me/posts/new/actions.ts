@@ -1,8 +1,10 @@
 "use server";
 
 import { createPostSchema } from "@/core/application/posts/commands/create-post.command";
-import { createPostUseCase } from "@/lib/factories";
+import { container } from "@/lib/container/container.prod";
 import { authClient } from "@/lib/safe-action";
+
+const { createPostUseCase } = container;
 
 export const createPostAction = authClient
   .inputSchema(createPostSchema)

@@ -1,7 +1,9 @@
 import Link from "next/link";
 
-import { listPostsUseCase } from "@/lib/factories";
 import { getSession } from "@/lib/auth";
+import { container } from "@/lib/container/container.prod";
+
+const { listPostsUseCase } = container;
 
 export default async function MePostsPage() {
   const session = await getSession();

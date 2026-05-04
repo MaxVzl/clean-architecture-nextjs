@@ -1,4 +1,6 @@
-import { listPostsUseCase } from "@/lib/factories";
+import { container } from "@/lib/container/container.prod";
+
+const { listPostsUseCase } = container;
 
 export default async function PostsPage({
   params,
