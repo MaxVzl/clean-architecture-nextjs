@@ -7,7 +7,7 @@ import {
   createPostUseCase,
   createUserUseCase,
   getUserUseCase,
-  listUserPostsUseCase,
+  listPostsUseCase,
   listUsersUseCase,
 } from "@/lib/factories";
 import { withAuth, withRoles } from "@/middlewares/auth.middleware";
@@ -18,7 +18,7 @@ export const sdk = {
     posts: {
       list: (query: Omit<ListPostsQuery, "userId">) =>
         withAuth(async ({ user }) =>
-          listUserPostsUseCase.execute({ ...query, userId: user.id }),
+          listPostsUseCase.execute({ ...query, userId: user.id }),
         ),
       create: (command: CreatePostCommand) =>
         withAuth(async ({ user }) =>
@@ -42,7 +42,8 @@ export const sdk = {
     create: (command: CreateUserCommand) =>
       withRoles([Role.ADMIN], () => createUserUseCase.execute(command)),
     posts: {
-      list: (query: ListPostsQuery) => listUserPostsUseCase.execute(query),
+      list: (userId: string, query: Omit<ListPostsQuery, "userId">) =>
+        listPostsUseCase.execute({ ...query, userId }),
     },
   },
 };

@@ -3,12 +3,12 @@ import { PostDto } from "@/core/application/posts/dtos/post.dto";
 import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.query";
 import { PostsQueryService } from "@/core/application/posts/services/posts-query.service";
 
-export interface ListUserPostsUseCaseDeps {
+export interface ListPostsUseCaseDeps {
   postsQueryService: PostsQueryService;
 }
 
-export class ListUserPostsUseCase extends UseCase<
-  ListUserPostsUseCaseDeps,
+export class ListPostsUseCase extends UseCase<
+  ListPostsUseCaseDeps,
   PostDto[],
   ListPostsQuery
 > {

@@ -9,13 +9,13 @@ import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.quer
 
 export class DrizzlePostsQueryService implements PostsQueryService {
   async find(query: ListPostsQuery): Promise<PostDto[]> {
-    if (query.userId === undefined) {
-      return [];
-    }
-    const rows = await db
-      .select()
-      .from(postsTable)
-      .where(eq(postsTable.userId, query.userId));
+    const rows =
+      query.userId !== undefined
+        ? await db
+            .select()
+            .from(postsTable)
+            .where(eq(postsTable.userId, query.userId))
+        : await db.select().from(postsTable);
     return rows.map(DrizzlePostMapper.toDto);
   }
 }

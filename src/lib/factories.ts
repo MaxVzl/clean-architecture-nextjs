@@ -1,5 +1,5 @@
 import { CreatePostUseCase } from "@/core/application/posts/use-cases/create-post.use-case";
-import { ListUserPostsUseCase } from "@/core/application/posts/use-cases/list-user-posts.use-case";
+import { ListPostsUseCase } from "@/core/application/posts/use-cases/list-posts.use-case";
 import { CreateUserUseCase } from "@/core/application/users/use-cases/create-user.use-case";
 import { GetUserUseCase } from "@/core/application/users/use-cases/get-user.use-case";
 import { ListUsersUseCase } from "@/core/application/users/use-cases/list-users.use-case";
@@ -18,7 +18,7 @@ export const usersQueryService = new DrizzleUsersQueryService();
 export const getUserUseCase = new GetUserUseCase({ usersQueryService });
 export const createUserUseCase = new CreateUserUseCase({ usersRepository });
 export const createPostUseCase = new CreatePostUseCase({ postsRepository });
-export const listUserPostsUseCase = new ListUserPostsUseCase({
+export const listPostsUseCase = new ListPostsUseCase({
   postsQueryService,
 });
 
