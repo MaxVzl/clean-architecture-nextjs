@@ -1,7 +1,9 @@
-import { sdk } from "@/lib/sdk";
+import { getSession } from "@/lib/auth";
+import { getUserUseCase } from "@/lib/factories";
 
 export default async function MePage() {
-  const user = await sdk.me.get();
+  const session = await getSession();
+  const user = await getUserUseCase.execute(session.user.id);
   return (
     <main>
       <h1>Me</h1>

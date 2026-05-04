@@ -1,9 +1,11 @@
 import Link from "next/link";
 
-import { sdk } from "@/lib/sdk";
+import { listPostsUseCase } from "@/lib/factories";
+import { getSession } from "@/lib/auth";
 
 export default async function MePostsPage() {
-  const posts = await sdk.me.posts.list({});
+  const session = await getSession();
+  const posts = await listPostsUseCase.execute({ userId: session.user.id });
   return (
     <main>
       <h1>Mes posts</h1>

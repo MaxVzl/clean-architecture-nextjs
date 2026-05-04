@@ -1,11 +1,13 @@
 "use server";
 
 import { createPostSchema } from "@/core/application/posts/commands/create-post.command";
-import { actionClient } from "@/lib/safe-action";
-import { sdk } from "@/lib/sdk";
+import { createPostUseCase } from "@/lib/factories";
+import { authClient } from "@/lib/safe-action";
 
-export const createPostAction = actionClient
+export const createPostAction = authClient
   .inputSchema(createPostSchema)
-  .action(async ({ parsedInput }) => {
-    await sdk.me.posts.create(parsedInput);
+  .action(async ({ parsedInput, ctx }) => {
+    await createPostUseCase.execute(parsedInput, {
+      userId: ctx.session.user.id,
+    });
   });

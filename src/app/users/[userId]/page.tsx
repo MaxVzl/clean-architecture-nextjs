@@ -1,4 +1,4 @@
-import { sdk } from "@/lib/sdk";
+import { getUserUseCase } from "@/lib/factories";
 import Link from "next/link";
 
 export default async function UserPage({
@@ -7,7 +7,7 @@ export default async function UserPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const user = await sdk.users.get(userId);
+  const user = await getUserUseCase.execute(userId);
   return (
     <main>
       <h1>User</h1>

@@ -1,4 +1,4 @@
-import { sdk } from "@/lib/sdk";
+import { listPostsUseCase } from "@/lib/factories";
 
 export default async function PostsPage({
   params,
@@ -6,7 +6,7 @@ export default async function PostsPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const posts = await sdk.users.posts.list(userId, {});
+  const posts = await listPostsUseCase.execute({ userId });
   return (
     <main>
       <h1>Posts</h1>

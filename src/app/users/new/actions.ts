@@ -1,11 +1,12 @@
 "use server";
 
 import { createUserSchema } from "@/core/application/users/commands/create-user.command";
-import { actionClient } from "@/lib/safe-action";
-import { sdk } from "@/lib/sdk";
+import { Role } from "@/core/domain/users/enums/role.enum";
+import { createUserUseCase } from "@/lib/factories";
+import { rolesClient } from "@/lib/safe-action";
 
-export const createUserAction = actionClient
+export const createUserAction = rolesClient([Role.ADMIN])
   .inputSchema(createUserSchema)
   .action(async ({ parsedInput }) => {
-    await sdk.users.create(parsedInput);
+    await createUserUseCase.execute(parsedInput);
   });

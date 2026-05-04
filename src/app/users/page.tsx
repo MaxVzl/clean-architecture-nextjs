@@ -2,7 +2,7 @@ import { UserCard } from "@/app/users/_components/user-card";
 import { UsersSearchBar } from "@/app/users/_components/users-search-bar";
 import { loadSearchParams } from "@/app/users/search-params";
 import { Paginated } from "@/components/paginated";
-import { sdk } from "@/lib/sdk";
+import { listUsersUseCase } from "@/lib/factories";
 import { SearchParams } from "nuqs/server";
 
 export default async function UsersPage({
@@ -17,7 +17,7 @@ export default async function UsersPage({
     data: users,
     total,
     pages,
-  } = await sdk.users.list({
+  } = await listUsersUseCase.execute({
     nameContains: term,
     emailContains: term,
     pagination: { limit, offset },
