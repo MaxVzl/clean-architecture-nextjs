@@ -1,5 +1,11 @@
-import { createUsersModule, UsersModuleDeps } from "@/lib/modules/users.module";
-import { createPostsModule, PostsModuleDeps } from "@/lib/modules/posts.module";
+import {
+  createUsersModule,
+  UsersModuleDeps,
+} from "@/lib/container/modules/users.module";
+import {
+  createPostsModule,
+  PostsModuleDeps,
+} from "@/lib/container/modules/posts.module";
 
 type ContainerDeps = UsersModuleDeps & PostsModuleDeps;
 
