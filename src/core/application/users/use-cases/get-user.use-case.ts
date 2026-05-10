@@ -15,11 +15,6 @@ export class GetUserUseCase extends UseCase<
   string
 > {
   async execute(id: string): Promise<UserDto> {
-    // const user = await this.deps.usersQueryService.findById(id);
-    // if (!user) {
-    //   throw new UserNotFoundError({ identifier: id });
-    // }
-    // return user;
     const user = await this.deps.cacheService.getOrSet(
       `user:${id}`,
       () => this.deps.usersQueryService.findById(id),
