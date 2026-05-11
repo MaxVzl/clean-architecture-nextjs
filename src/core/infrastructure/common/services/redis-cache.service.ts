@@ -1,11 +1,12 @@
 import { type CacheService } from "@/core/application/common/services/cache.service";
-import Redis from "ioredis";
+import Redis, { RedisOptions } from "ioredis";
 
 export class RedisCacheService implements CacheService {
   private client: Redis;
 
-  constructor(connectionString: string) {
-    this.client = new Redis(connectionString);
+  constructor(options: RedisOptions | string) {
+    this.client =
+      typeof options === "string" ? new Redis(options) : new Redis(options);
   }
 
   async get<T>(key: string): Promise<T | null> {
