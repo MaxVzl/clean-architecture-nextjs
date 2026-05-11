@@ -4,9 +4,11 @@ import { SystemContext } from "@/core/application/common/contexts/system.context
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/posts/entities/post.entity";
 import { PostsRepository } from "@/core/domain/posts/repositories/posts.repository";
+import { EmailService } from "@/core/application/common/services/email.service";
 
 export interface CreatePostUseCaseDeps {
   postsRepository: PostsRepository;
+  emailService: EmailService;
 }
 
 export class CreatePostUseCase extends UseCase<
@@ -25,6 +27,11 @@ export class CreatePostUseCase extends UseCase<
       description: command.description,
     });
     await this.deps.postsRepository.save(post);
+    await this.deps.emailService.send({
+      to: "test@test.com",
+      subject: "test test test",
+      body: "body",
+    });
     return post.id.value;
   }
 }
