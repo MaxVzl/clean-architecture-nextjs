@@ -14,6 +14,10 @@ export const container = createContainer({
   usersQueryService: new DrizzleUsersQueryService(),
   postsQueryService: new DrizzlePostsQueryService(),
   cacheService: new InMemoryCacheService(),
-  postNotifierService: new EmailPostNotifierService(new InMemoryEmailService()),
-  authNotifierService: new EmailAuthNotifierService(new InMemoryEmailService()),
+  postNotifierService: new EmailPostNotifierService({
+    emailService: new InMemoryEmailService(),
+  }),
+  authNotifierService: new EmailAuthNotifierService({
+    emailService: new InMemoryEmailService(),
+  }),
 });

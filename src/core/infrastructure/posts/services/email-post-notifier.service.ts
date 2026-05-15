@@ -1,11 +1,17 @@
-import type { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
 import type { EmailService } from "@/core/application/common/services/email.service";
+import type { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
+import { Service } from "@/core/infrastructure/common/service.base";
 import { render } from "react-email";
 import PostCreatedEmail from "@/core/infrastructure/emails/post-created.email";
 
-export class EmailPostNotifierService implements PostNotifierService {
-  constructor(private readonly emailService: EmailService) {}
+export interface EmailPostNotifierServiceDeps {
+  emailService: EmailService;
+}
 
+export class EmailPostNotifierService
+  extends Service<EmailPostNotifierServiceDeps>
+  implements PostNotifierService
+{
   async notifyPostCreated(input: {
     to: string;
     title: string;
@@ -16,7 +22,7 @@ export class EmailPostNotifierService implements PostNotifierService {
       { pretty: true },
     );
 
-    await this.emailService.send({
+    await this.deps.emailService.send({
       to: input.to,
       subject: `New post created: ${input.title}`,
       body,
