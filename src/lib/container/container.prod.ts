@@ -8,16 +8,14 @@ import { InMemoryEmailService } from "@/core/infrastructure/common/services/in-m
 import { EmailPostNotifierService } from "@/core/infrastructure/posts/services/email-post-notifier.service";
 import { EmailAuthNotifierService } from "@/core/infrastructure/auth/services/email-auth-notifier.service";
 
+const emailService = new InMemoryEmailService();
+
 export const container = createContainer({
   usersRepository: new DrizzleUsersRepository(),
   postsRepository: new DrizzlePostsRepository(),
   usersQueryService: new DrizzleUsersQueryService(),
   postsQueryService: new DrizzlePostsQueryService(),
   cacheService: new InMemoryCacheService(),
-  postNotifierService: new EmailPostNotifierService({
-    emailService: new InMemoryEmailService(),
-  }),
-  authNotifierService: new EmailAuthNotifierService({
-    emailService: new InMemoryEmailService(),
-  }),
+  postNotifierService: new EmailPostNotifierService({ emailService }),
+  authNotifierService: new EmailAuthNotifierService({ emailService }),
 });
