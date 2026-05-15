@@ -6,18 +6,16 @@ import {
   createPostsModule,
   PostsModuleDeps,
 } from "@/lib/container/modules/posts.module";
-import {
-  AuthModuleDeps,
-  createAuthModule,
-} from "@/lib/container/modules/auth.module";
+import { AuthNotifierService } from "@/core/application/auth/services/auth-notifier.service";
 
-type ContainerDeps = AuthModuleDeps & UsersModuleDeps & PostsModuleDeps;
+type ContainerDeps = UsersModuleDeps &
+  PostsModuleDeps & { authNotifierService: AuthNotifierService };
 
 export function createContainer(deps: ContainerDeps) {
   return {
-    ...createAuthModule(deps),
     ...createUsersModule(deps),
     ...createPostsModule(deps),
+    authNotifierService: deps.authNotifierService,
   };
 }
 
