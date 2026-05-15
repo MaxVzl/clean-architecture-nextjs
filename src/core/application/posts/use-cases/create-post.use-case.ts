@@ -4,14 +4,14 @@ import { SystemContext } from "@/core/application/common/contexts/system.context
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/posts/entities/post.entity";
 import { PostsRepository } from "@/core/domain/posts/repositories/posts.repository";
-import { EmailService } from "@/core/application/common/services/email.service";
 import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
 import { UserNotFoundError } from "@/core/domain/users/errors/user-not-found.error";
+import { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
 
 export interface CreatePostUseCaseDeps {
   postsRepository: PostsRepository;
   usersRepository: UsersRepository;
-  emailService: EmailService;
+  postNotifierService: PostNotifierService;
 }
 
 export class CreatePostUseCase extends UseCase<
@@ -36,7 +36,7 @@ export class CreatePostUseCase extends UseCase<
       description: command.description,
     });
     await this.deps.postsRepository.save(post);
-    await this.deps.emailService.sendCreatePost({
+    await this.deps.postNotifierService.notifyPostCreated({
       to: user.email.value,
       title: command.title,
       description: command.description,

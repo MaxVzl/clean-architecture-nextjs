@@ -18,20 +18,7 @@ export class InMemoryEmailService implements EmailService {
     subject: string;
     body: string;
   }): Promise<void> {
-    return Promise.resolve(void this.sent.push({ to, subject, body }));
-  }
-
-  async sendCreatePost({
-    to,
-    title,
-    description,
-  }: {
-    to: string;
-    title: string;
-    description: string;
-  }): Promise<void> {
-    const subject = `New post created: ${title}`;
-    const body = `The post ${title} has been created with the description: ${description}.`;
+    console.log(body);
     return Promise.resolve(void this.sent.push({ to, subject, body }));
   }
 

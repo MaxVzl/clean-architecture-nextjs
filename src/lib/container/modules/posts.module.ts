@@ -1,4 +1,4 @@
-import { EmailService } from "@/core/application/common/services/email.service";
+import { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
 import { PostsQueryService } from "@/core/application/posts/services/posts-query.service";
 import { CreatePostUseCase } from "@/core/application/posts/use-cases/create-post.use-case";
 import { ListPostsUseCase } from "@/core/application/posts/use-cases/list-posts.use-case";
@@ -9,7 +9,7 @@ export type PostsModuleDeps = {
   postsRepository: PostsRepository;
   postsQueryService: PostsQueryService;
   usersRepository: UsersRepository;
-  emailService: EmailService;
+  postNotifierService: PostNotifierService;
 };
 
 export function createPostsModule(deps: PostsModuleDeps) {
@@ -20,7 +20,7 @@ export function createPostsModule(deps: PostsModuleDeps) {
     createPostUseCase: new CreatePostUseCase({
       postsRepository: deps.postsRepository,
       usersRepository: deps.usersRepository,
-      emailService: deps.emailService,
+      postNotifierService: deps.postNotifierService,
     }),
   };
 }
