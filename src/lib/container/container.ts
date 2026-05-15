@@ -6,11 +6,16 @@ import {
   createPostsModule,
   PostsModuleDeps,
 } from "@/lib/container/modules/posts.module";
+import {
+  AuthModuleDeps,
+  createAuthModule,
+} from "@/lib/container/modules/auth.module";
 
-type ContainerDeps = UsersModuleDeps & PostsModuleDeps;
+type ContainerDeps = AuthModuleDeps & UsersModuleDeps & PostsModuleDeps;
 
 export function createContainer(deps: ContainerDeps) {
   return {
+    ...createAuthModule(deps),
     ...createUsersModule(deps),
     ...createPostsModule(deps),
   };

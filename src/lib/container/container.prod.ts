@@ -6,6 +6,7 @@ import { DrizzlePostsQueryService } from "@/core/infrastructure/posts/services/d
 import { InMemoryCacheService } from "@/core/infrastructure/common/services/in-memory-cache.service";
 import { InMemoryEmailService } from "@/core/infrastructure/common/services/in-memory-email.service";
 import { EmailPostNotifierService } from "@/core/infrastructure/posts/services/email-post-notifier.service";
+import { EmailAuthNotifierService } from "@/core/infrastructure/auth/services/email-auth-notifier.service";
 
 export const container = createContainer({
   usersRepository: new DrizzleUsersRepository(),
@@ -14,4 +15,5 @@ export const container = createContainer({
   postsQueryService: new DrizzlePostsQueryService(),
   cacheService: new InMemoryCacheService(),
   postNotifierService: new EmailPostNotifierService(new InMemoryEmailService()),
+  authNotifierService: new EmailAuthNotifierService(new InMemoryEmailService()),
 });

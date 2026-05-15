@@ -10,14 +10,19 @@ import {
 } from "@/core/infrastructure/database/schemas/auth.schema";
 import { headers } from "next/headers";
 import { Role } from "@/core/domain/users/enums/role.enum";
+import { container } from "@/lib/container/container.prod";
+
+const { authNotifierService } = container;
 
 export const auth = betterAuth({
   baseURL: "http://localhost:3000/",
   emailAndPassword: {
     enabled: true,
-    sendResetPassword: async ({ token, url, user }) => {
-      console.log("[auth] password reset — token:", token);
-      console.log("[auth] password reset — url:", url, "user:", user.email);
+    sendResetPassword: async ({ url, user }) => {
+      await authNotifierService.notifyPasswordReset({
+        to: user.email,
+        url,
+      });
     },
   },
   database: drizzleAdapter(db, {
