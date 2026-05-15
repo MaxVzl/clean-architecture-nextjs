@@ -1,7 +1,7 @@
 import type { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
 import type { EmailService } from "@/core/application/common/services/email.service";
 import { render } from "react-email";
-import Email from "@/core/infrastructure/emails/email";
+import PostCreatedEmail from "@/core/infrastructure/emails/post-created.email";
 
 export class EmailPostNotifierService implements PostNotifierService {
   constructor(private readonly emailService: EmailService) {}
@@ -12,7 +12,7 @@ export class EmailPostNotifierService implements PostNotifierService {
     description: string;
   }): Promise<void> {
     const body = await render(
-      Email({ title: input.title, description: input.description }),
+      PostCreatedEmail({ title: input.title, description: input.description }),
       { pretty: true },
     );
 

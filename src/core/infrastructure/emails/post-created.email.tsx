@@ -1,7 +1,7 @@
 import { Button, Html, Head, Body, Heading, Text } from "react-email";
 import * as React from "react";
 
-export default function Email({
+export default function PostCreatedEmail({
   title,
   description,
 }: {
