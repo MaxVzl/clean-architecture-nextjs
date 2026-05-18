@@ -6,12 +6,8 @@ import { UsersRepository } from "@/core/domain/users/repositories/users.reposito
 import { db } from "@/core/infrastructure/database";
 import { user } from "@/core/infrastructure/database/schemas/auth.schema";
 import { DrizzleUserMapper } from "@/core/infrastructure/users/mappers/drizzle-user.mapper";
-import { Repository } from "@/core/infrastructure/common/repository.base";
 
-export class DrizzleUsersRepository
-  extends Repository
-  implements UsersRepository
-{
+export class DrizzleUsersRepository implements UsersRepository {
   async findById(id: UUID): Promise<User | null> {
     const rows = await db
       .select()

@@ -6,12 +6,8 @@ import { PostsRepository } from "@/core/domain/posts/repositories/posts.reposito
 import { db } from "@/core/infrastructure/database";
 import { postsTable } from "@/core/infrastructure/database/schemas/posts.schema";
 import { DrizzlePostMapper } from "@/core/infrastructure/posts/mappers/drizzle-post.mapper";
-import { Repository } from "@/core/infrastructure/common/repository.base";
 
-export class DrizzlePostsRepository
-  extends Repository
-  implements PostsRepository
-{
+export class DrizzlePostsRepository implements PostsRepository {
   async findByUserId(userId: UUID): Promise<Post[]> {
     const rows = await db
       .select()
