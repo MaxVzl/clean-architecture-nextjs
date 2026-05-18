@@ -1,15 +1,13 @@
 import type { EmailService } from "@/core/application/common/services/email.service";
 import { AuthNotifierService } from "@/core/application/auth/services/auth-notifier.service";
-import { Service } from "@/core/infrastructure/common/service.base";
 
 export interface EmailAuthNotifierServiceDeps {
   emailService: EmailService;
 }
 
-export class EmailAuthNotifierService
-  extends Service<EmailAuthNotifierServiceDeps>
-  implements AuthNotifierService
-{
+export class EmailAuthNotifierService implements AuthNotifierService {
+  constructor(protected readonly deps: EmailAuthNotifierServiceDeps) {}
+
   async notifyPasswordReset(input: { to: string; url: string }): Promise<void> {
     await this.deps.emailService.send({
       to: input.to,

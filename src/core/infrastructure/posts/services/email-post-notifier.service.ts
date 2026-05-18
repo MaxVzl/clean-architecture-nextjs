@@ -1,6 +1,5 @@
 import type { EmailService } from "@/core/application/common/services/email.service";
 import type { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
-import { Service } from "@/core/infrastructure/common/service.base";
 import { render } from "react-email";
 import PostCreatedEmail from "@/core/infrastructure/emails/post-created.email";
 
@@ -8,10 +7,9 @@ export interface EmailPostNotifierServiceDeps {
   emailService: EmailService;
 }
 
-export class EmailPostNotifierService
-  extends Service<EmailPostNotifierServiceDeps>
-  implements PostNotifierService
-{
+export class EmailPostNotifierService implements PostNotifierService {
+  constructor(protected readonly deps: EmailPostNotifierServiceDeps) {}
+
   async notifyPostCreated(input: {
     to: string;
     title: string;
