@@ -2,7 +2,7 @@ import { PostNotifierService } from "@/core/application/post/services/post-notif
 import { PostsQueryService } from "@/core/application/post/services/posts-query.service";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 import { ListPostUseCase } from "@/core/application/post/use-cases/list-post.use-case";
-import { PostsRepository } from "@/core/domain/posts/repositories/posts.repository";
+import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
 import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
 
 export type PostsModuleDeps = {
