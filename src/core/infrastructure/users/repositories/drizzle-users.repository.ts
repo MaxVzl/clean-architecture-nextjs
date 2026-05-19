@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
-import { User } from "@/core/domain/users/entities/user.entity";
-import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
+import { User } from "@/core/domain/user/entities/user.entity";
+import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 import { db } from "@/core/infrastructure/database";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { DrizzleUserMapper } from "@/core/infrastructure/users/mappers/drizzle-user.mapper";

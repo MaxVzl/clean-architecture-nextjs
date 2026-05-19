@@ -1,4 +1,4 @@
-import { Role } from "@/core/domain/users/enums/role.enum";
+import { Role } from "@/core/domain/user/enums/role.enum";
 
 export interface UserDto {
   id: string;

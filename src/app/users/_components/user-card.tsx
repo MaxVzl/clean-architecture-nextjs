@@ -4,8 +4,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { CheckCircle } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 
-import type { UserDto } from "@/core/application/users/dtos/user.dto";
-import { Role } from "@/core/domain/users/enums/role.enum";
+import type { UserDto } from "@/core/application/user/dtos/user.dto";
+import { Role } from "@/core/domain/user/enums/role.enum";
 import {
   Avatar,
   AvatarBadge,

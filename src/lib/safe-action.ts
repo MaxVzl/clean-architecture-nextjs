@@ -1,4 +1,4 @@
-import { Role } from "@/core/domain/users/enums/role.enum";
+import { Role } from "@/core/domain/user/enums/role.enum";
 import { getSession, verifyRoles } from "@/lib/auth";
 import { createSafeActionClient } from "next-safe-action";
 

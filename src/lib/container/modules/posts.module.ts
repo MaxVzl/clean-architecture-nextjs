@@ -3,7 +3,7 @@ import { PostsQueryService } from "@/core/application/post/services/posts-query.
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 import { ListPostUseCase } from "@/core/application/post/use-cases/list-post.use-case";
 import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
-import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
+import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 
 export type PostsModuleDeps = {
   postsRepository: PostsRepository;

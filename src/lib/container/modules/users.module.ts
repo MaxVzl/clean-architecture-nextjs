@@ -3,7 +3,7 @@ import { UsersQueryService } from "@/core/application/user/services/users-query.
 import { CreateUserUseCase } from "@/core/application/user/use-cases/create-user.use-case";
 import { GetUserUseCase } from "@/core/application/user/use-cases/get-user.use-case";
 import { ListUserUseCase } from "@/core/application/user/use-cases/list-user.use-case";
-import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
+import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 
 export type UsersModuleDeps = {
   usersRepository: UsersRepository;

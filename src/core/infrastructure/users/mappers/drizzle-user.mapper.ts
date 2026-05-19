@@ -1,8 +1,8 @@
 import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
-import { User } from "@/core/domain/users/entities/user.entity";
-import { Role } from "@/core/domain/users/enums/role.enum";
-import { Email } from "@/core/domain/users/value-objects/email.vo";
+import { User } from "@/core/domain/user/entities/user.entity";
+import { Role } from "@/core/domain/user/enums/role.enum";
+import { Email } from "@/core/domain/user/value-objects/email.vo";
 import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 
 export class DrizzleUserMapper {

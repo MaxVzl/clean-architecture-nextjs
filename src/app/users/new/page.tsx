@@ -1,7 +1,7 @@
 "use client";
 
 import { createUserAction } from "@/app/users/new/actions";
-import { Role } from "@/core/domain/users/enums/role.enum";
+import { Role } from "@/core/domain/user/enums/role.enum";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 

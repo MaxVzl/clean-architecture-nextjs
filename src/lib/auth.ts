@@ -9,7 +9,7 @@ import {
   verification,
 } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { headers } from "next/headers";
-import { Role } from "@/core/domain/users/enums/role.enum";
+import { Role } from "@/core/domain/user/enums/role.enum";
 import { container } from "@/lib/container/container.prod";
 
 const { authNotifierService } = container;
