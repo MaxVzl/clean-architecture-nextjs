@@ -3,8 +3,8 @@ import { DrizzleUsersRepository } from "@/core/infrastructure/users/repositories
 import { DrizzlePostsRepository } from "@/core/infrastructure/posts/repositories/drizzle-posts.repository";
 import { DrizzleUsersQueryService } from "@/core/infrastructure/users/services/drizzle-users-query.service";
 import { DrizzlePostsQueryService } from "@/core/infrastructure/posts/services/drizzle-posts-query.service";
-import { InMemoryCacheService } from "@/core/infrastructure/common/services/in-memory-cache.service";
-import { InMemoryEmailService } from "@/core/infrastructure/common/services/in-memory-email.service";
+import { InMemoryCacheService } from "@/core/infrastructure/common/services/cache/in-memory-cache.service";
+import { InMemoryEmailService } from "@/core/infrastructure/common/services/email/in-memory-email.service";
 import { EmailPostNotifierService } from "@/core/infrastructure/posts/services/email-post-notifier.service";
 import { EmailAuthNotifierService } from "@/core/infrastructure/auth/services/email-auth-notifier.service";
 
