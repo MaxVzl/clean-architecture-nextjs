@@ -6,7 +6,7 @@ import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { UsersQueryService } from "@/core/application/user/services/users-query.service";
 import { db } from "@/core/infrastructure/database";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
-import { DrizzleUserMapper } from "@/core/infrastructure/users/mappers/drizzle-user.mapper";
+import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";
 
 function containsWhere(filter: {
   nameContains?: string | undefined;

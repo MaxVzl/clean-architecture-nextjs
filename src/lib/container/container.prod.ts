@@ -1,7 +1,7 @@
 import { createContainer } from "./container";
-import { DrizzleUsersRepository } from "@/core/infrastructure/users/repositories/drizzle-users.repository";
+import { DrizzleUsersRepository } from "@/core/infrastructure/user/repositories/drizzle-users.repository";
 import { DrizzlePostsRepository } from "@/core/infrastructure/post/repositories/drizzle-posts.repository";
-import { DrizzleUsersQueryService } from "@/core/infrastructure/users/services/drizzle-users-query.service";
+import { DrizzleUsersQueryService } from "@/core/infrastructure/user/services/drizzle-users-query.service";
 import { DrizzlePostsQueryService } from "@/core/infrastructure/post/services/drizzle-posts-query.service";
 import { InMemoryCacheService } from "@/core/infrastructure/common/services/cache/in-memory-cache.service";
 import { InMemoryEmailService } from "@/core/infrastructure/common/services/email/in-memory-email.service";
