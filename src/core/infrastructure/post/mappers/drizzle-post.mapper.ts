@@ -1,7 +1,7 @@
 import { PostDto } from "@/core/application/post/dtos/post.dto";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/post/entities/post.entity";
-import { postsTable } from "@/core/infrastructure/posts/schemas/drizzle-posts.schema";
+import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";
 
 export class DrizzlePostMapper {
   static toDto(row: typeof postsTable.$inferSelect): PostDto {
