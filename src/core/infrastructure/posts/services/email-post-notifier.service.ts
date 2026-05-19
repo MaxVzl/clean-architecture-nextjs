@@ -1,5 +1,5 @@
 import type { EmailService } from "@/core/application/common/services/email.service";
-import type { PostNotifierService } from "@/core/application/posts/services/post-notifier.service";
+import type { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
 import { render } from "react-email";
 import PostCreatedEmail from "@/core/infrastructure/emails/post-created.email";
 

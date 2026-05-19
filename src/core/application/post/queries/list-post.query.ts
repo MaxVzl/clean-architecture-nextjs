@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const listPostsQuerySchema = z.object({
+export const listPostQuerySchema = z.object({
   userId: z.string().optional(),
   titleContains: z.string().optional(),
   pagination: z
@@ -11,4 +11,4 @@ export const listPostsQuerySchema = z.object({
     .optional(),
 });
 
-export type ListPostsQuery = z.infer<typeof listPostsQuerySchema>;
+export type ListPostQuery = z.infer<typeof listPostQuerySchema>;

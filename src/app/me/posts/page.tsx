@@ -3,11 +3,11 @@ import Link from "next/link";
 import { getSession } from "@/lib/auth";
 import { container } from "@/lib/container/container.prod";
 
-const { listPostsUseCase } = container;
+const { listPostUseCase } = container;
 
 export default async function MePostsPage() {
   const session = await getSession();
-  const posts = await listPostsUseCase.execute({ userId: session.user.id });
+  const posts = await listPostUseCase.execute({ userId: session.user.id });
   return (
     <main>
       <h1>Mes posts</h1>

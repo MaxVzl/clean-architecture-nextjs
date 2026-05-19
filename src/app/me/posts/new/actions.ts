@@ -1,6 +1,6 @@
 "use server";
 
-import { createPostSchema } from "@/core/application/posts/commands/create-post.command";
+import { createPostSchema } from "@/core/application/post/commands/create-post.command";
 import { container } from "@/lib/container/container.prod";
 import { authClient } from "@/lib/safe-action";
 
