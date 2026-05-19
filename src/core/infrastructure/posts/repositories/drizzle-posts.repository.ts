@@ -4,7 +4,7 @@ import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/posts/entities/post.entity";
 import { PostsRepository } from "@/core/domain/posts/repositories/posts.repository";
 import { db } from "@/core/infrastructure/database";
-import { postsTable } from "@/core/infrastructure/database/schemas/posts.schema";
+import { postsTable } from "@/core/infrastructure/posts/schemas/drizzle-posts.schema";
 import { DrizzlePostMapper } from "@/core/infrastructure/posts/mappers/drizzle-post.mapper";
 
 export class DrizzlePostsRepository implements PostsRepository {

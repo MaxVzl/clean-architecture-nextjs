@@ -4,7 +4,7 @@ import { PostDto } from "@/core/application/posts/dtos/post.dto";
 import { ListPostsQuery } from "@/core/application/posts/queries/list-posts.query";
 import { PostsQueryService } from "@/core/application/posts/services/posts-query.service";
 import { db } from "@/core/infrastructure/database";
-import { postsTable } from "@/core/infrastructure/database/schemas/posts.schema";
+import { postsTable } from "@/core/infrastructure/posts/schemas/drizzle-posts.schema";
 import { DrizzlePostMapper } from "@/core/infrastructure/posts/mappers/drizzle-post.mapper";
 
 export class DrizzlePostsQueryService implements PostsQueryService {

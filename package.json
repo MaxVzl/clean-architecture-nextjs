@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "auth:generate": "npx auth@latest generate --output src/core/infrastructure/database/schemas/auth.schema.ts -y",
+    "auth:generate": "npx auth@latest generate --output src/core/infrastructure/auth/schemas/drizzle-auth.schema.ts -y",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "email:dev": "email dev --dir src/core/infrastructure/emails"

@@ -5,7 +5,7 @@ import { ListUsersQuery } from "@/core/application/users/queries/list-users.quer
 import { UserDto } from "@/core/application/users/dtos/user.dto";
 import { UsersQueryService } from "@/core/application/users/services/users-query.service";
 import { db } from "@/core/infrastructure/database";
-import { user } from "@/core/infrastructure/database/schemas/auth.schema";
+import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { DrizzleUserMapper } from "@/core/infrastructure/users/mappers/drizzle-user.mapper";
 
 function containsWhere(filter: {

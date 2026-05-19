@@ -3,7 +3,7 @@ import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { User } from "@/core/domain/users/entities/user.entity";
 import { Role } from "@/core/domain/users/enums/role.enum";
 import { Email } from "@/core/domain/users/value-objects/email.vo";
-import { user as usersTable } from "@/core/infrastructure/database/schemas/auth.schema";
+import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 
 export class DrizzleUserMapper {
   private static toRole(role: (typeof usersTable.$inferSelect)["role"]): Role {

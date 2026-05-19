@@ -7,7 +7,7 @@ import {
   session,
   user,
   verification,
-} from "@/core/infrastructure/database/schemas/auth.schema";
+} from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { headers } from "next/headers";
 import { Role } from "@/core/domain/users/enums/role.enum";
 import { container } from "@/lib/container/container.prod";
