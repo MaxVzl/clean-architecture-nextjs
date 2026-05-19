@@ -1,20 +1,20 @@
 import {
-  createUsersModule,
-  UsersModuleDeps,
-} from "@/lib/container/modules/users.module";
+  createUserModule,
+  UserModuleDeps,
+} from "@/lib/container/modules/user.module";
 import {
-  createPostsModule,
-  PostsModuleDeps,
-} from "@/lib/container/modules/posts.module";
+  createPostModule,
+  PostModuleDeps,
+} from "@/lib/container/modules/post.module";
 import { AuthNotifierService } from "@/core/application/auth/services/auth-notifier.service";
 
-type ContainerDeps = UsersModuleDeps &
-  PostsModuleDeps & { authNotifierService: AuthNotifierService };
+type ContainerDeps = UserModuleDeps &
+  PostModuleDeps & { authNotifierService: AuthNotifierService };
 
 export function createContainer(deps: ContainerDeps) {
   return {
-    ...createUsersModule(deps),
-    ...createPostsModule(deps),
+    ...createUserModule(deps),
+    ...createPostModule(deps),
     authNotifierService: deps.authNotifierService,
   };
 }

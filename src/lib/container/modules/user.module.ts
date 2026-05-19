@@ -5,13 +5,13 @@ import { GetUserUseCase } from "@/core/application/user/use-cases/get-user.use-c
 import { ListUserUseCase } from "@/core/application/user/use-cases/list-user.use-case";
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 
-export type UsersModuleDeps = {
+export type UserModuleDeps = {
   usersRepository: UsersRepository;
   usersQueryService: UsersQueryService;
   cacheService: CacheService;
 };
 
-export function createUsersModule(deps: UsersModuleDeps) {
+export function createUserModule(deps: UserModuleDeps) {
   return {
     getUserUseCase: new GetUserUseCase({
       usersQueryService: deps.usersQueryService,

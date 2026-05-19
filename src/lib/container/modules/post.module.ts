@@ -5,14 +5,14 @@ import { ListPostUseCase } from "@/core/application/post/use-cases/list-post.use
 import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 
-export type PostsModuleDeps = {
+export type PostModuleDeps = {
   postsRepository: PostsRepository;
   postsQueryService: PostsQueryService;
   usersRepository: UsersRepository;
   postNotifierService: PostNotifierService;
 };
 
-export function createPostsModule(deps: PostsModuleDeps) {
+export function createPostModule(deps: PostModuleDeps) {
   return {
     listPostUseCase: new ListPostUseCase({
       postsQueryService: deps.postsQueryService,
