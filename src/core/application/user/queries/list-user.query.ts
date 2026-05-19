@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const listUsersQuerySchema = z.object({
+export const listUserQuerySchema = z.object({
   nameContains: z.string().optional(),
   emailContains: z.string().optional(),
   pagination: z
@@ -11,4 +11,4 @@ export const listUsersQuerySchema = z.object({
     .optional(),
 });
 
-export type ListUsersQuery = z.infer<typeof listUsersQuerySchema>;
+export type ListUserQuery = z.infer<typeof listUserQuerySchema>;

@@ -1,4 +1,4 @@
-import { UserDto } from "@/core/application/users/dtos/user.dto";
+import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { User } from "@/core/domain/users/entities/user.entity";
 import { Role } from "@/core/domain/users/enums/role.enum";

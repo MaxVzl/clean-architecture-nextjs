@@ -2,7 +2,7 @@ import { UsersRepository } from "@/core/domain/users/repositories/users.reposito
 import { UseCase } from "@/core/application/common/use-case.base";
 import { User } from "@/core/domain/users/entities/user.entity";
 import { Email } from "@/core/domain/users/value-objects/email.vo";
-import { CreateUserCommand } from "@/core/application/users/commands/create-user.command";
+import { CreateUserCommand } from "@/core/application/user/commands/create-user.command";
 
 export interface CreateUserUseCaseDeps {
   usersRepository: UsersRepository;

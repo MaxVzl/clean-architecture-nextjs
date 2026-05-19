@@ -1,8 +1,8 @@
 import { CacheService } from "@/core/application/common/services/cache.service";
-import { UsersQueryService } from "@/core/application/users/services/users-query.service";
-import { CreateUserUseCase } from "@/core/application/users/use-cases/create-user.use-case";
-import { GetUserUseCase } from "@/core/application/users/use-cases/get-user.use-case";
-import { ListUsersUseCase } from "@/core/application/users/use-cases/list-users.use-case";
+import { UsersQueryService } from "@/core/application/user/services/users-query.service";
+import { CreateUserUseCase } from "@/core/application/user/use-cases/create-user.use-case";
+import { GetUserUseCase } from "@/core/application/user/use-cases/get-user.use-case";
+import { ListUserUseCase } from "@/core/application/user/use-cases/list-user.use-case";
 import { UsersRepository } from "@/core/domain/users/repositories/users.repository";
 
 export type UsersModuleDeps = {
@@ -17,7 +17,7 @@ export function createUsersModule(deps: UsersModuleDeps) {
       usersQueryService: deps.usersQueryService,
       cacheService: deps.cacheService,
     }),
-    listUsersUseCase: new ListUsersUseCase({
+    listUserUseCase: new ListUserUseCase({
       usersQueryService: deps.usersQueryService,
     }),
     createUserUseCase: new CreateUserUseCase({
