@@ -7,11 +7,13 @@ import { PostsRepository } from "@/core/domain/post/repositories/posts.repositor
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 import { UserNotFoundError } from "@/core/domain/user/errors/user-not-found.error";
 import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
+import { JobQueueService } from "@/core/application/common/services/job-queue.service";
 
 export interface CreatePostUseCaseDeps {
   postsRepository: PostsRepository;
   usersRepository: UsersRepository;
   postNotifierService: PostNotifierService;
+  jobQueueService: JobQueueService;
 }
 
 export class CreatePostUseCase extends UseCase<
@@ -40,6 +42,14 @@ export class CreatePostUseCase extends UseCase<
       to: user.email.value,
       title: command.title,
       description: command.description,
+    });
+    await this.deps.jobQueueService.enqueue({
+      name: "post.created",
+      payload: {
+        email: user.email.value,
+        title: command.title,
+        description: command.description,
+      },
     });
     return post.id.value;
   }
