@@ -1,7 +1,7 @@
 import { container } from "@/lib/container/container.prod";
 import Link from "next/link";
 
-const { getUserUseCase } = container;
+const { usersQueryService } = container;
 
 export default async function UserPage({
   params,
@@ -9,7 +9,10 @@ export default async function UserPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const user = await getUserUseCase.execute(userId);
+  const user = await usersQueryService.findById(userId);
+  if (!user) {
+    throw new Error("User not found");
+  }
   return (
     <main>
       <h1>User</h1>

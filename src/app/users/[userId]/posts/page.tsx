@@ -1,6 +1,6 @@
 import { container } from "@/lib/container/container.prod";
 
-const { listPostUseCase } = container;
+const { postsQueryService } = container;
 
 export default async function PostsPage({
   params,
@@ -8,7 +8,7 @@ export default async function PostsPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const posts = await listPostUseCase.execute({ userId });
+  const posts = await postsQueryService.find({ userId });
   return (
     <main>
       <h1>Posts</h1>
