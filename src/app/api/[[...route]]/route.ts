@@ -13,6 +13,9 @@ app.get("/hello", (c) => {
 });
 
 app.get("/posts", (c) => postsController.index(c));
+app.get("/posts/:postId", (c) =>
+  postsController.show(c, c.req.param("postId")),
+);
 app.get("/users/:userId/posts", (c) =>
   postsController.index(c, { userId: c.req.param("userId") }),
 );

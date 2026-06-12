@@ -56,4 +56,14 @@ export class DrizzlePostsQueryService implements PostsQueryService {
       limit,
     };
   }
+
+  async findById(id: string): Promise<PostDto | null> {
+    const rows = await db
+      .select()
+      .from(postsTable)
+      .where(eq(postsTable.id, id))
+      .limit(1);
+    const row = rows[0];
+    return row ? DrizzlePostMapper.toDto(row) : null;
+  }
 }

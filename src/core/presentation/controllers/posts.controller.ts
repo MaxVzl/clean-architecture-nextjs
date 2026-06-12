@@ -11,4 +11,9 @@ export class PostsController {
     const posts = await this.deps.postsQueryService.find(query ?? {});
     return c.json(posts);
   }
+
+  async show(c: Context, postId: string) {
+    const post = await this.deps.postsQueryService.findById(postId);
+    return c.json(post);
+  }
 }

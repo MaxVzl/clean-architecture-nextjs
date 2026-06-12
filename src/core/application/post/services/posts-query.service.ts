@@ -4,4 +4,5 @@ import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 
 export interface PostsQueryService {
   find(query: ListPostQuery): Promise<PaginatedDto<PostDto>>;
+  findById(id: string): Promise<PostDto | null>;
 }
