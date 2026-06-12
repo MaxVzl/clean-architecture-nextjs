@@ -13,16 +13,10 @@ app.get("/hello", (c) => {
 });
 
 app.get("/posts", (c) => postsController.index(c));
-app.get("/posts/:postId", (c) =>
-  postsController.show(c, c.req.param("postId")),
-);
-app.get("/users/:userId/posts", (c) =>
-  postsController.index(c, { userId: c.req.param("userId") }),
-);
+app.get("/posts/:postId", (c) => postsController.show(c));
+app.get("/users/:userId/posts", (c) => postsController.index(c));
 app.get("/users", (c) => usersController.index(c));
-app.get("/users/:userId", (c) =>
-  usersController.show(c, c.req.param("userId")),
-);
+app.get("/users/:userId", (c) => usersController.show(c));
 
 export const GET = handle(app);
 export const POST = handle(app);
