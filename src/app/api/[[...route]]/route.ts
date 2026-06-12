@@ -1,8 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import { container } from "@/lib/container/container.prod";
-
-const { postsController, usersController } = container;
+import { postsRouter } from "@/core/presentation/routes/posts.routes";
+import { usersRouter } from "@/core/presentation/routes/users.routes";
 
 const app = new Hono().basePath("/api");
 
@@ -12,11 +11,8 @@ app.get("/hello", (c) => {
   });
 });
 
-app.get("/posts", (c) => postsController.index(c));
-app.get("/posts/:postId", (c) => postsController.show(c));
-app.get("/users/:userId/posts", (c) => postsController.index(c));
-app.get("/users", (c) => usersController.index(c));
-app.get("/users/:userId", (c) => usersController.show(c));
+app.route("/posts", postsRouter);
+app.route("/users", usersRouter);
 
 export const GET = handle(app);
 export const POST = handle(app);
