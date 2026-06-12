@@ -1,12 +1,12 @@
 import { asc, count, eq, like, or, SQL } from "drizzle-orm";
 
-import { Paginated } from "@/core/application/common/paginated.base";
 import { ListUserQuery } from "@/core/application/user/queries/list-user.query";
 import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { UsersQueryService } from "@/core/application/user/services/users-query.service";
 import { db } from "@/core/infrastructure/database";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";
+import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 
 function containsWhere(filter: {
   nameContains?: string | undefined;
@@ -27,7 +27,7 @@ function containsWhere(filter: {
 }
 
 export class DrizzleUsersQueryService implements UsersQueryService {
-  async find(query: ListUserQuery): Promise<Paginated<UserDto>> {
+  async find(query: ListUserQuery): Promise<PaginatedDto<UserDto>> {
     const limit = Math.max(1, query.pagination?.limit ?? 10);
     const page = Math.max(1, query.pagination?.offset ?? 1);
     const start = (page - 1) * limit;
@@ -50,12 +50,12 @@ export class DrizzleUsersQueryService implements UsersQueryService {
       .from(user)
       .where(whereClause);
 
-    return new Paginated({
+    return {
       data: rows.map(DrizzleUserMapper.toDto),
       total: countRow?.total ?? 0,
       offset: page,
       limit,
-    });
+    };
   }
 
   async findById(id: string): Promise<UserDto | null> {
