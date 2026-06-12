@@ -14,6 +14,6 @@ export class UsersController {
   async show(c: Context) {
     const userId = c.req.param("userId") as string;
     const user = await this.deps.usersQueryService.findById(userId);
-    return c.json(user);
+    return user ? c.json(user) : c.notFound();
   }
 }
