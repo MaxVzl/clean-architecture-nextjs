@@ -18,7 +18,7 @@ export default async function UsersPage({
   const {
     data: users,
     total,
-    pages,
+    offset: pages,
   } = await usersQueryService.find({
     nameContains: term,
     emailContains: term,
