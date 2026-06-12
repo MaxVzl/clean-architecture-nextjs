@@ -3,6 +3,7 @@ import { PostsQueryService } from "@/core/application/post/services/posts-query.
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
+import { PostsController } from "@/core/presentation/controllers/posts.controller";
 
 export type PostModuleDeps = {
   postsRepository: PostsRepository;
@@ -14,6 +15,9 @@ export type PostModuleDeps = {
 export function createPostModule(deps: PostModuleDeps) {
   return {
     postsQueryService: deps.postsQueryService,
+    postsController: new PostsController({
+      postsQueryService: deps.postsQueryService,
+    }),
     createPostUseCase: new CreatePostUseCase({
       postsRepository: deps.postsRepository,
       usersRepository: deps.usersRepository,
