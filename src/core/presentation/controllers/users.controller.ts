@@ -8,12 +8,12 @@ export class UsersController {
 
   async index(c: Context) {
     const users = await this.deps.usersQueryService.find({});
-    return c.json(users);
+    return c.json(users, 200);
   }
 
   async show(c: Context) {
     const userId = c.req.param("userId") as string;
     const user = await this.deps.usersQueryService.findById(userId);
-    return user ? c.json(user) : c.notFound();
+    return user ? c.json(user, 200) : c.notFound();
   }
 }

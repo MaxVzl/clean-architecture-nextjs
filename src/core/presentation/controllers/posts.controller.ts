@@ -10,12 +10,12 @@ export class PostsController {
     const posts = await this.deps.postsQueryService.find({
       userId: c.req.param("userId"),
     });
-    return c.json(posts);
+    return c.json(posts, 200);
   }
 
   async show(c: Context) {
     const postId = c.req.param("postId") as string;
     const post = await this.deps.postsQueryService.findById(postId);
-    return post ? c.json(post) : c.notFound();
+    return post ? c.json(post, 200) : c.notFound();
   }
 }
