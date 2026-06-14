@@ -14,9 +14,11 @@
     "email:dev": "email dev --dir src/core/infrastructure/emails"
   },
   "dependencies": {
+    "@hono/zod-openapi": "^1.4.0",
     "@hugeicons/core-free-icons": "^4.1.1",
     "@hugeicons/react": "^1.1.6",
     "@libsql/client": "^0.17.2",
+    "@scalar/hono-api-reference": "^0.11.3",
     "better-auth": "^1.6.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
