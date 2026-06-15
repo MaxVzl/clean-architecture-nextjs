@@ -3,6 +3,7 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { handle } from "hono/vercel";
 import { postsRouter } from "@/core/presentation/routes/posts.routes";
 import { usersRouter } from "@/core/presentation/routes/users.routes";
+import { AuthMiddleware } from "@/core/presentation/middlewares/auth.middleware";
 
 const app = new OpenAPIHono().basePath("/api");
 
@@ -21,6 +22,8 @@ app.get("/hello", (c) => {
     message: "Hello Next.js!",
   });
 });
+
+// app.use((c, next) => new AuthMiddleware({}).authenticated(c, next))
 
 app.route("/posts", postsRouter);
 app.route("/users", usersRouter);

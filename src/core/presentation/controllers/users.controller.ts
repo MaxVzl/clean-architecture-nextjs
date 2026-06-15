@@ -1,13 +1,19 @@
 import { UsersQueryService } from "@/core/application/user/services/users-query.service";
 import { Context } from "hono";
+import { Controller } from "@/core/presentation/common/controller.base";
+import { getPagination } from "@/core/presentation/helpers/pagination.helper";
 
-export class UsersController {
-  constructor(
-    private readonly deps: { usersQueryService: UsersQueryService },
-  ) {}
+interface UsersControllerDeps {
+  usersQueryService: UsersQueryService;
+};
 
+export class UsersController extends Controller<UsersControllerDeps> {
   async index(c: Context) {
-    const users = await this.deps.usersQueryService.find({});
+    const users = await this.deps.usersQueryService.find({
+      nameContains: c.req.query("nameContains"),
+      emailContains: c.req.query("emailContains"),
+      pagination: getPagination(c)
+    });
     return c.json(users, 200);
   }
 
