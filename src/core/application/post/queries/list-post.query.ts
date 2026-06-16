@@ -1,7 +1,8 @@
+import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import z from "zod";
 
 export const listPostQuerySchema = z.object({
-  userId: z.string().optional(),
+  userId: uuidSchema.optional(),
   titleContains: z.string().optional(),
   pagination: z
     .object({

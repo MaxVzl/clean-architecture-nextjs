@@ -1,7 +1,8 @@
+import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import { z } from "zod";
 
 export const postSchema = z.object({
-  id: z.string(),
+  id: uuidSchema,
   title: z.string(),
   description: z.string(),
 });
