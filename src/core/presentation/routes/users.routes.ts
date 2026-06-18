@@ -1,7 +1,6 @@
 import { OpenAPIHono, z } from "@hono/zod-openapi";
 import { container } from "@/lib/container/container.prod";
 import { createRoute } from "@hono/zod-openapi";
-import { paginatedSchema } from "@/core/application/common/dtos/paginated.dto";
 import { userSchema } from "@/core/application/user/dtos/user.dto";
 import { postSchema } from "@/core/application/post/dtos/post.dto";
 import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
@@ -23,9 +22,12 @@ usersRouter.openapi(
       200: {
         content: {
           "application/json": {
-            schema: paginatedSchema(userSchema),
+            schema: z.array(userSchema),
           },
         },
+        headers: z.object({
+          "X-Total-Count": z.number(),
+        }),
         description: "Retrieve the users",
       },
     },
@@ -73,9 +75,12 @@ usersRouter.openapi(
       200: {
         content: {
           "application/json": {
-            schema: paginatedSchema(postSchema),
+            schema: z.array(postSchema),
           },
         },
+        headers: z.object({
+          "X-Total-Count": z.number(),
+        }),
         description: "Retrieve the user's posts",
       },
     },

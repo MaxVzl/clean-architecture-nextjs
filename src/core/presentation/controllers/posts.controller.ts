@@ -9,12 +9,14 @@ interface PostsControllerDeps {
 
 export class PostsController extends Controller<PostsControllerDeps> {
   async index(c: Context) {
-    const posts = await this.deps.postsQueryService.find({
+    const { data, total } = await this.deps.postsQueryService.find({
       userId: c.req.param("userId"),
       titleContains: c.req.query("titleContains"),
       pagination: getPagination(c)
     });
-    return c.json(posts, 200);
+    return c.json(data, 200, {
+      "X-Total-Count": total.toString(),
+    });
   }
 
   async show(c: Context) {
