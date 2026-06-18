@@ -17,6 +17,11 @@ export function createPostModule(deps: PostModuleDeps) {
     postsQueryService: deps.postsQueryService,
     postsController: new PostsController({
       postsQueryService: deps.postsQueryService,
+      createPostUseCase: new CreatePostUseCase({
+        postsRepository: deps.postsRepository,
+        usersRepository: deps.usersRepository,
+        postNotifierService: deps.postNotifierService,
+      }),
     }),
     createPostUseCase: new CreatePostUseCase({
       postsRepository: deps.postsRepository,

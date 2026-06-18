@@ -2,9 +2,11 @@ import { PostsQueryService } from "@/core/application/post/services/posts-query.
 import { Context } from "hono";
 import { Controller } from "@/core/presentation/common/controller.base";
 import { getPagination } from "@/core/presentation/helpers/pagination.helper";
+import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 
 interface PostsControllerDeps {
   postsQueryService: PostsQueryService;
+  createPostUseCase: CreatePostUseCase;
 };
 
 export class PostsController extends Controller<PostsControllerDeps> {
@@ -23,5 +25,14 @@ export class PostsController extends Controller<PostsControllerDeps> {
     const postId = c.req.param("postId") as string;
     const post = await this.deps.postsQueryService.findById(postId);
     return post ? c.json(post, 200) : c.notFound();
+  }
+
+  async create(c: Context) {
+    const userId = c.req.param("userId") as string;
+    const body = await c.req.json();
+    const postId = await this.deps.createPostUseCase.execute(body, {
+      userId,
+    });
+    return c.json(postId, 201);
   }
 }

@@ -6,6 +6,7 @@ import { postSchema } from "@/core/application/post/dtos/post.dto";
 import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import { listUserQuerySchema } from "@/core/application/user/queries/list-user.query";
 import { listPostQuerySchema } from "@/core/application/post/queries/list-post.query";
+import { createPostSchema } from "@/core/application/post/commands/create-post.command";
 
 const { usersController, postsController } = container;
 
@@ -86,4 +87,37 @@ usersRouter.openapi(
     },
   }),
   (c) => postsController.index(c),
+);
+
+usersRouter.openapi(
+  createRoute({
+    method: "post",
+    path: "/:userId/posts",
+    request: {
+      params: z.object({
+        userId: uuidSchema,
+      }),
+      body: {
+        content: {
+          "application/json": {
+            schema: createPostSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      201: {
+        content: {
+          "application/json": {
+            schema: z.string(),
+          },
+        },
+        description: "Create a new post",
+      },
+      401: {
+        description: "Unauthorized",
+      },
+    },
+  }),
+  (c) => postsController.create(c),
 );
