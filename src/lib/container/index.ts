@@ -3,9 +3,9 @@ import type { Container } from "./container";
 let container: Container;
 
 if (process.env.NODE_ENV === "production") {
-  container = require("./container.prod").container;
+  container = (await import("./container.prod")).prodContainer;
 } else {
-  container = require("./container.dev").container;
+  container = (await import("./container.dev")).container;
 }
 
 export { container };

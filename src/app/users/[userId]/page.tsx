@@ -1,4 +1,4 @@
-import { container } from "@/lib/container/container.prod";
+import { container } from "@/lib/container";
 import Link from "next/link";
 
 const { usersQueryService } = container;

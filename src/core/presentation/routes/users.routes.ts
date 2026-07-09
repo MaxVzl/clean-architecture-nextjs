@@ -1,5 +1,5 @@
 import { OpenAPIHono, z } from "@hono/zod-openapi";
-import { container } from "@/lib/container/container.prod";
+import { container } from "@/lib/container";
 import { createRoute } from "@hono/zod-openapi";
 import { userSchema } from "@/core/application/user/dtos/user.dto";
 import { postSchema } from "@/core/application/post/dtos/post.dto";

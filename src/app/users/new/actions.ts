@@ -2,7 +2,7 @@
 
 import { createUserSchema } from "@/core/application/user/commands/create-user.command";
 import { Role } from "@/core/domain/user/enums/role.enum";
-import { container } from "@/lib/container/container.prod";
+import { container } from "@/lib/container";
 import { rolesClient } from "@/lib/safe-action";
 
 const { createUserUseCase } = container;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { getSession } from "@/lib/auth";
-import { container } from "@/lib/container/container.prod";
+import { container } from "@/lib/container";
 
 const { postsQueryService } = container;
 

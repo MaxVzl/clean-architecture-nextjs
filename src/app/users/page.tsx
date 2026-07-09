@@ -3,7 +3,7 @@ import { UsersSearchBar } from "@/app/users/_components/users-search-bar";
 import { loadSearchParams } from "@/app/users/search-params";
 import { Paginated } from "@/components/paginated";
 import { SearchParams } from "nuqs/server";
-import { container } from "@/lib/container/container.prod";
+import { container } from "@/lib/container";
 
 const { usersQueryService } = container;
 
