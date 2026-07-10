@@ -5,7 +5,7 @@ let container: Container;
 if (process.env.NODE_ENV === "production") {
   container = (await import("./container.prod")).prodContainer;
 } else {
-  container = (await import("./container.dev")).container;
+  container = (await import("./container.dev")).devContainer;
 }
 
 export { container };

@@ -10,7 +10,7 @@ import { EmailAuthNotifierService } from "@/core/infrastructure/auth/services/em
 
 const emailService = new InMemoryEmailService();
 
-export const container = createContainer({
+export const devContainer = createContainer({
   usersRepository: new DrizzleUsersRepository(),
   postsRepository: new DrizzlePostsRepository(),
   usersQueryService: new DrizzleUsersQueryService(),
