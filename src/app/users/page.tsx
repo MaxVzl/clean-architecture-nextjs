@@ -22,7 +22,8 @@ export default async function UsersPage({
   } = await usersQueryService.find({
     nameContains: term,
     emailContains: term,
-    pagination: { limit, offset },
+    limit,
+    offset,
   });
 
   return (

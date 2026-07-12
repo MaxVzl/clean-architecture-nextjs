@@ -28,8 +28,8 @@ function containsWhere(filter: {
 
 export class DrizzleUsersQueryService implements UsersQueryService {
   async find(query: ListUserQuery): Promise<PaginatedDto<UserDto>> {
-    const limit = Math.max(1, query.pagination?.limit ?? 10);
-    const page = Math.max(1, query.pagination?.offset ?? 1);
+    const limit = Math.max(1, query.limit ?? 10);
+    const page = Math.max(1, query.offset ?? 1);
     const start = (page - 1) * limit;
 
     const whereClause = containsWhere({
