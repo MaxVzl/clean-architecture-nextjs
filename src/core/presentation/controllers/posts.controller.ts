@@ -11,17 +11,8 @@ interface PostsControllerDeps {
 }
 
 export class PostsController extends Controller<PostsControllerDeps> {
-  async index({
-    c,
-    params,
-    query,
-  }: {
-    c: Context;
-    params: { userId?: string };
-    query: ListPostQuery;
-  }) {
+  async index({ c, query }: { c: Context; query: ListPostQuery }) {
     const { data, total } = await this.deps.postsQueryService.find({
-      userId: params.userId,
       titleContains: query.titleContains,
       limit: query.limit,
       offset: query.offset,
@@ -49,5 +40,27 @@ export class PostsController extends Controller<PostsControllerDeps> {
       userId: params.userId,
     });
     return c.json(postId, 201);
+  }
+
+  async indexByUser({
+    c,
+    params,
+    query,
+  }: {
+    c: Context;
+    params: { userId: string };
+    query: ListPostQuery;
+  }) {
+    const { data, total } = await this.deps.postsQueryService.findByUserId(
+      params.userId,
+      {
+        titleContains: query.titleContains,
+        limit: query.limit,
+        offset: query.offset,
+      },
+    );
+    return c.json(data, 200, {
+      "X-Total-Count": total.toString(),
+    });
   }
 }

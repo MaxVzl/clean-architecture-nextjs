@@ -7,9 +7,10 @@ const { postsQueryService } = container;
 
 export default async function MePostsPage() {
   const session = await getSession();
-  const { data: posts } = await postsQueryService.find({
-    userId: session.user.id,
-  });
+  const { data: posts } = await postsQueryService.findByUserId(
+    session.user.id,
+    {},
+  );
   return (
     <main>
       <h1>Mes posts</h1>

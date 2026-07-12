@@ -78,7 +78,7 @@ usersRouter.openapi(
       params: z.object({
         userId: uuidSchema,
       }),
-      query: listPostQuerySchema.omit({ userId: true }),
+      query: listPostQuerySchema,
     },
     responses: {
       200: {
@@ -95,7 +95,7 @@ usersRouter.openapi(
     },
   }),
   (c) =>
-    postsController.index({
+    postsController.indexByUser({
       c,
       params: c.req.valid("param"),
       query: c.req.valid("query"),

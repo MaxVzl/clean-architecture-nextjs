@@ -13,7 +13,7 @@ postsRouter.openapi(
     method: "get",
     path: "/",
     request: {
-      query: listPostQuerySchema.omit({ userId: true }),
+      query: listPostQuerySchema,
     },
     responses: {
       200: {
@@ -32,7 +32,6 @@ postsRouter.openapi(
   (c) =>
     postsController.index({
       c,
-      params: { userId: undefined },
       query: c.req.valid("query"),
     }),
 );

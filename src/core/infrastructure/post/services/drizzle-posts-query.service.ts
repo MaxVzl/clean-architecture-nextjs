@@ -32,7 +32,40 @@ export class DrizzlePostsQueryService implements PostsQueryService {
     const start = (page - 1) * limit;
 
     const whereClause = buildWhere({
-      userId: query.userId,
+      titleContains: query.titleContains,
+    });
+
+    const rows = await db
+      .select()
+      .from(postsTable)
+      .where(whereClause)
+      .orderBy(asc(postsTable.id))
+      .limit(limit)
+      .offset(start);
+
+    const [countRow] = await db
+      .select({ total: count() })
+      .from(postsTable)
+      .where(whereClause);
+
+    return {
+      data: rows.map(DrizzlePostMapper.toDto),
+      total: countRow?.total ?? 0,
+      offset: page,
+      limit,
+    };
+  }
+
+  async findByUserId(
+    userId: string,
+    query: ListPostQuery,
+  ): Promise<PaginatedDto<PostDto>> {
+    const limit = Math.max(1, query.limit ?? 10);
+    const page = Math.max(1, query.offset ?? 1);
+    const start = (page - 1) * limit;
+
+    const whereClause = buildWhere({
+      userId,
       titleContains: query.titleContains,
     });
 

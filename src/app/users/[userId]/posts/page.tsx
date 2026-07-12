@@ -8,7 +8,7 @@ export default async function PostsPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const { data: posts } = await postsQueryService.find({ userId });
+  const { data: posts } = await postsQueryService.findByUserId(userId, {});
   return (
     <main>
       <h1>Posts</h1>
