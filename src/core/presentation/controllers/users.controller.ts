@@ -9,7 +9,6 @@ interface UsersControllerDeps {
 
 export class UsersController extends Controller<UsersControllerDeps> {
   async index({ c, query }: { c: Context; query: ListUserQuery }) {
-    console.log(c.req.query(), query);
     const { data, total } = await this.deps.usersQueryService.find({
       nameContains: query.nameContains,
       emailContains: query.emailContains,
