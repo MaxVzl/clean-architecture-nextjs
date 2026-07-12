@@ -7,6 +7,10 @@ import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import { listUserQuerySchema } from "@/core/application/user/queries/list-user.query";
 import { listPostQuerySchema } from "@/core/application/post/queries/list-post.query";
 import { createPostSchema } from "@/core/application/post/commands/create-post.command";
+import { paginatedResponse } from "@/core/presentation/helpers/paginated-response.helper";
+import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
+import { jsonBody } from "@/core/presentation/helpers/json-body.helper";
+import { createdResponse } from "@/core/presentation/helpers/created-response.helper";
 
 const { usersController, postsController } = container;
 
@@ -19,19 +23,7 @@ usersRouter.openapi(
     request: {
       query: listUserQuerySchema,
     },
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: z.array(userSchema),
-          },
-        },
-        headers: z.object({
-          "X-Total-Count": z.number(),
-        }),
-        description: "Retrieve the users",
-      },
-    },
+    responses: paginatedResponse(userSchema, "Retrieve the users"),
   }),
   (c) =>
     usersController.index({
@@ -49,19 +41,7 @@ usersRouter.openapi(
         userId: uuidSchema,
       }),
     },
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: userSchema,
-          },
-        },
-        description: "Retrieve the user",
-      },
-      404: {
-        description: "User not found",
-      },
-    },
+    responses: singleItemResponse(userSchema, "Retrieve the user"),
   }),
   (c) =>
     usersController.show({
@@ -80,19 +60,7 @@ usersRouter.openapi(
       }),
       query: listPostQuerySchema,
     },
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: z.array(postSchema),
-          },
-        },
-        headers: z.object({
-          "X-Total-Count": z.number(),
-        }),
-        description: "Retrieve the user's posts",
-      },
-    },
+    responses: paginatedResponse(postSchema, "Retrieve the user's posts"),
   }),
   (c) =>
     postsController.indexByUser({
@@ -110,27 +78,9 @@ usersRouter.openapi(
       params: z.object({
         userId: uuidSchema,
       }),
-      body: {
-        content: {
-          "application/json": {
-            schema: createPostSchema,
-          },
-        },
-      },
+      body: jsonBody(createPostSchema),
     },
-    responses: {
-      201: {
-        content: {
-          "application/json": {
-            schema: z.string(),
-          },
-        },
-        description: "Create a new post",
-      },
-      401: {
-        description: "Unauthorized",
-      },
-    },
+    responses: createdResponse(z.string(), "Post created"),
   }),
   (c) =>
     postsController.create({

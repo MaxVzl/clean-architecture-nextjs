@@ -3,6 +3,8 @@ import { container } from "@/lib/container";
 import { postSchema } from "@/core/application/post/dtos/post.dto";
 import { listPostQuerySchema } from "@/core/application/post/queries/list-post.query";
 import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
+import { paginatedResponse } from "@/core/presentation/helpers/paginated-response.helper";
+import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
 
 const { postsController } = container;
 
@@ -15,19 +17,7 @@ postsRouter.openapi(
     request: {
       query: listPostQuerySchema,
     },
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: z.array(postSchema),
-          },
-        },
-        headers: z.object({
-          "X-Total-Count": z.number(),
-        }),
-        description: "Retrieve the posts",
-      },
-    },
+    responses: paginatedResponse(postSchema, "Retrieve the posts"),
   }),
   (c) =>
     postsController.index({
@@ -45,19 +35,7 @@ postsRouter.openapi(
         postId: uuidSchema,
       }),
     },
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: postSchema,
-          },
-        },
-        description: "Retrieve the post",
-      },
-      404: {
-        description: "Post not found",
-      },
-    },
+    responses: singleItemResponse(postSchema, "Retrieve the post"),
   }),
   (c) =>
     postsController.show({
