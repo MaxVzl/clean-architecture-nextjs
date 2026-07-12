@@ -29,7 +29,12 @@ postsRouter.openapi(
       },
     },
   }),
-  (c) => postsController.index(c),
+  (c) =>
+    postsController.index({
+      c,
+      params: { userId: undefined },
+      query: c.req.valid("query"),
+    }),
 );
 
 postsRouter.openapi(
@@ -55,5 +60,9 @@ postsRouter.openapi(
       },
     },
   }),
-  (c) => postsController.show(c),
+  (c) =>
+    postsController.show({
+      c,
+      params: c.req.valid("param"),
+    }),
 );

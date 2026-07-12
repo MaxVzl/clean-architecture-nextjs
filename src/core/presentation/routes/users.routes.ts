@@ -33,7 +33,11 @@ usersRouter.openapi(
       },
     },
   }),
-  (c) => usersController.index(c),
+  (c) =>
+    usersController.index({
+      c,
+      query: c.req.valid("query"),
+    }),
 );
 
 usersRouter.openapi(
@@ -59,7 +63,11 @@ usersRouter.openapi(
       },
     },
   }),
-  (c) => usersController.show(c),
+  (c) =>
+    usersController.show({
+      c,
+      params: c.req.valid("param"),
+    }),
 );
 
 usersRouter.openapi(
@@ -86,7 +94,12 @@ usersRouter.openapi(
       },
     },
   }),
-  (c) => postsController.index(c),
+  (c) =>
+    postsController.index({
+      c,
+      params: c.req.valid("param"),
+      query: c.req.valid("query"),
+    }),
 );
 
 usersRouter.openapi(
@@ -119,5 +132,10 @@ usersRouter.openapi(
       },
     },
   }),
-  (c) => postsController.create(c),
+  (c) =>
+    postsController.create({
+      c,
+      params: c.req.valid("param"),
+      body: c.req.valid("json"),
+    }),
 );
