@@ -1,8 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { handle } from "hono/vercel";
-import { postsRouter } from "@/core/presentation/routers/posts.router";
-import { usersRouter } from "@/core/presentation/routers/users.router";
+import { postRouter } from "@/core/presentation/routers/post.router";
+import { userRouter } from "@/core/presentation/routers/user.router";
 
 const app = new OpenAPIHono().basePath("/api");
 
@@ -24,8 +24,8 @@ app.get("/hello", (c) => {
 
 // app.use((c, next) => new AuthMiddleware({}).authenticated(c, next))
 
-app.route("/posts", postsRouter);
-app.route("/users", usersRouter);
+app.route("/posts", postRouter);
+app.route("/users", userRouter);
 
 export const GET = handle(app);
 export const POST = handle(app);
