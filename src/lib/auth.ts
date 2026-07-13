@@ -12,14 +12,12 @@ import { headers } from "next/headers";
 import { Role } from "@/core/domain/user/enums/role.enum";
 import { container } from "@/lib/container";
 
-const { authNotifierService } = container;
-
 export const auth = betterAuth({
   baseURL: "http://localhost:3000/",
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ url, user }) => {
-      await authNotifierService.notifyPasswordReset({
+      await container.authNotifierService.notifyPasswordReset({
         to: user.email,
         url,
       });

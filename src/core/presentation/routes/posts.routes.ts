@@ -7,8 +7,6 @@ import { paginatedResponse } from "@/core/presentation/helpers/paginated-respons
 import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
 import { validController } from "@/core/presentation/helpers/valid-controller.helper";
 
-const { postsController } = container;
-
 export const postsRouter = new OpenAPIHono();
 
 postsRouter.openapi(
@@ -20,7 +18,7 @@ postsRouter.openapi(
     },
     responses: paginatedResponse(postSchema, "Retrieve the posts"),
   }),
-  (c) => postsController.index(validController(c)),
+  (c) => container.postsController.index(validController(c)),
 );
 
 postsRouter.openapi(
@@ -34,5 +32,5 @@ postsRouter.openapi(
     },
     responses: singleItemResponse(postSchema, "Retrieve the post"),
   }),
-  (c) => postsController.show(validController(c)),
+  (c) => container.postsController.show(validController(c)),
 );

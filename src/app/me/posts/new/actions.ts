@@ -4,12 +4,10 @@ import { createPostSchema } from "@/core/application/post/commands/create-post.c
 import { container } from "@/lib/container";
 import { authClient } from "@/lib/safe-action";
 
-const { createPostUseCase } = container;
-
 export const createPostAction = authClient
   .inputSchema(createPostSchema)
   .action(async ({ parsedInput, ctx }) => {
-    await createPostUseCase.execute(parsedInput, {
+    await container.createPostUseCase.execute(parsedInput, {
       userId: ctx.session.user.id,
     });
   });

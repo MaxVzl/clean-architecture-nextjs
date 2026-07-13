@@ -5,8 +5,6 @@ import { Paginated } from "@/components/paginated";
 import { SearchParams } from "nuqs/server";
 import { container } from "@/lib/container";
 
-const { usersQueryService } = container;
-
 export default async function UsersPage({
   searchParams,
 }: {
@@ -19,7 +17,7 @@ export default async function UsersPage({
     data: users,
     total,
     offset: pages,
-  } = await usersQueryService.find({
+  } = await container.usersQueryService.find({
     nameContains: term,
     emailContains: term,
     limit,

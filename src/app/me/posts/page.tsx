@@ -3,11 +3,9 @@ import Link from "next/link";
 import { getSession } from "@/lib/auth";
 import { container } from "@/lib/container";
 
-const { postsQueryService } = container;
-
 export default async function MePostsPage() {
   const session = await getSession();
-  const { data: posts } = await postsQueryService.findByUserId(
+  const { data: posts } = await container.postsQueryService.findByUserId(
     session.user.id,
     {},
   );

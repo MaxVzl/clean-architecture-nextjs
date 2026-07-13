@@ -1,11 +1,9 @@
 import { getSession } from "@/lib/auth";
 import { container } from "@/lib/container";
 
-const { usersQueryService } = container;
-
 export default async function MePage() {
   const session = await getSession();
-  const user = await usersQueryService.findById(session.user.id);
+  const user = await container.usersQueryService.findById(session.user.id);
   if (!user) {
     throw new Error("User not found");
   }

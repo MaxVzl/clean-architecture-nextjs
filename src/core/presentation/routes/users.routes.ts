@@ -13,8 +13,6 @@ import { jsonBody } from "@/core/presentation/helpers/json-body.helper";
 import { createdResponse } from "@/core/presentation/helpers/created-response.helper";
 import { validController } from "@/core/presentation/helpers/valid-controller.helper";
 
-const { usersController, postsController } = container;
-
 export const usersRouter = new OpenAPIHono();
 
 usersRouter.openapi(
@@ -26,7 +24,7 @@ usersRouter.openapi(
     },
     responses: paginatedResponse(userSchema, "Retrieve the users"),
   }),
-  (c) => usersController.index(validController(c)),
+  (c) => container.usersController.index(validController(c)),
 );
 
 usersRouter.openapi(
@@ -40,7 +38,7 @@ usersRouter.openapi(
     },
     responses: singleItemResponse(userSchema, "Retrieve the user"),
   }),
-  (c) => usersController.show(validController(c)),
+  (c) => container.usersController.show(validController(c)),
 );
 
 usersRouter.openapi(
@@ -55,7 +53,7 @@ usersRouter.openapi(
     },
     responses: paginatedResponse(postSchema, "Retrieve the user's posts"),
   }),
-  (c) => postsController.indexByUser(validController(c)),
+  (c) => container.postsController.indexByUser(validController(c)),
 );
 
 usersRouter.openapi(
@@ -70,5 +68,5 @@ usersRouter.openapi(
     },
     responses: createdResponse(z.string(), "Post created"),
   }),
-  (c) => postsController.create(validController(c)),
+  (c) => container.postsController.create(validController(c)),
 );
