@@ -1,8 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { handle } from "hono/vercel";
-import { postsRouter } from "@/core/presentation/routes/posts.routes";
-import { usersRouter } from "@/core/presentation/routes/users.routes";
+import { postsRouter } from "@/core/presentation/routers/posts.router";
+import { usersRouter } from "@/core/presentation/routers/users.router";
 
 const app = new OpenAPIHono().basePath("/api");
 
