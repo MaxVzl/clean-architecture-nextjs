@@ -10,14 +10,14 @@ import {
 } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { headers } from "next/headers";
 import { Role } from "@/core/domain/user/enums/role.enum";
-import { container } from "@/lib/container";
+import { authNotifierService } from "@/lib/container";
 
 export const auth = betterAuth({
   baseURL: "http://localhost:3000/",
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ url, user }) => {
-      await container.authNotifierService.notifyPasswordReset({
+      await authNotifierService.notifyPasswordReset({
         to: user.email,
         url,
       });
