@@ -1,11 +1,5 @@
-import type { Container } from "./container";
+import { devContainer } from "./container.dev";
+import { prodContainer } from "./container.prod";
 
-let container: Container;
-
-if (process.env.NODE_ENV === "production") {
-  container = require("./container.prod").prodContainer;
-} else {
-  container = require("./container.dev").devContainer;
-}
-
-export { container };
+export const container =
+  process.env.NODE_ENV === "production" ? prodContainer : devContainer;
