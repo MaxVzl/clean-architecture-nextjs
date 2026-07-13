@@ -11,7 +11,6 @@ import { paginatedResponse } from "@/core/presentation/helpers/paginated-respons
 import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
 import { jsonBody } from "@/core/presentation/helpers/json-body.helper";
 import { createdResponse } from "@/core/presentation/helpers/created-response.helper";
-import { validController } from "@/core/presentation/helpers/valid-controller.helper";
 
 export const usersRouter = new OpenAPIHono();
 
@@ -24,7 +23,14 @@ usersRouter.openapi(
     },
     responses: paginatedResponse(userSchema, "Retrieve the users"),
   }),
-  (c) => container.usersController.index(validController(c)),
+  async (c) => {
+    const { data, total } = await container.usersQueryService.find(
+      c.req.valid("query"),
+    );
+    return c.json(data, 200, {
+      "X-Total-Count": total.toString(),
+    });
+  },
 );
 
 usersRouter.openapi(
@@ -38,7 +44,12 @@ usersRouter.openapi(
     },
     responses: singleItemResponse(userSchema, "Retrieve the user"),
   }),
-  (c) => container.usersController.show(validController(c)),
+  async (c) => {
+    const user = await container.usersQueryService.findById(
+      c.req.valid("param").userId,
+    );
+    return user ? c.json(user, 200) : c.notFound();
+  },
 );
 
 usersRouter.openapi(
@@ -53,7 +64,15 @@ usersRouter.openapi(
     },
     responses: paginatedResponse(postSchema, "Retrieve the user's posts"),
   }),
-  (c) => container.postsController.indexByUser(validController(c)),
+  async (c) => {
+    const { data, total } = await container.postsQueryService.findByUserId(
+      c.req.valid("param").userId,
+      c.req.valid("query"),
+    );
+    return c.json(data, 200, {
+      "X-Total-Count": total.toString(),
+    });
+  },
 );
 
 usersRouter.openapi(
@@ -68,5 +87,13 @@ usersRouter.openapi(
     },
     responses: createdResponse(z.string(), "Post created"),
   }),
-  (c) => container.postsController.create(validController(c)),
+  async (c) => {
+    const postId = await container.createPostUseCase.execute(
+      c.req.valid("json"),
+      {
+        userId: c.req.valid("param").userId,
+      },
+    );
+    return c.json(postId, 201);
+  },
 );

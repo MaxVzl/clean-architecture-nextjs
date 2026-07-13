@@ -3,7 +3,6 @@ import { Scalar } from "@scalar/hono-api-reference";
 import { handle } from "hono/vercel";
 import { postsRouter } from "@/core/presentation/routes/posts.routes";
 import { usersRouter } from "@/core/presentation/routes/users.routes";
-import { AuthMiddleware } from "@/core/presentation/middlewares/auth.middleware";
 
 const app = new OpenAPIHono().basePath("/api");
 

@@ -5,7 +5,6 @@ import { listPostQuerySchema } from "@/core/application/post/queries/list-post.q
 import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import { paginatedResponse } from "@/core/presentation/helpers/paginated-response.helper";
 import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
-import { validController } from "@/core/presentation/helpers/valid-controller.helper";
 
 export const postsRouter = new OpenAPIHono();
 
@@ -18,7 +17,14 @@ postsRouter.openapi(
     },
     responses: paginatedResponse(postSchema, "Retrieve the posts"),
   }),
-  (c) => container.postsController.index(validController(c)),
+  async (c) => {
+    const { data, total } = await container.postsQueryService.find(
+      c.req.valid("query"),
+    );
+    return c.json(data, 200, {
+      "X-Total-Count": total.toString(),
+    });
+  },
 );
 
 postsRouter.openapi(
@@ -32,5 +38,10 @@ postsRouter.openapi(
     },
     responses: singleItemResponse(postSchema, "Retrieve the post"),
   }),
-  (c) => container.postsController.show(validController(c)),
+  async (c) => {
+    const post = await container.postsQueryService.findById(
+      c.req.valid("param").postId,
+    );
+    return post ? c.json(post, 200) : c.notFound();
+  },
 );
