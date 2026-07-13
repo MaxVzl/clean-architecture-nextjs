@@ -11,6 +11,7 @@ import { paginatedResponse } from "@/core/presentation/helpers/paginated-respons
 import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
 import { jsonBody } from "@/core/presentation/helpers/json-body.helper";
 import { createdResponse } from "@/core/presentation/helpers/created-response.helper";
+import { validController } from "@/core/presentation/helpers/valid-controller.helper";
 
 const { usersController, postsController } = container;
 
@@ -25,11 +26,7 @@ usersRouter.openapi(
     },
     responses: paginatedResponse(userSchema, "Retrieve the users"),
   }),
-  (c) =>
-    usersController.index({
-      c,
-      query: c.req.valid("query"),
-    }),
+  (c) => usersController.index(validController(c)),
 );
 
 usersRouter.openapi(
@@ -43,11 +40,7 @@ usersRouter.openapi(
     },
     responses: singleItemResponse(userSchema, "Retrieve the user"),
   }),
-  (c) =>
-    usersController.show({
-      c,
-      params: c.req.valid("param"),
-    }),
+  (c) => usersController.show(validController(c)),
 );
 
 usersRouter.openapi(
@@ -62,12 +55,7 @@ usersRouter.openapi(
     },
     responses: paginatedResponse(postSchema, "Retrieve the user's posts"),
   }),
-  (c) =>
-    postsController.indexByUser({
-      c,
-      params: c.req.valid("param"),
-      query: c.req.valid("query"),
-    }),
+  (c) => postsController.indexByUser(validController(c)),
 );
 
 usersRouter.openapi(
@@ -82,10 +70,5 @@ usersRouter.openapi(
     },
     responses: createdResponse(z.string(), "Post created"),
   }),
-  (c) =>
-    postsController.create({
-      c,
-      params: c.req.valid("param"),
-      body: c.req.valid("json"),
-    }),
+  (c) => postsController.create(validController(c)),
 );
