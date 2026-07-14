@@ -1,5 +1,4 @@
 import { EmailAuthNotifierService } from "@/core/infrastructure/auth/services/email-auth-notifier.service";
-import { InMemoryCacheService } from "@/core/infrastructure/common/services/cache/in-memory-cache.service";
 import { InMemoryEmailService } from "@/core/infrastructure/common/services/email/in-memory-email.service";
 import { DrizzlePostsRepository } from "@/core/infrastructure/post/repositories/drizzle-posts.repository";
 import { DrizzlePostsQueryService } from "@/core/infrastructure/post/services/drizzle-posts-query.service";

@@ -1,5 +1,4 @@
-import { Role } from "@/core/domain/user/enums/role.enum";
-import { withAuth, withRoles } from "@/lib/helpers/auth.helper";
+import { withAuth } from "@/lib/helpers/auth.helper";
 
 export default withAuth(({ user }) => {
   return (
