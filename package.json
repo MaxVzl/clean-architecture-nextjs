@@ -54,6 +54,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.7",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
     "prettier": "^3.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
