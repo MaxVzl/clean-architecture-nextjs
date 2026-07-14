@@ -7,7 +7,7 @@ export const actionClient = createSafeActionClient({
   handleServerError: (error) => error.message,
 });
 
-export const authClient = actionClient.use(async ({ next, ctx }) => {
+export const authClient = actionClient.use(async ({ next }) => {
   const session = await getSession();
   return next({ ctx: { session } });
 });

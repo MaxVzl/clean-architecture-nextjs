@@ -43,7 +43,7 @@ export class ResendEmailService implements EmailService {
     if (error) {
       throw new Error(
         `${error.name}: ${error.message}` +
-          (error.statusCode != null ? ` (${error.statusCode})` : ""),
+          (error.statusCode !== null ? ` (${error.statusCode})` : ""),
       );
     }
   }
