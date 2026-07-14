@@ -9,7 +9,7 @@ import {
 } from "@/core/presentation/routes/post.routes";
 import {
   createUserPostRoute,
-  listUserPostsRoute,
+  listUserPostRoute,
 } from "@/core/presentation/routes/user.routes";
 
 interface PostControllerDeps {
@@ -44,7 +44,7 @@ export class PostController extends Controller<PostControllerDeps> {
     return c.json(postId, 201);
   };
 
-  indexByUser: RouteHandler<typeof listUserPostsRoute> = async (c) => {
+  indexByUser: RouteHandler<typeof listUserPostRoute> = async (c) => {
     const { data, total } = await this.deps.postsQueryService.findByUserId(
       c.req.valid("param").userId,
       c.req.valid("query"),

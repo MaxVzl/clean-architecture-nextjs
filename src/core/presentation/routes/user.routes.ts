@@ -31,7 +31,7 @@ export const getUserRoute = createRoute({
   responses: singleItemResponse(userSchema, "Retrieve the user"),
 });
 
-export const listUserPostsRoute = createRoute({
+export const listUserPostRoute = createRoute({
   method: "get",
   path: "/:userId/posts",
   request: {
