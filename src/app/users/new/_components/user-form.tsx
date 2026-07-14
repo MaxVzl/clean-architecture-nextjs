@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
+import type { FormEvent } from "react";
 
 import { createUserAction } from "@/app/users/new/actions";
 import { Role } from "@/core/domain/user/enums/role.enum";
@@ -13,7 +14,7 @@ export function UserForm() {
       router.push("/users");
     },
   });
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     execute({

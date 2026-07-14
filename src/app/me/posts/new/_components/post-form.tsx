@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
+import type { FormEvent } from "react";
 
 import { createPostAction } from "@/app/me/posts/new/actions";
 
@@ -12,7 +13,7 @@ export function PostForm() {
       router.push("/me/posts");
     },
   });
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     execute({
