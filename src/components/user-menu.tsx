@@ -52,9 +52,7 @@ export function UserMenu({ name, email, image }: UserMenuProps) {
           aria-label="Menu du profil"
         >
           <Avatar size="sm">
-            {image ? (
-              <AvatarImage src={image} alt="" />
-            ) : null}
+            {image ? <AvatarImage src={image} alt="" /> : null}
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>

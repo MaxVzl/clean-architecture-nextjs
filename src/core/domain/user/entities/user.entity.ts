@@ -12,9 +12,7 @@ export type UserProps = {
 };
 
 export class User extends Entity<UserProps, UUID> {
-  static create(
-    props: Omit<UserProps, "image" | "emailVerified">,
-  ): User {
+  static create(props: Omit<UserProps, "image" | "emailVerified">): User {
     return new User(
       {
         ...props,

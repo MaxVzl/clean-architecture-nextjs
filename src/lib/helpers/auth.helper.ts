@@ -4,9 +4,7 @@ import { Session, User } from "better-auth";
 
 type AuthSession = { session: Session; user: User };
 
-export function withAuth(
-  component: (auth: AuthSession) => React.ReactNode,
-) {
+export function withAuth(component: (auth: AuthSession) => React.ReactNode) {
   return async function AuthenticatedPage() {
     const auth = await getSession();
     return component(auth);
@@ -14,12 +12,12 @@ export function withAuth(
 }
 
 export function withRoles(
-    roles: Role[],
-    component: (auth: AuthSession) => React.ReactNode,
+  roles: Role[],
+  component: (auth: AuthSession) => React.ReactNode,
 ) {
-    return async function AuthenticatedWithRolesPage() {
-        const auth = await getSession();
-        verifyRoles(auth.user, roles);
-        return component(auth);
-    };
+  return async function AuthenticatedWithRolesPage() {
+    const auth = await getSession();
+    verifyRoles(auth.user, roles);
+    return component(auth);
+  };
 }

@@ -64,11 +64,15 @@ export function DevQuickLoginButton() {
     });
     setPending(null);
     if (applyError) {
-      setError(applyError.message ?? "Impossible d’appliquer le nouveau mot de passe");
+      setError(
+        applyError.message ?? "Impossible d’appliquer le nouveau mot de passe",
+      );
       return;
     }
     setResetToken("");
-    setResetInfo("Mot de passe mis à jour (constante dev). Tu peux te connecter.");
+    setResetInfo(
+      "Mot de passe mis à jour (constante dev). Tu peux te connecter.",
+    );
   }
 
   const busy = pending !== null;
