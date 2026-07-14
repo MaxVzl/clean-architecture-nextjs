@@ -2,6 +2,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import importPlugin from "eslint-plugin-import";
+import prettier from "eslint-plugin-prettier";
 import unusedImports from "eslint-plugin-unused-imports";
 
 const eslintConfig = defineConfig([
@@ -10,10 +11,12 @@ const eslintConfig = defineConfig([
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
   {
     plugins: {
+      prettier,
       import: importPlugin,
       "unused-imports": unusedImports,
     },
     rules: {
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
       "@typescript-eslint/no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
