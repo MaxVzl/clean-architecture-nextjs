@@ -1,8 +1,9 @@
 "use client";
 
-import { createPostAction } from "@/app/me/posts/new/actions";
-import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
+
+import { createPostAction } from "@/app/me/posts/new/actions";
 
 export function PostForm() {
   const router = useRouter();

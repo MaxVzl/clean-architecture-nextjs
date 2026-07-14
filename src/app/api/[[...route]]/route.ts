@@ -1,6 +1,7 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { handle } from "hono/vercel";
+
 import { postRouter } from "@/core/presentation/routers/post.router";
 import { userRouter } from "@/core/presentation/routers/user.router";
 

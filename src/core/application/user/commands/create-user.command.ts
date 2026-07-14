@@ -1,6 +1,7 @@
+import z from "zod";
+
 import { Role } from "@/core/domain/user/enums/role.enum";
 import { emailSchema } from "@/core/domain/user/value-objects/email.vo";
-import z from "zod";
 
 export const createUserSchema = z.object({
   name: z.string(),

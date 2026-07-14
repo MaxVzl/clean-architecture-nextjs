@@ -1,6 +1,7 @@
-import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { relations, sql } from "drizzle-orm";
 import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
+
+import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 
 export const postsTable = sqliteTable(
   "posts",

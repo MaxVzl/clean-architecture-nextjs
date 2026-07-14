@@ -5,8 +5,8 @@ import { PostDto } from "@/core/application/post/dtos/post.dto";
 import { ListPostQuery } from "@/core/application/post/queries/list-post.query";
 import { PostsQueryService } from "@/core/application/post/services/posts-query.service";
 import { db } from "@/core/infrastructure/database";
-import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";
 import { DrizzlePostMapper } from "@/core/infrastructure/post/mappers/drizzle-post.mapper";
+import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";
 
 function buildWhere(filter: {
   userId?: string | undefined;

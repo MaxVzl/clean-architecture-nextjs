@@ -1,11 +1,9 @@
 "use client";
 
-import { HugeiconsIcon } from "@hugeicons/react";
 import { CheckCircle } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 
-import type { UserDto } from "@/core/application/user/dtos/user.dto";
-import { Role } from "@/core/domain/user/enums/role.enum";
 import {
   Avatar,
   AvatarBadge,
@@ -19,6 +17,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import type { UserDto } from "@/core/application/user/dtos/user.dto";
+import { Role } from "@/core/domain/user/enums/role.enum";
 import { cn } from "@/lib/utils";
 
 function initialsFromName(name: string): string {

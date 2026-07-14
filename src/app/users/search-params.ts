@@ -1,10 +1,11 @@
-import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from "@/config/pagination";
 import {
   createLoader,
   parseAsInteger,
   parseAsNumberLiteral,
   parseAsString,
 } from "nuqs/server";
+
+import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS } from "@/config/pagination";
 
 export const searchParams = {
   search: parseAsString.withDefault(""),

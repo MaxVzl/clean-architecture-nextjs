@@ -1,6 +1,7 @@
-import type { EmailService } from "@/core/application/common/services/email.service";
 import nodemailer, { type Transporter } from "nodemailer";
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
+
+import type { EmailService } from "@/core/application/common/services/email.service";
 
 export type NodemailerEmailServiceConfig =
   | {

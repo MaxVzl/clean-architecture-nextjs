@@ -1,6 +1,7 @@
+import { Session, User } from "better-auth";
+
 import { Role } from "@/core/domain/user/enums/role.enum";
 import { getSession, verifyRoles } from "@/lib/auth";
-import { Session, User } from "better-auth";
 
 type AuthSession = { session: Session; user: User };
 

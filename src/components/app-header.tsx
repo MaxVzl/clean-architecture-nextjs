@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
+
 import { DevQuickLoginButton } from "@/components/dev-quick-login-button";
 import { UserMenu } from "@/components/user-menu";
+import { authClient } from "@/lib/auth-client";
 
 export function AppHeader() {
   const { data } = authClient.useSession();

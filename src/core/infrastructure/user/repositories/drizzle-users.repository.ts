@@ -3,8 +3,8 @@ import { eq } from "drizzle-orm";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { User } from "@/core/domain/user/entities/user.entity";
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
-import { db } from "@/core/infrastructure/database";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
+import { db } from "@/core/infrastructure/database";
 import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";
 
 export class DrizzleUsersRepository implements UsersRepository {

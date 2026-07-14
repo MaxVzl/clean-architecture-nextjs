@@ -1,9 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
+
 import { createUserAction } from "@/app/users/new/actions";
 import { Role } from "@/core/domain/user/enums/role.enum";
-import { useAction } from "next-safe-action/hooks";
-import { useRouter } from "next/navigation";
 
 export function UserForm() {
   const router = useRouter();

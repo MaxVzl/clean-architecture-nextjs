@@ -1,5 +1,6 @@
-import { usersQueryService } from "@/lib/container";
 import Link from "next/link";
+
+import { usersQueryService } from "@/lib/container";
 
 export default async function UserPage({
   params,

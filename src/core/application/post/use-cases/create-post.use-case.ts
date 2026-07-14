@@ -1,12 +1,12 @@
+import { SystemContext } from "@/core/application/common/contexts/system.context";
 import { UseCase } from "@/core/application/common/use-case.base";
 import { CreatePostCommand } from "@/core/application/post/commands/create-post.command";
-import { SystemContext } from "@/core/application/common/contexts/system.context";
+import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/post/entities/post.entity";
 import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
-import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 import { UserNotFoundError } from "@/core/domain/user/errors/user-not-found.error";
-import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
+import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 
 export interface CreatePostUseCaseDeps {
   postsRepository: PostsRepository;

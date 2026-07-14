@@ -1,12 +1,12 @@
-import {
-  createUserModule,
-  UserModuleDeps,
-} from "@/lib/container/modules/user.module";
+import { AuthNotifierService } from "@/core/application/auth/services/auth-notifier.service";
 import {
   createPostModule,
   PostModuleDeps,
 } from "@/lib/container/modules/post.module";
-import { AuthNotifierService } from "@/core/application/auth/services/auth-notifier.service";
+import {
+  createUserModule,
+  UserModuleDeps,
+} from "@/lib/container/modules/user.module";
 
 type ContainerDeps = UserModuleDeps &
   PostModuleDeps & { authNotifierService: AuthNotifierService };

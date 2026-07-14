@@ -1,5 +1,6 @@
-import { type CacheService } from "@/core/application/common/services/cache.service";
 import Redis, { RedisOptions } from "ioredis";
+
+import { type CacheService } from "@/core/application/common/services/cache.service";
 
 export class RedisCacheService implements CacheService {
   private client: Redis;

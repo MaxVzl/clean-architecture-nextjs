@@ -1,4 +1,5 @@
 import z from "zod";
+
 import { paginatedHeaders, unauthorizedResponse } from "../common/errors.type";
 
 export const paginatedResponse = <T extends z.ZodType>(

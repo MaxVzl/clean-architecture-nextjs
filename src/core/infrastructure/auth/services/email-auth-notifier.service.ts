@@ -1,5 +1,5 @@
-import type { EmailService } from "@/core/application/common/services/email.service";
 import { AuthNotifierService } from "@/core/application/auth/services/auth-notifier.service";
+import type { EmailService } from "@/core/application/common/services/email.service";
 
 export interface EmailAuthNotifierServiceDeps {
   emailService: EmailService;

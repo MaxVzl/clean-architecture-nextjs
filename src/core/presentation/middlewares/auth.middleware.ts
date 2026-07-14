@@ -1,5 +1,6 @@
-import { Middleware } from "@/core/presentation/common/middleware.base";
 import { MiddlewareHandler } from "hono";
+
+import { Middleware } from "@/core/presentation/common/middleware.base";
 import { getSession } from "@/lib/auth";
 
 interface AuthMiddlewareDeps {

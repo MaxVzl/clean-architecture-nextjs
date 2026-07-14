@@ -1,15 +1,16 @@
-import {
-  createUserPostRoute,
-  listUserPostsRoute,
-} from "@/core/presentation/routes/user.routes";
 import { RouteHandler } from "@hono/zod-openapi";
+
 import { PostsQueryService } from "@/core/application/post/services/posts-query.service";
-import { Controller } from "@/core/presentation/common/controller.base";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
+import { Controller } from "@/core/presentation/common/controller.base";
 import {
   getPostRoute,
   listPostRoute,
 } from "@/core/presentation/routes/post.routes";
+import {
+  createUserPostRoute,
+  listUserPostsRoute,
+} from "@/core/presentation/routes/user.routes";
 
 interface PostControllerDeps {
   postsQueryService: PostsQueryService;

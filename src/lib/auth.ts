@@ -1,15 +1,16 @@
 import { betterAuth, User } from "better-auth";
-import { admin } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "@/core/infrastructure/database";
+import { admin } from "better-auth/plugins";
+import { headers } from "next/headers";
+
+import { Role } from "@/core/domain/user/enums/role.enum";
 import {
   account,
   session,
   user,
   verification,
 } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
-import { headers } from "next/headers";
-import { Role } from "@/core/domain/user/enums/role.enum";
+import { db } from "@/core/infrastructure/database";
 import { authNotifierService } from "@/lib/container";
 
 export const auth = betterAuth({

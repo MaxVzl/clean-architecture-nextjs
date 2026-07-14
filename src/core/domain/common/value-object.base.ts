@@ -1,4 +1,5 @@
 import { type z } from "zod";
+
 import { ValidationError } from "./errors/validation.error";
 
 type ValueObjectProps = Record<string, unknown>;

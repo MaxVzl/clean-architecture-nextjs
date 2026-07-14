@@ -1,6 +1,7 @@
+import { createSafeActionClient } from "next-safe-action";
+
 import { Role } from "@/core/domain/user/enums/role.enum";
 import { getSession, verifyRoles } from "@/lib/auth";
-import { createSafeActionClient } from "next-safe-action";
 
 export const actionClient = createSafeActionClient({
   handleServerError: (error) => error.message,

@@ -1,5 +1,6 @@
-import { notFoundResponse } from "@/core/presentation/common/errors.type";
 import z from "zod";
+
+import { notFoundResponse } from "@/core/presentation/common/errors.type";
 
 export const singleItemResponse = <T extends z.ZodType>(
   schema: T,

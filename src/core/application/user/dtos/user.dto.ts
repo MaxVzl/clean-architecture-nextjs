@@ -1,7 +1,8 @@
+import { z } from "zod";
+
 import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
 import { Role } from "@/core/domain/user/enums/role.enum";
 import { emailSchema } from "@/core/domain/user/value-objects/email.vo";
-import { z } from "zod";
 
 export const userSchema = z.object({
   id: uuidSchema,

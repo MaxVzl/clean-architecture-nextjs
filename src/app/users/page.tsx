@@ -1,8 +1,9 @@
+import { SearchParams } from "nuqs/server";
+
 import { UserCard } from "@/app/users/_components/user-card";
 import { UsersSearchBar } from "@/app/users/_components/users-search-bar";
 import { loadSearchParams } from "@/app/users/search-params";
 import { Paginated } from "@/components/paginated";
-import { SearchParams } from "nuqs/server";
 import { usersQueryService } from "@/lib/container";
 
 export default async function UsersPage({

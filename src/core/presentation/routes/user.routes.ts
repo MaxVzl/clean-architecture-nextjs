@@ -1,3 +1,5 @@
+import { createRoute, z } from "@hono/zod-openapi";
+
 import { createPostSchema } from "@/core/application/post/commands/create-post.command";
 import { postSchema } from "@/core/application/post/dtos/post.dto";
 import { listPostQuerySchema } from "@/core/application/post/queries/list-post.query";
@@ -8,7 +10,6 @@ import { createdResponse } from "@/core/presentation/helpers/created-response.he
 import { jsonBody } from "@/core/presentation/helpers/json-body.helper";
 import { paginatedResponse } from "@/core/presentation/helpers/paginated-response.helper";
 import { singleItemResponse } from "@/core/presentation/helpers/single-item-response.helper";
-import { createRoute, z } from "@hono/zod-openapi";
 
 export const listUserRoute = createRoute({
   method: "get",

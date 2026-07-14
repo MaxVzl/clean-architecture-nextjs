@@ -1,10 +1,11 @@
+import { RouteHandler } from "@hono/zod-openapi";
+
+import { UsersQueryService } from "@/core/application/user/services/users-query.service";
+import { Controller } from "@/core/presentation/common/controller.base";
 import {
   getUserRoute,
   listUserRoute,
 } from "@/core/presentation/routes/user.routes";
-import { RouteHandler } from "@hono/zod-openapi";
-import { UsersQueryService } from "@/core/application/user/services/users-query.service";
-import { Controller } from "@/core/presentation/common/controller.base";
 
 interface UserControllerDeps {
   usersQueryService: UsersQueryService;

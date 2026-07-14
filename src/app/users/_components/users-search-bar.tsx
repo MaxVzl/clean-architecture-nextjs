@@ -1,14 +1,13 @@
 "use client";
 
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Search } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-
 import { useSearchUsers } from "@/hooks/features/users/use-search-users";
 
 const SEARCH_ID = "users-search";

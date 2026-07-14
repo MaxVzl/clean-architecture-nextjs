@@ -1,6 +1,6 @@
 import { Entity } from "../../common/entity.base";
-import { Role } from "../enums/role.enum";
 import { UUID } from "../../common/value-objects/uuid.vo";
+import { Role } from "../enums/role.enum";
 import { Email } from "../value-objects/email.vo";
 
 export type UserProps = {

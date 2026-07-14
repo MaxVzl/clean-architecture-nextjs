@@ -1,5 +1,6 @@
-import type { EmailService } from "@/core/application/common/services/email.service";
 import { Resend } from "resend";
+
+import type { EmailService } from "@/core/application/common/services/email.service";
 
 export type ResendEmailServiceConfig =
   | {

@@ -1,7 +1,7 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
+
+import { listPostRoute , getPostRoute } from "@/core/presentation/routes/post.routes";
 import { postController } from "@/lib/container";
-import { listPostRoute } from "@/core/presentation/routes/post.routes";
-import { getPostRoute } from "@/core/presentation/routes/post.routes";
 
 export const postRouter = new OpenAPIHono()
   .openapi(listPostRoute, postController.index)
