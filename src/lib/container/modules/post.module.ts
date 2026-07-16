@@ -12,7 +12,7 @@ export type PostModuleDeps = {
   postNotifierService: PostNotifierService;
 };
 
-export function createPostModule(deps: PostModuleDeps) {
+export const createPostModule = (deps: PostModuleDeps) => {
   return {
     postsQueryService: deps.postsQueryService,
     postController: new PostController({
@@ -29,4 +29,4 @@ export function createPostModule(deps: PostModuleDeps) {
       postNotifierService: deps.postNotifierService,
     }),
   };
-}
+};

@@ -11,12 +11,12 @@ import {
 type ContainerDeps = UserModuleDeps &
   PostModuleDeps & { authNotifierService: AuthNotifierService };
 
-export function createContainer(deps: ContainerDeps) {
+export const createContainer = (deps: ContainerDeps) => {
   return {
     ...createUserModule(deps),
     ...createPostModule(deps),
     authNotifierService: deps.authNotifierService,
   };
-}
+};
 
 export type Container = ReturnType<typeof createContainer>;
