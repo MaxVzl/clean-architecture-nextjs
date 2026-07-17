@@ -8,14 +8,12 @@ export type UserModuleDeps = {
   usersQueryService: UsersQueryService;
 };
 
-export const createUserModule = (deps: UserModuleDeps) => {
-  return {
+export const createUserModule = (deps: UserModuleDeps) => ({
+  usersQueryService: deps.usersQueryService,
+  userController: new UserController({
     usersQueryService: deps.usersQueryService,
-    userController: new UserController({
-      usersQueryService: deps.usersQueryService,
-    }),
-    createUserUseCase: new CreateUserUseCase({
-      usersRepository: deps.usersRepository,
-    }),
-  };
-};
+  }),
+  createUserUseCase: new CreateUserUseCase({
+    usersRepository: deps.usersRepository,
+  }),
+});

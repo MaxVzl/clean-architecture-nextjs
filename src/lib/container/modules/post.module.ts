@@ -12,21 +12,19 @@ export type PostModuleDeps = {
   postNotifierService: PostNotifierService;
 };
 
-export const createPostModule = (deps: PostModuleDeps) => {
-  return {
+export const createPostModule = (deps: PostModuleDeps) => ({
+  postsQueryService: deps.postsQueryService,
+  postController: new PostController({
     postsQueryService: deps.postsQueryService,
-    postController: new PostController({
-      postsQueryService: deps.postsQueryService,
-      createPostUseCase: new CreatePostUseCase({
-        postsRepository: deps.postsRepository,
-        usersRepository: deps.usersRepository,
-        postNotifierService: deps.postNotifierService,
-      }),
-    }),
     createPostUseCase: new CreatePostUseCase({
       postsRepository: deps.postsRepository,
       usersRepository: deps.usersRepository,
       postNotifierService: deps.postNotifierService,
     }),
-  };
-};
+  }),
+  createPostUseCase: new CreatePostUseCase({
+    postsRepository: deps.postsRepository,
+    usersRepository: deps.usersRepository,
+    postNotifierService: deps.postNotifierService,
+  }),
+});
