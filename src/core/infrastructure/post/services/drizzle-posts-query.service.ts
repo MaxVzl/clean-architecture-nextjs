@@ -4,7 +4,7 @@ import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 import { PostDto } from "@/core/application/post/dtos/post.dto";
 import { ListPostQuery } from "@/core/application/post/queries/list-post.query";
 import { PostsQueryService } from "@/core/application/post/services/posts-query.service";
-import { db } from "@/core/infrastructure/database";
+import { Database } from "@/core/infrastructure/database";
 import { DrizzlePostMapper } from "@/core/infrastructure/post/mappers/drizzle-post.mapper";
 import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";
 
@@ -25,7 +25,12 @@ function buildWhere(filter: {
   return and(...parts)!;
 }
 
+export interface DrizzlePostsQueryServiceDeps {
+  db: Database;
+}
+
 export class DrizzlePostsQueryService implements PostsQueryService {
+  constructor(private readonly deps: DrizzlePostsQueryServiceDeps) {}
   async find(query: ListPostQuery): Promise<PaginatedDto<PostDto>> {
     const limit = Math.max(1, query.limit ?? 10);
     const page = Math.max(1, query.offset ?? 1);
@@ -35,7 +40,7 @@ export class DrizzlePostsQueryService implements PostsQueryService {
       titleContains: query.titleContains,
     });
 
-    const rows = await db
+    const rows = await this.deps.db
       .select()
       .from(postsTable)
       .where(whereClause)
@@ -43,7 +48,7 @@ export class DrizzlePostsQueryService implements PostsQueryService {
       .limit(limit)
       .offset(start);
 
-    const [countRow] = await db
+    const [countRow] = await this.deps.db
       .select({ total: count() })
       .from(postsTable)
       .where(whereClause);
@@ -69,7 +74,7 @@ export class DrizzlePostsQueryService implements PostsQueryService {
       titleContains: query.titleContains,
     });
 
-    const rows = await db
+    const rows = await this.deps.db
       .select()
       .from(postsTable)
       .where(whereClause)
@@ -77,7 +82,7 @@ export class DrizzlePostsQueryService implements PostsQueryService {
       .limit(limit)
       .offset(start);
 
-    const [countRow] = await db
+    const [countRow] = await this.deps.db
       .select({ total: count() })
       .from(postsTable)
       .where(whereClause);
@@ -91,7 +96,7 @@ export class DrizzlePostsQueryService implements PostsQueryService {
   }
 
   async findById(id: string): Promise<PostDto | null> {
-    const rows = await db
+    const rows = await this.deps.db
       .select()
       .from(postsTable)
       .where(eq(postsTable.id, id))

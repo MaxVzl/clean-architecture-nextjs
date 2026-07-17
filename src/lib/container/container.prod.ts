@@ -1,5 +1,6 @@
 import { EmailAuthNotifierService } from "@/core/infrastructure/auth/services/email-auth-notifier.service";
 import { InMemoryEmailService } from "@/core/infrastructure/common/services/email/in-memory-email.service";
+import { db } from "@/core/infrastructure/database";
 import { DrizzlePostsRepository } from "@/core/infrastructure/post/repositories/drizzle-posts.repository";
 import { DrizzlePostsQueryService } from "@/core/infrastructure/post/services/drizzle-posts-query.service";
 import { EmailPostNotifierService } from "@/core/infrastructure/post/services/email-post-notifier.service";
@@ -11,10 +12,10 @@ import { createContainer } from "./container";
 const emailService = new InMemoryEmailService();
 
 export const prodContainer = createContainer({
-  usersRepository: new DrizzleUsersRepository(),
-  postsRepository: new DrizzlePostsRepository(),
-  usersQueryService: new DrizzleUsersQueryService(),
-  postsQueryService: new DrizzlePostsQueryService(),
+  usersRepository: new DrizzleUsersRepository({ db }),
+  postsRepository: new DrizzlePostsRepository({ db }),
+  usersQueryService: new DrizzleUsersQueryService({ db }),
+  postsQueryService: new DrizzlePostsQueryService({ db }),
   postNotifierService: new EmailPostNotifierService({ emailService }),
   authNotifierService: new EmailAuthNotifierService({ emailService }),
 });

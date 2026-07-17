@@ -5,7 +5,7 @@ import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { ListUserQuery } from "@/core/application/user/queries/list-user.query";
 import { UsersQueryService } from "@/core/application/user/services/users-query.service";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
-import { db } from "@/core/infrastructure/database";
+import { Database } from "@/core/infrastructure/database";
 import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";
 
 function containsWhere(filter: {
@@ -26,7 +26,12 @@ function containsWhere(filter: {
   return or(...parts)!;
 }
 
+export interface DrizzleUsersQueryServiceDeps {
+  db: Database;
+}
+
 export class DrizzleUsersQueryService implements UsersQueryService {
+  constructor(private readonly deps: DrizzleUsersQueryServiceDeps) {}
   async find(query: ListUserQuery): Promise<PaginatedDto<UserDto>> {
     const limit = Math.max(1, query.limit ?? 10);
     const page = Math.max(1, query.offset ?? 1);
@@ -37,7 +42,7 @@ export class DrizzleUsersQueryService implements UsersQueryService {
       emailContains: query.emailContains,
     });
 
-    const rows = await db
+    const rows = await this.deps.db
       .select()
       .from(user)
       .where(whereClause)
@@ -45,7 +50,7 @@ export class DrizzleUsersQueryService implements UsersQueryService {
       .limit(limit)
       .offset(start);
 
-    const [countRow] = await db
+    const [countRow] = await this.deps.db
       .select({ total: count() })
       .from(user)
       .where(whereClause);
@@ -59,7 +64,11 @@ export class DrizzleUsersQueryService implements UsersQueryService {
   }
 
   async findById(id: string): Promise<UserDto | null> {
-    const rows = await db.select().from(user).where(eq(user.id, id)).limit(1);
+    const rows = await this.deps.db
+      .select()
+      .from(user)
+      .where(eq(user.id, id))
+      .limit(1);
     const row = rows[0];
     return row ? DrizzleUserMapper.toDto(row) : null;
   }
