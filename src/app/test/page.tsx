@@ -1,9 +1,13 @@
 "use client";
 
-import { AddressPicker } from "@/components/address-picker";
+import { useState } from "react";
+
+import { Address, AddressPicker } from "@/components/address-picker";
 import { Button } from "@/components/ui/button";
 
 export default function TestPage() {
+  const [address, setAddress] = useState<Address | null>(null);
+
   return (
     <div>
       <h1>Test</h1>
@@ -38,11 +42,14 @@ export default function TestPage() {
               },
             ],
           });
-          console.log(address);
+          if (address) {
+            setAddress(address);
+          }
         }}
       >
         Open
       </Button>
+      {address && <div>{address.name}</div>}
     </div>
   );
 }

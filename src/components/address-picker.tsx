@@ -24,7 +24,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 // import { useIsMobile } from "@/hooks/use-mobile"
 
-type Address = {
+export type Address = {
   name: string;
   isFavorite?: boolean;
   street: string;
@@ -90,11 +90,11 @@ export const AddressPicker = createCallable<Props, Response>(
                           <Badge variant="secondary">Favorite</Badge>
                         ) : null}
                       </FieldTitle>
-                      <FieldDescription>
-                        <div>{address.street}</div>
-                        <div>
+                      <FieldDescription className="flex flex-col">
+                        <span>{address.street}</span>
+                        <span>
                           {address.zip} {address.city} - {address.country}
-                        </div>
+                        </span>
                       </FieldDescription>
                     </FieldContent>
                     <RadioGroupItem value={address.name} id={address.name} />
