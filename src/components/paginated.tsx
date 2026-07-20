@@ -15,15 +15,10 @@ import { PAGE_SIZE_OPTIONS, type PageSizeOption } from "@/config/pagination";
 import { usePaginated } from "@/hooks/use-paginated";
 import { cn } from "@/lib/utils";
 
-export const Paginated = ({
-  total,
-  pages,
-}: {
-  total: number;
-  pages: number;
-}) => {
+export const Paginated = ({ total }: { total: number }) => {
   const [{ limit, offset }, setPaginated] = usePaginated();
 
+  const pages = total === 0 ? 0 : Math.ceil(total / limit);
   const noResults = total === 0;
   const prevDisabled = noResults || pages === 0 || offset <= 1;
   const nextDisabled = noResults || pages === 0 || offset >= pages;
