@@ -4,6 +4,7 @@ import "./globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
+import { AddressPicker } from "@/components/address-picker";
 import { AppHeader } from "@/components/app-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
@@ -49,6 +50,7 @@ export default function RootLayout({
             <div className="flex min-h-screen flex-col">
               <AppHeader />
               <main className="flex-1">{children}</main>
+              <AddressPicker />
             </div>
           </NuqsAdapter>
         </ThemeProvider>
