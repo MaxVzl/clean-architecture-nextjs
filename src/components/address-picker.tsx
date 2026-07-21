@@ -22,7 +22,7 @@ import {
   FieldTitle,
 } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-// import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export type Address = {
   name: string;
@@ -43,7 +43,7 @@ export const AddressPicker = createCallable<Props, Response>(
   ({ call, addresses }) => {
     const [selectedAddress, setSelectedAddress] =
       React.useState<Address | null>(null);
-    // const isMobile = useIsMobile()
+    const isMobile = useIsMobile();
 
     function handleConfirm() {
       const selected = addresses.find(
@@ -59,9 +59,7 @@ export const AddressPicker = createCallable<Props, Response>(
       <Drawer
         open={!call.ended}
         onOpenChange={(open) => call.end(open ? null : null)}
-        //   showSwipeHandle={isMobile}
-        //   swipeDirection={isMobile ? "down" : "right"}
-        direction="right"
+        direction={isMobile ? "bottom" : "right"}
       >
         <DrawerContent>
           <DrawerHeader>
