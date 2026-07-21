@@ -4,9 +4,11 @@ import { useState } from "react";
 
 import { Address, AddressPicker } from "@/components/address-picker";
 import { Button } from "@/components/ui/button";
+import { useCustomerSheet } from "@/hooks/use-customer-sheet";
 
 export default function TestPage() {
   const [address, setAddress] = useState<Address | null>(null);
+  const [_, setCustomerId] = useCustomerSheet();
 
   return (
     <div>
@@ -50,6 +52,13 @@ export default function TestPage() {
         Open
       </Button>
       {address && <div>{address.name}</div>}
+      <Button
+        onClick={() =>
+          setCustomerId({ customerId: "11111111-1111-4111-8111-111111111111" })
+        }
+      >
+        Open
+      </Button>
     </div>
   );
 }

@@ -6,6 +6,8 @@ import type { ReactNode } from "react";
 
 import { AddressPicker } from "@/components/address-picker";
 import { AppHeader } from "@/components/app-header";
+import { CustomerSheet } from "@/components/customer-sheet";
+import { QueryProvider } from "@/components/query-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 
@@ -46,13 +48,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NuqsAdapter>
-            <div className="flex min-h-screen flex-col">
-              <AppHeader />
-              <main className="flex-1">{children}</main>
-              <AddressPicker />
-            </div>
-          </NuqsAdapter>
+          <QueryProvider>
+            <NuqsAdapter>
+              <div className="flex min-h-screen flex-col">
+                <AppHeader />
+                <main className="flex-1">{children}</main>
+                <AddressPicker />
+                <CustomerSheet />
+              </div>
+            </NuqsAdapter>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
