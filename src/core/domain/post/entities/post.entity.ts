@@ -9,6 +9,6 @@ export type PostProps = {
 
 export class Post extends Entity<PostProps, UUID> {
   static create(props: PostProps): Post {
-    return this.restore(props, UUID.generate());
+    return this.make(props, UUID.generate());
   }
 }

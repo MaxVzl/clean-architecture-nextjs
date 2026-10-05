@@ -19,7 +19,7 @@ export abstract class ValueObject<T extends ValueObjectProps> {
     this.props = Object.freeze(props);
   }
 
-  public static create<TVO extends ValueObject<{ value: unknown }>>(
+  public static make<TVO extends ValueObject<{ value: unknown }>>(
     this: {
       prototype: TVO;
       name: string;

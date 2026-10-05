@@ -16,7 +16,7 @@ export class CreateUserUseCase extends UseCase<
   async execute(command: CreateUserCommand): Promise<string> {
     const user = User.create({
       name: command.name,
-      email: Email.create(command.email),
+      email: Email.make(command.email),
       role: command.role,
     });
     await this.deps.usersRepository.save(user);

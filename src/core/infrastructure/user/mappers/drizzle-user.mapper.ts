@@ -25,15 +25,15 @@ export class DrizzleUserMapper {
   }
 
   static toDomain(user: typeof usersTable.$inferSelect): User {
-    return User.restore(
+    return User.make(
       {
         name: user.name,
-        email: Email.create(user.email),
+        email: Email.make(user.email),
         role: DrizzleUserMapper.toRole(user.role),
         image: user.image,
         emailVerified: user.emailVerified,
       },
-      UUID.create(user.id),
+      UUID.make(user.id),
     );
   }
 

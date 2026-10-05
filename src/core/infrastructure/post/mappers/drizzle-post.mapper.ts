@@ -13,13 +13,13 @@ export class DrizzlePostMapper {
   }
 
   static toDomain(row: typeof postsTable.$inferSelect): Post {
-    return Post.restore(
+    return Post.make(
       {
-        userId: UUID.create(row.userId),
+        userId: UUID.make(row.userId),
         title: row.title,
         description: row.description,
       },
-      UUID.create(row.id),
+      UUID.make(row.id),
     );
   }
 

@@ -25,13 +25,13 @@ export class CreatePostUseCase extends UseCase<
     context: SystemContext,
   ): Promise<string> {
     const user = await this.deps.usersRepository.findById(
-      UUID.create(context.userId),
+      UUID.make(context.userId),
     );
     if (!user) {
       throw new UserNotFoundError({ identifier: context.userId });
     }
     const post = Post.create({
-      userId: UUID.create(context.userId),
+      userId: UUID.make(context.userId),
       title: command.title,
       description: command.description,
     });

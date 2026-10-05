@@ -11,7 +11,7 @@ export abstract class Entity<TProps extends object, TId> {
     this._props = props;
   }
 
-  static restore<TEntity extends Entity<PropsOf<TEntity>, IdOf<TEntity>>>(
+  static make<TEntity extends Entity<PropsOf<TEntity>, IdOf<TEntity>>>(
     this: { prototype: TEntity },
     props: PropsOf<TEntity>,
     id: IdOf<TEntity>,

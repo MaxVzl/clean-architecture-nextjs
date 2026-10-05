@@ -7,6 +7,6 @@ export const uuidSchema = z.uuidv4();
 
 export class UUID extends defineValueObject(uuidSchema) {
   public static generate(): UUID {
-    return this.create(uuidv4());
+    return this.make(uuidv4());
   }
 }
