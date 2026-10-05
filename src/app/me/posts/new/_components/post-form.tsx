@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
 import type { FormEvent } from "react";
 
-import { createPostAction } from "@/app/me/posts/new/actions";
+import { createPostAction } from "@/core/presentation/actions/post.actions";
 
 export function PostForm() {
   const router = useRouter();
