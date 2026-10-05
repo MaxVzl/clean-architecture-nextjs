@@ -4,6 +4,14 @@ import { ValidationError } from "./errors/validation.error";
 
 type ValueObjectProps = Record<string, unknown>;
 
+interface ValueProps<TValue> extends Record<string, unknown> {
+  value: TValue;
+}
+
+type PropsOf<V> = V extends ValueObject<infer P> ? P : never;
+type ValueOf<V> = PropsOf<V> extends { value: infer TValue } ? TValue : never;
+type Newable<TProps, TVO> = new (props: TProps) => TVO;
+
 export abstract class ValueObject<T extends ValueObjectProps> {
   protected readonly props: T;
 
@@ -11,24 +19,29 @@ export abstract class ValueObject<T extends ValueObjectProps> {
     this.props = Object.freeze(props);
   }
 
-  protected static validate<T>(
-    schema: z.ZodType<T>,
-    input: unknown,
-    valueObjectName: string,
-  ): T {
-    const result = schema.safeParse(input);
+  public static create<TVO extends ValueObject<{ value: unknown }>>(
+    this: {
+      prototype: TVO;
+      name: string;
+      schema: z.ZodType<ValueOf<TVO>>;
+    },
+    input: ValueOf<TVO>,
+  ): TVO {
+    const result = this.schema.safeParse(input);
 
     if (!result.success) {
       const errorMessage = result.error.issues
         .map((issue) => issue.message)
         .join(", ");
       throw new ValidationError({
-        message: `Validation ${valueObjectName} failed: ${errorMessage}`,
-        field: valueObjectName,
+        message: `Validation ${this.name} failed: ${errorMessage}`,
+        field: this.name,
       });
     }
 
-    return result.data;
+    return new (this as unknown as Newable<{ value: ValueOf<TVO> }, TVO>)({
+      value: result.data,
+    });
   }
 
   public equals(vo?: ValueObject<T> | null): boolean {
@@ -56,4 +69,18 @@ export abstract class ValueObject<T extends ValueObjectProps> {
   public toString(): string {
     return JSON.stringify(this.props);
   }
+}
+
+export function defineValueObject<TSchema extends z.ZodType>(schema: TSchema) {
+  type TValue = z.infer<TSchema>;
+
+  abstract class DefinedValueObject extends ValueObject<ValueProps<TValue>> {
+    public static readonly schema: TSchema = schema;
+
+    public get value(): TValue {
+      return this.props.value;
+    }
+  }
+
+  return DefinedValueObject;
 }
