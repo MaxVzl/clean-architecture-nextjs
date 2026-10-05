@@ -40,11 +40,11 @@ export class DrizzleUserMapper {
   static toPersistence(user: User): typeof usersTable.$inferInsert {
     return {
       id: user.id.value,
-      name: user.name,
-      email: user.email.value,
-      role: user.role,
-      image: user.image,
-      emailVerified: user.emailVerified,
+      name: user.props.name,
+      email: user.props.email.value,
+      role: user.props.role,
+      image: user.props.image,
+      emailVerified: user.props.emailVerified,
     };
   }
 }

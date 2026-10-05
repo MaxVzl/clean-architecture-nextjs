@@ -26,9 +26,9 @@ export class DrizzlePostMapper {
   static toPersistence(post: Post): typeof postsTable.$inferInsert {
     return {
       id: post.id.value,
-      userId: post.userId.value,
-      title: post.title,
-      description: post.description,
+      userId: post.props.userId.value,
+      title: post.props.title,
+      description: post.props.description,
     };
   }
 }

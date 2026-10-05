@@ -37,7 +37,7 @@ export class CreatePostUseCase extends UseCase<
     });
     await this.deps.postsRepository.save(post);
     await this.deps.postNotifierService.notifyPostCreated({
-      to: user.email.value,
+      to: user.props.email.value,
       title: command.title,
       description: command.description,
     });

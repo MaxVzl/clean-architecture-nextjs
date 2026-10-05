@@ -2,7 +2,7 @@ type PropsOf<E> = E extends Entity<infer P, infer _I> ? P : never;
 type IdOf<E> = E extends Entity<infer _P, infer I> ? I : never;
 type Newable<TProps, TId, TEntity> = new (props: TProps, id: TId) => TEntity;
 
-export abstract class Entity<TProps, TId> {
+export abstract class Entity<TProps extends object, TId> {
   protected _id: TId;
   protected _props: TProps;
 
@@ -24,6 +24,10 @@ export abstract class Entity<TProps, TId> {
 
   get id() {
     return this._id;
+  }
+
+  get props(): Readonly<TProps> {
+    return this._props;
   }
 
   public equals(entity: Entity<TProps, TId>): boolean {
