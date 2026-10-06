@@ -1,4 +1,4 @@
-import { postsReadModel } from "@/lib/container";
+import { postReadModel } from "@/lib/container";
 
 export default async function PostsPage({
   params,
@@ -6,7 +6,7 @@ export default async function PostsPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const { data: posts } = await postsReadModel.findByUserId(userId, {});
+  const { data: posts } = await postReadModel.findByUserId(userId, {});
   return (
     <main>
       <h1>Posts</h1>

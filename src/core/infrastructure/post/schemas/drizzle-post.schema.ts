@@ -1,15 +1,15 @@
 import { relations, sql } from "drizzle-orm";
 import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
 
-import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
+import { user as userTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 
-export const postsTable = sqliteTable(
+export const postTable = sqliteTable(
   "posts",
   {
     id: text("id").primaryKey(),
     userId: text("user_id")
       .notNull()
-      .references(() => usersTable.id, { onDelete: "cascade" }),
+      .references(() => userTable.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
     description: text("description").notNull(),
     createdAt: integer("created_at", { mode: "timestamp_ms" })
@@ -23,9 +23,9 @@ export const postsTable = sqliteTable(
   (table) => [index("posts_userId_idx").on(table.userId)],
 );
 
-export const postsRelations = relations(postsTable, ({ one }) => ({
-  user: one(usersTable, {
-    fields: [postsTable.userId],
-    references: [usersTable.id],
+export const postRelations = relations(postTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [postTable.userId],
+    references: [userTable.id],
   }),
 }));

@@ -1,19 +1,19 @@
-import { UsersReadModel } from "@/core/application/user/read-models/users.read-model";
+import { UserReadModel } from "@/core/application/user/read-models/user.read-model";
 import { CreateUserUseCase } from "@/core/application/user/use-cases/create-user.use-case";
-import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
+import { UserRepository } from "@/core/domain/user/repositories/user.repository";
 import { UserController } from "@/core/presentation/controllers/user.controller";
 
 export type UserModuleDeps = {
-  usersRepository: UsersRepository;
-  usersReadModel: UsersReadModel;
+  userRepository: UserRepository;
+  userReadModel: UserReadModel;
 };
 
 export const createUserModule = (deps: UserModuleDeps) => ({
-  usersReadModel: deps.usersReadModel,
+  userReadModel: deps.userReadModel,
   userController: new UserController({
-    usersReadModel: deps.usersReadModel,
+    userReadModel: deps.userReadModel,
   }),
   createUserUseCase: new CreateUserUseCase({
-    usersRepository: deps.usersRepository,
+    userRepository: deps.userRepository,
   }),
 });

@@ -4,17 +4,17 @@ import { Role } from "@/core/domain/user/enums/role.enum";
 import { Email } from "@/core/domain/user/value-objects/email.vo";
 import { UserId } from "@/core/domain/user/value-objects/user-id.vo";
 import { UserName } from "@/core/domain/user/value-objects/user-name.vo";
-import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
+import { user as userTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 
 export class DrizzleUserMapper {
-  private static toRole(role: (typeof usersTable.$inferSelect)["role"]): Role {
+  private static toRole(role: (typeof userTable.$inferSelect)["role"]): Role {
     if (role === Role.ADMIN || role === Role.USER) {
       return role;
     }
     return Role.USER;
   }
 
-  static toDto(row: typeof usersTable.$inferSelect): UserDto {
+  static toDto(row: typeof userTable.$inferSelect): UserDto {
     return {
       id: row.id,
       name: row.name,
@@ -25,7 +25,7 @@ export class DrizzleUserMapper {
     };
   }
 
-  static toDomain(user: typeof usersTable.$inferSelect): User {
+  static toDomain(user: typeof userTable.$inferSelect): User {
     return User.make(
       {
         name: UserName.make(user.name),
@@ -38,7 +38,7 @@ export class DrizzleUserMapper {
     );
   }
 
-  static toPersistence(user: User): typeof usersTable.$inferInsert {
+  static toPersistence(user: User): typeof userTable.$inferInsert {
     return {
       id: user.id.value,
       name: user.props.name.value,

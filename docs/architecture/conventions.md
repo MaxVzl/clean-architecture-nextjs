@@ -108,24 +108,46 @@ Un port est **nommé selon sa nature** : le suffixe du nom et le dossier indique
 | Service | `XxxService` | `application/<feature>/services/` | Capacité technique ou métier externe (email, cache, notification…) |
 | Read model | `XxxReadModel` | `application/<feature>/read-models/` | Lecture optimisée qui renvoie des DTO |
 
-Les implémentations vivent dans `infrastructure/<feature>/<même dossier>/` et sont préfixées par leur technologie : `DrizzleUsersRepository`, `ResendEmailService`, `DrizzlePostsReadModel`.
+Les implémentations vivent dans `infrastructure/<feature>/<même dossier>/` et sont préfixées par leur technologie : `DrizzleUserRepository`, `ResendEmailService`, `DrizzlePostReadModel`.
 
 Le nom de fichier reprend la nature du port comme extension :
 
 | Nature | Port (`application` / `domain`) | Implémentation (`infrastructure`) |
 |---|---|---|
-| Repository | `users.repository.ts` | `drizzle-users.repository.ts` |
+| Repository | `user.repository.ts` | `drizzle-user.repository.ts` |
 | Service | `email.service.ts` | `resend-email.service.ts` |
-| Read model | `posts.read-model.ts` | `drizzle-posts.read-model.ts` |
+| Read model | `post.read-model.ts` | `drizzle-post.read-model.ts` |
 
-## 7. CQRS
+## 7. Singulier et pluriel
+
+**Singulier** pour tout ce qui nomme l'entité ou la feature : dossiers de feature, fichiers, classes, interfaces, variables de dépendance, variables Drizzle.
+
+```ts
+// ✅
+user.repository.ts · UserRepository · DrizzleUserReadModel · userRepository · postTable
+// ❌
+users.repository.ts · UsersRepository · DrizzleUsersReadModel · usersRepository · postsTable
+```
+
+**Pluriel** uniquement dans ces cas :
+
+| Cas | Exemple | Raison |
+|---|---|---|
+| Dossiers de catégorie | `repositories/`, `entities/`, `value-objects/` | Ils contiennent plusieurs éléments |
+| Tables SQL | `sqliteTable("posts", …)`, index `posts_userId_idx` | Convention SQL du projet |
+| URLs REST | `/api/users`, `/:userId/posts` | Une URL désigne une collection |
+| Variables qui contiennent une collection | `const { data: users }`, `posts.map(…)` | Vrai pluriel sémantique |
+
+Les tables générées par better-auth (`user`, `session`…) gardent pour l'instant leur nom par défaut, au singulier. On peut les passer au pluriel avec l'option `modelName` de better-auth.
+
+## 8. CQRS
 
 - **Écriture (commandes)** : `presentation` appelle un **use case**, qui charge et sauvegarde des **entités** via des **repositories**. L'entrée est une commande (`application/<feature>/commands/`) décrite par un schéma zod.
 - **Lecture (requêtes)** : `presentation` appelle un **read model**, qui renvoie directement des **DTO** sans hydrater le domaine. Les paramètres sont une requête (`application/<feature>/queries/`) décrite par un schéma zod.
 
 Le côté lecture ne passe jamais par les entités. Le côté écriture ne renvoie jamais de DTO de lecture : il renvoie au plus un identifiant.
 
-## 8. Emplacement de la présentation
+## 9. Emplacement de la présentation
 
 La présentation reste dans `src/core/presentation`. Elle contient les routes et controllers Hono ainsi que les server actions Next.js.
 
@@ -142,3 +164,4 @@ La présentation reste dans `src/core/presentation`. Elle contient les routes et
 | 2026-10-06 | Ports nommés selon leur nature : `repositories/`, `services/`, `read-models/` |
 | 2026-10-06 | Les lectures s'appellent des read models (`XxxReadModel`, fichiers `*.read-model.ts`), et non des query services |
 | 2026-10-06 | La présentation reste dans `src/core` |
+| 2026-10-06 | Singulier pour tout ce qui nomme l'entité ; pluriel pour les dossiers de catégorie, les tables SQL, les URLs REST et les collections |

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { usersReadModel } from "@/lib/container";
+import { userReadModel } from "@/lib/container";
 
 export default async function UserPage({
   params,
@@ -8,7 +8,7 @@ export default async function UserPage({
   params: Promise<{ userId: string }>;
 }) {
   const { userId } = await params;
-  const user = await usersReadModel.findById(userId);
+  const user = await userReadModel.findById(userId);
   if (!user) {
     throw new Error("User not found");
   }

@@ -1,18 +1,18 @@
 import { eq } from "drizzle-orm";
 
 import { User } from "@/core/domain/user/entities/user.entity";
-import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
+import { UserRepository } from "@/core/domain/user/repositories/user.repository";
 import { UserId } from "@/core/domain/user/value-objects/user-id.vo";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { Database } from "@/core/infrastructure/database";
 import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";
 
-export interface DrizzleUsersRepositoryDeps {
+export interface DrizzleUserRepositoryDeps {
   db: Database;
 }
 
-export class DrizzleUsersRepository implements UsersRepository {
-  constructor(private readonly deps: DrizzleUsersRepositoryDeps) {}
+export class DrizzleUserRepository implements UserRepository {
+  constructor(private readonly deps: DrizzleUserRepositoryDeps) {}
   async findById(id: UserId): Promise<User | null> {
     const rows = await this.deps.db
       .select()

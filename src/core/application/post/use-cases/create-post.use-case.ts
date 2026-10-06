@@ -2,14 +2,14 @@ import { SystemContext } from "@/core/application/common/contexts/system.context
 import { CreatePostCommand } from "@/core/application/post/commands/create-post.command";
 import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
 import { Post } from "@/core/domain/post/entities/post.entity";
-import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
+import { PostRepository } from "@/core/domain/post/repositories/post.repository";
 import { UserNotFoundError } from "@/core/domain/user/errors/user-not-found.error";
-import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
+import { UserRepository } from "@/core/domain/user/repositories/user.repository";
 import { UserId } from "@/core/domain/user/value-objects/user-id.vo";
 
 export interface CreatePostUseCaseDeps {
-  postsRepository: PostsRepository;
-  usersRepository: UsersRepository;
+  postRepository: PostRepository;
+  userRepository: UserRepository;
   postNotifierService: PostNotifierService;
 }
 
@@ -21,7 +21,7 @@ export class CreatePostUseCase {
     context: SystemContext,
   ): Promise<string> {
     const authorId = UserId.make(context.userId);
-    const author = await this.deps.usersRepository.findById(authorId);
+    const author = await this.deps.userRepository.findById(authorId);
     if (!author) {
       throw new UserNotFoundError({ identifier: authorId.value });
     }
@@ -30,7 +30,7 @@ export class CreatePostUseCase {
       title: command.title,
       description: command.description,
     });
-    await this.deps.postsRepository.save(post);
+    await this.deps.postRepository.save(post);
     await this.deps.postNotifierService.notifyPostCreated({
       to: author.props.email.value,
       title: command.title,

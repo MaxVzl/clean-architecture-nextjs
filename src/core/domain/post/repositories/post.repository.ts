@@ -1,5 +1,5 @@
 import { Post } from "../entities/post.entity";
 
-export interface PostsRepository {
+export interface PostRepository {
   save(post: Post): Promise<void>;
 }

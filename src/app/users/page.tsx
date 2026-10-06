@@ -4,7 +4,7 @@ import { UserCard } from "@/app/users/_components/user-card";
 import { UsersSearchBar } from "@/app/users/_components/users-search-bar";
 import { loadSearchParams } from "@/app/users/search-params";
 import { Paginated } from "@/components/paginated";
-import { usersReadModel } from "@/lib/container";
+import { userReadModel } from "@/lib/container";
 
 export default async function UsersPage({
   searchParams,
@@ -14,7 +14,7 @@ export default async function UsersPage({
   const { search, limit, offset } = await loadSearchParams(searchParams);
 
   const term = search.trim() || undefined;
-  const { data: users, total } = await usersReadModel.find({
+  const { data: users, total } = await userReadModel.find({
     nameContains: term,
     emailContains: term,
     limit,

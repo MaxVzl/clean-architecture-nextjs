@@ -1,30 +1,30 @@
-import { PostsReadModel } from "@/core/application/post/read-models/posts.read-model";
+import { PostReadModel } from "@/core/application/post/read-models/post.read-model";
 import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
-import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
-import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
+import { PostRepository } from "@/core/domain/post/repositories/post.repository";
+import { UserRepository } from "@/core/domain/user/repositories/user.repository";
 import { PostController } from "@/core/presentation/controllers/post.controller";
 
 export type PostModuleDeps = {
-  postsRepository: PostsRepository;
-  postsReadModel: PostsReadModel;
-  usersRepository: UsersRepository;
+  postRepository: PostRepository;
+  postReadModel: PostReadModel;
+  userRepository: UserRepository;
   postNotifierService: PostNotifierService;
 };
 
 export const createPostModule = (deps: PostModuleDeps) => ({
-  postsReadModel: deps.postsReadModel,
+  postReadModel: deps.postReadModel,
   postController: new PostController({
-    postsReadModel: deps.postsReadModel,
+    postReadModel: deps.postReadModel,
     createPostUseCase: new CreatePostUseCase({
-      postsRepository: deps.postsRepository,
-      usersRepository: deps.usersRepository,
+      postRepository: deps.postRepository,
+      userRepository: deps.userRepository,
       postNotifierService: deps.postNotifierService,
     }),
   }),
   createPostUseCase: new CreatePostUseCase({
-    postsRepository: deps.postsRepository,
-    usersRepository: deps.usersRepository,
+    postRepository: deps.postRepository,
+    userRepository: deps.userRepository,
     postNotifierService: deps.postNotifierService,
   }),
 });

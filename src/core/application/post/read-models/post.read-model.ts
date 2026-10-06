@@ -2,7 +2,7 @@ import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 import { PostDto } from "@/core/application/post/dtos/post.dto";
 import { ListPostQuery } from "@/core/application/post/queries/list-post.query";
 
-export interface PostsReadModel {
+export interface PostReadModel {
   find(query: ListPostQuery): Promise<PaginatedDto<PostDto>>;
   findByUserId(
     userId: string,
