@@ -1,5 +1,4 @@
 import { SystemContext } from "@/core/application/common/contexts/system.context";
-import { UseCase } from "@/core/application/common/use-case.base";
 import { CreatePostCommand } from "@/core/application/post/commands/create-post.command";
 import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
 import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
@@ -14,12 +13,9 @@ export interface CreatePostUseCaseDeps {
   postNotifierService: PostNotifierService;
 }
 
-export class CreatePostUseCase extends UseCase<
-  CreatePostUseCaseDeps,
-  string,
-  CreatePostCommand,
-  SystemContext
-> {
+export class CreatePostUseCase {
+  constructor(private readonly deps: CreatePostUseCaseDeps) {}
+
   async execute(
     command: CreatePostCommand,
     context: SystemContext,

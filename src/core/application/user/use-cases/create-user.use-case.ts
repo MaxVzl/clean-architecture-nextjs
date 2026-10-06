@@ -1,4 +1,3 @@
-import { UseCase } from "@/core/application/common/use-case.base";
 import { CreateUserCommand } from "@/core/application/user/commands/create-user.command";
 import { User } from "@/core/domain/user/entities/user.entity";
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
@@ -8,11 +7,9 @@ export interface CreateUserUseCaseDeps {
   usersRepository: UsersRepository;
 }
 
-export class CreateUserUseCase extends UseCase<
-  CreateUserUseCaseDeps,
-  string,
-  CreateUserCommand
-> {
+export class CreateUserUseCase {
+  constructor(private readonly deps: CreateUserUseCaseDeps) {}
+
   async execute(command: CreateUserCommand): Promise<string> {
     const user = User.create({
       name: command.name,
