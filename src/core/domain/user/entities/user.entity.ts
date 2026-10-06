@@ -22,4 +22,12 @@ export class User extends Entity<UserProps, UUID> {
       UUID.generate(),
     );
   }
+
+  changeName(name: string): void {
+    this._props.name = name;
+  }
+
+  infos(): string {
+    return `User ${this._props.name} has email ${this._props.email.value} and role ${this._id.value}`;
+  }
 }
