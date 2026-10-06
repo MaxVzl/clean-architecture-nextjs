@@ -187,6 +187,15 @@ export class CreatePostUseCase {
 - **Pas de classe de base vide** (`UseCase<…>`, `Controller<…>`) juste pour stocker `deps` : le constructeur et l'interface `XxxDeps` suffisent, et le typage reste explicite.
 - Le câblage se fait dans le composition root (`src/lib/container/`) : un module par feature, qui instancie chaque use case **une seule fois** et réutilise l'instance.
 
+## 11. Contrôle d'accès
+
+| Type de règle | Exemple | Où |
+|---|---|---|
+| Authentification et rôle global | « il faut être connecté », « seul un admin peut créer un tag » | Point d'entrée de la présentation : `authClient`, `rolesClient([Role.ADMIN])`, middleware HTTP |
+| Règle qui dépend des données | « seul l'auteur peut supprimer son post » | Domaine (méthode de l'entité) ou use case, avec une `ForbiddenError` codée |
+
+L'identité de l'acteur arrive au use case via `SystemContext`, construit à partir de la session, jamais à partir de l'URL ou du corps de la requête.
+
 ---
 
 ## Décisions
@@ -205,3 +214,4 @@ export class CreatePostUseCase {
 | 2026-10-06 | Seuls les points d'entrée de la présentation (actions, routers, middlewares) importent le composition root `@/lib` |
 | 2026-10-06 | Règle de dépendance vérifiée par ESLint (`import/no-restricted-paths`) |
 | 2026-10-06 | Injection par constructeur avec un objet `deps` typé `XxxDeps` ; pas de classe de base vide (`UseCase`, `Controller` supprimées) |
+| 2026-10-06 | Contrôle d'accès à deux niveaux : rôle global dans la présentation, règles liées aux données dans le domaine (`ForbiddenError`) |
