@@ -25,6 +25,10 @@ Les dépendances vont toujours **vers l'intérieur** :
 
 Dans chaque couche, le code est découpé **par feature** (`user/`, `post/`…), avec un dossier `common/` pour ce qui est partagé.
 
+**Exception : le composition root.** Le container (`src/lib/container/`) vit hors des couches et les assemble. Seuls les points d'entrée de la présentation (`actions/`, `routers/`, `middlewares/`) ont le droit d'importer `@/lib` : une server action ou un router est une fonction de module, on ne peut pas lui injecter ses dépendances. Les controllers, use cases, le domaine et l'infrastructure ne l'importent jamais.
+
+**La règle est vérifiée par ESLint** (`import/no-restricted-paths` dans `eslint.config.mjs`) : tout import interdit entre couches est une erreur de lint.
+
 ## 2. Dépendances du domaine
 
 `zod` est **autorisé** dans le domaine. Il sert à valider les value objects, et ses schémas sont réutilisés par la couche application (commandes, DTO).
@@ -163,6 +167,26 @@ Le côté lecture ne passe jamais par les entités. Le côté écriture ne renvo
 
 La présentation reste dans `src/core/presentation`. Elle contient les routes et controllers Hono ainsi que les server actions Next.js.
 
+## 10. Injection de dépendances
+
+Toute classe qui a des dépendances (use case, controller, implémentation d'un port) les reçoit **par constructeur**, dans un objet `deps` typé par une interface `XxxDeps` :
+
+```ts
+export interface CreatePostUseCaseDeps {
+  postRepository: PostRepository;
+  userRepository: UserRepository;
+  postNotifierService: PostNotifierService;
+}
+
+export class CreatePostUseCase {
+  constructor(private readonly deps: CreatePostUseCaseDeps) {}
+}
+```
+
+- Les dépendances sont typées par des **ports**, jamais par des implémentations.
+- **Pas de classe de base vide** (`UseCase<…>`, `Controller<…>`) juste pour stocker `deps` : le constructeur et l'interface `XxxDeps` suffisent, et le typage reste explicite.
+- Le câblage se fait dans le composition root (`src/lib/container/`) : un module par feature, qui instancie chaque use case **une seule fois** et réutilise l'instance.
+
 ---
 
 ## Décisions
@@ -178,3 +202,6 @@ La présentation reste dans `src/core/presentation`. Elle contient les routes et
 | 2026-10-06 | Les lectures s'appellent des read models (`XxxReadModel`, fichiers `*.read-model.ts`), et non des query services |
 | 2026-10-06 | La présentation reste dans `src/core` |
 | 2026-10-06 | Singulier pour tout ce qui nomme l'entité ; pluriel pour les dossiers de catégorie, les tables SQL, les URLs REST et les collections |
+| 2026-10-06 | Seuls les points d'entrée de la présentation (actions, routers, middlewares) importent le composition root `@/lib` |
+| 2026-10-06 | Règle de dépendance vérifiée par ESLint (`import/no-restricted-paths`) |
+| 2026-10-06 | Injection par constructeur avec un objet `deps` typé `XxxDeps` ; pas de classe de base vide (`UseCase`, `Controller` supprimées) |

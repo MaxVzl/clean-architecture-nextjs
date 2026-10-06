@@ -1,7 +1,6 @@
 import { RouteHandler } from "@hono/zod-openapi";
 
 import { UserReadModel } from "@/core/application/user/read-models/user.read-model";
-import { Controller } from "@/core/presentation/common/controller.base";
 import {
   getUserRoute,
   listUserRoute,
@@ -11,7 +10,9 @@ interface UserControllerDeps {
   userReadModel: UserReadModel;
 }
 
-export class UserController extends Controller<UserControllerDeps> {
+export class UserController {
+  constructor(private readonly deps: UserControllerDeps) {}
+
   index: RouteHandler<typeof listUserRoute> = async (c) => {
     const { data, total } = await this.deps.userReadModel.find(
       c.req.valid("query"),

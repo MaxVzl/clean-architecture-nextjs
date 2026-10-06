@@ -2,7 +2,6 @@ import { RouteHandler } from "@hono/zod-openapi";
 
 import { PostReadModel } from "@/core/application/post/read-models/post.read-model";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
-import { Controller } from "@/core/presentation/common/controller.base";
 import {
   getPostRoute,
   listPostRoute,
@@ -17,7 +16,9 @@ interface PostControllerDeps {
   createPostUseCase: CreatePostUseCase;
 }
 
-export class PostController extends Controller<PostControllerDeps> {
+export class PostController {
+  constructor(private readonly deps: PostControllerDeps) {}
+
   index: RouteHandler<typeof listPostRoute> = async (c) => {
     const { data, total } = await this.deps.postReadModel.find(
       c.req.valid("query"),
