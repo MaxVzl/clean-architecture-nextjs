@@ -3,7 +3,7 @@ import { asc, count, eq, like, or, SQL } from "drizzle-orm";
 import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { ListUserQuery } from "@/core/application/user/queries/list-user.query";
-import { UsersQueryService } from "@/core/application/user/services/users-query.service";
+import { UsersQueryService } from "@/core/application/user/query-services/users-query.service";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { Database } from "@/core/infrastructure/database";
 import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";

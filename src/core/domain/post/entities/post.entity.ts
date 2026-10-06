@@ -1,14 +1,15 @@
 import { Entity } from "../../common/entity.base";
-import { UUID } from "../../common/value-objects/uuid.vo";
+import { UserId } from "../../user/value-objects/user-id.vo";
+import { PostId } from "../value-objects/post-id.vo";
 
 export type PostProps = {
-  userId: UUID;
+  authorId: UserId;
   title: string;
   description: string;
 };
 
-export class Post extends Entity<PostProps, UUID> {
+export class Post extends Entity<PostProps, PostId> {
   static create(props: PostProps): Post {
-    return this.make(props, UUID.generate());
+    return this.make(props, PostId.generate());
   }
 }

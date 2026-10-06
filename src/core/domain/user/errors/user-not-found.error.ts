@@ -6,6 +6,6 @@ interface UserNotFoundErrorProps {
 
 export class UserNotFoundError extends NotFoundError {
   constructor({ identifier }: UserNotFoundErrorProps) {
-    super({ resource: "User", identifier });
+    super({ code: "USER_NOT_FOUND", resource: "User", identifier });
   }
 }

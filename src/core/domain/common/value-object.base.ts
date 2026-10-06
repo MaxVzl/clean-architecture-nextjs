@@ -1,6 +1,7 @@
 import { type z } from "zod";
 
 import { ValidationError } from "./errors/validation.error";
+import { deepEqual } from "./utils/deep-equal";
 
 interface ValueProps<TValue> extends Record<string, unknown> {
   value: TValue;
@@ -51,24 +52,9 @@ export function defineValueObject<TSchema extends z.ZodType>(schema: TSchema) {
 
     public equals(vo?: DefinedValueObject | null): boolean {
       if (vo === null || vo === undefined) return false;
+      if (vo.constructor !== this.constructor) return false;
 
-      const thisProps = this.props;
-      const otherProps = vo.props;
-
-      const thisKeys = Object.keys(thisProps);
-      const otherKeys = Object.keys(otherProps);
-
-      if (thisKeys.length !== otherKeys.length) {
-        return false;
-      }
-
-      for (const key of thisKeys) {
-        if (thisProps[key] !== otherProps[key]) {
-          return false;
-        }
-      }
-
-      return true;
+      return deepEqual(this.props.value, vo.props.value);
     }
 
     public toString(): string {

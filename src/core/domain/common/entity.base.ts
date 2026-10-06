@@ -1,8 +1,12 @@
+interface Identifier {
+  equals(other?: Identifier | null): boolean;
+}
+
 type PropsOf<E> = E extends Entity<infer P, infer _I> ? P : never;
 type IdOf<E> = E extends Entity<infer _P, infer I> ? I : never;
 type Newable<TProps, TId, TEntity> = new (props: TProps, id: TId) => TEntity;
 
-export abstract class Entity<TProps extends object, TId> {
+export abstract class Entity<TProps extends object, TId extends Identifier> {
   protected _id: TId;
   protected _props: TProps;
 
@@ -30,7 +34,10 @@ export abstract class Entity<TProps extends object, TId> {
     return this._props;
   }
 
-  public equals(entity: Entity<TProps, TId>): boolean {
-    return this === entity;
+  public equals(entity?: Entity<TProps, TId> | null): boolean {
+    if (entity === null || entity === undefined) return false;
+    if (entity.constructor !== this.constructor) return false;
+
+    return this._id.equals(entity._id);
   }
 }

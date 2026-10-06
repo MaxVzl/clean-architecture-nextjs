@@ -5,7 +5,7 @@ import { postSchema } from "@/core/application/post/dtos/post.dto";
 import { listPostQuerySchema } from "@/core/application/post/queries/list-post.query";
 import { userSchema } from "@/core/application/user/dtos/user.dto";
 import { listUserQuerySchema } from "@/core/application/user/queries/list-user.query";
-import { uuidSchema } from "@/core/domain/common/value-objects/uuid.vo";
+import { userIdSchema } from "@/core/domain/user/value-objects/user-id.vo";
 import { createdResponse } from "@/core/presentation/helpers/created-response.helper";
 import { jsonBody } from "@/core/presentation/helpers/json-body.helper";
 import { paginatedResponse } from "@/core/presentation/helpers/paginated-response.helper";
@@ -25,7 +25,7 @@ export const getUserRoute = createRoute({
   path: "/:userId",
   request: {
     params: z.object({
-      userId: uuidSchema,
+      userId: userIdSchema,
     }),
   },
   responses: singleItemResponse(userSchema, "Retrieve the user"),
@@ -36,7 +36,7 @@ export const listUserPostRoute = createRoute({
   path: "/:userId/posts",
   request: {
     params: z.object({
-      userId: uuidSchema,
+      userId: userIdSchema,
     }),
     query: listPostQuerySchema,
   },
@@ -48,7 +48,7 @@ export const createUserPostRoute = createRoute({
   path: "/:userId/posts",
   request: {
     params: z.object({
-      userId: uuidSchema,
+      userId: userIdSchema,
     }),
     body: jsonBody(createPostSchema),
   },

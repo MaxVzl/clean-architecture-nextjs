@@ -1,6 +1,7 @@
 import { PostDto } from "@/core/application/post/dtos/post.dto";
-import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { Post } from "@/core/domain/post/entities/post.entity";
+import { PostId } from "@/core/domain/post/value-objects/post-id.vo";
+import { UserId } from "@/core/domain/user/value-objects/user-id.vo";
 import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";
 
 export class DrizzlePostMapper {
@@ -15,18 +16,18 @@ export class DrizzlePostMapper {
   static toDomain(row: typeof postsTable.$inferSelect): Post {
     return Post.make(
       {
-        userId: UUID.make(row.userId),
+        authorId: UserId.make(row.userId),
         title: row.title,
         description: row.description,
       },
-      UUID.make(row.id),
+      PostId.make(row.id),
     );
   }
 
   static toPersistence(post: Post): typeof postsTable.$inferInsert {
     return {
       id: post.id.value,
-      userId: post.props.userId.value,
+      userId: post.props.authorId.value,
       title: post.props.title,
       description: post.props.description,
     };

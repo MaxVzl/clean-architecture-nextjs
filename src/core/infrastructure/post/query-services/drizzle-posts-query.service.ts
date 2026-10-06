@@ -3,7 +3,7 @@ import { and, asc, count, eq, like, SQL } from "drizzle-orm";
 import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 import { PostDto } from "@/core/application/post/dtos/post.dto";
 import { ListPostQuery } from "@/core/application/post/queries/list-post.query";
-import { PostsQueryService } from "@/core/application/post/services/posts-query.service";
+import { PostsQueryService } from "@/core/application/post/query-services/posts-query.service";
 import { Database } from "@/core/infrastructure/database";
 import { DrizzlePostMapper } from "@/core/infrastructure/post/mappers/drizzle-post.mapper";
 import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";

@@ -1,8 +1,7 @@
-import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
-
 import { User } from "../entities/user.entity";
+import { UserId } from "../value-objects/user-id.vo";
 
 export interface UsersRepository {
-  findById(id: UUID): Promise<User | null>;
+  findById(id: UserId): Promise<User | null>;
   save(user: User): Promise<void>;
 }

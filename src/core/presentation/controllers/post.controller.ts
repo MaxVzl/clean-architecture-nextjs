@@ -1,6 +1,6 @@
 import { RouteHandler } from "@hono/zod-openapi";
 
-import { PostsQueryService } from "@/core/application/post/services/posts-query.service";
+import { PostsQueryService } from "@/core/application/post/query-services/posts-query.service";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 import { Controller } from "@/core/presentation/common/controller.base";
 import {

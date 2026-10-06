@@ -1,8 +1,9 @@
 import { UserDto } from "@/core/application/user/dtos/user.dto";
-import { UUID } from "@/core/domain/common/value-objects/uuid.vo";
 import { User } from "@/core/domain/user/entities/user.entity";
 import { Role } from "@/core/domain/user/enums/role.enum";
 import { Email } from "@/core/domain/user/value-objects/email.vo";
+import { UserId } from "@/core/domain/user/value-objects/user-id.vo";
+import { UserName } from "@/core/domain/user/value-objects/user-name.vo";
 import { user as usersTable } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 
 export class DrizzleUserMapper {
@@ -27,20 +28,20 @@ export class DrizzleUserMapper {
   static toDomain(user: typeof usersTable.$inferSelect): User {
     return User.make(
       {
-        name: user.name,
+        name: UserName.make(user.name),
         email: Email.make(user.email),
         role: DrizzleUserMapper.toRole(user.role),
         image: user.image,
         emailVerified: user.emailVerified,
       },
-      UUID.make(user.id),
+      UserId.make(user.id),
     );
   }
 
   static toPersistence(user: User): typeof usersTable.$inferInsert {
     return {
       id: user.id.value,
-      name: user.props.name,
+      name: user.props.name.value,
       email: user.props.email.value,
       role: user.props.role,
       image: user.props.image,
