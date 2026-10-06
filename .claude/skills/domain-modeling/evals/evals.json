@@ -1,0 +1,70 @@
+{
+  "skill_name": "domain-modeling",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Ajoute un système de commentaires sur les posts : un commentaire a un auteur, un contenu entre 1 et 2000 caractères, et peut être modifié par son auteur uniquement dans les 15 minutes qui suivent sa création. Fais juste la partie domaine.",
+      "expected_output": "Nouvelle feature domain/comment/ : CommentId préfixé, VO de contenu, authorId: UserId, postId: PostId, méthode d'édition avec la date reçue en paramètre, erreurs catégorisées avec code (Forbidden + BusinessRule), port CommentRepository ; tsc passe.",
+      "files": [
+        "copie du projet clean-architecture-nextjs"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Aucun `throw new Error(` dans le code de domaine écrit",
+        "Les erreurs créées héritent d'une catégorie (NotFound/Conflict/Forbidden/BusinessRule/Validation)",
+        "Chaque erreur créée porte un `code` stable en SCREAMING_SNAKE_CASE",
+        "Les entités ne lisent pas l'heure elles-mêmes (pas de `new Date()` / `Date.now()`)",
+        "Le domaine n'importe que du domaine, zod et uuid",
+        "Nommage au singulier pour les fichiers et dossiers de feature",
+        "CommentId est un VO dédié et préfixé (comment-<uuid>) dans domain/comment/value-objects/",
+        "L'entité Comment référence l'auteur et le post par leurs ids typés (UserId, PostId)",
+        "Le contenu (1 à 2000 caractères) est un value object avec la règle dans son schéma",
+        "La fenêtre de 15 minutes est vérifiée dans l'entité, avec une date reçue en paramètre",
+        "Port CommentRepository déclaré dans domain/comment/repositories/comment.repository.ts"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Un admin doit pouvoir bannir un utilisateur, avec une raison. On ne peut pas bannir un admin, ni bannir deux fois le même utilisateur. Mets à jour le domaine user.",
+      "expected_output": "User enrichi d'une méthode ban() avec VO de raison, date reçue en paramètre, erreurs BusinessRule/Forbidden avec code, create() et mapper toujours cohérents ; tsc passe.",
+      "files": [
+        "copie du projet clean-architecture-nextjs"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Aucun `throw new Error(` dans le code de domaine écrit",
+        "Les erreurs créées héritent d'une catégorie (NotFound/Conflict/Forbidden/BusinessRule/Validation)",
+        "Chaque erreur créée porte un `code` stable en SCREAMING_SNAKE_CASE",
+        "Les entités ne lisent pas l'heure elles-mêmes (pas de `new Date()` / `Date.now()`)",
+        "Le domaine n'importe que du domaine, zod et uuid",
+        "Nommage au singulier pour les fichiers et dossiers de feature",
+        "La raison de bannissement est un value object de la feature user",
+        "Au moins deux erreurs dédiées (admin non bannissable, déjà banni) dans user/errors/",
+        "UserId n'est pas modifié (id géré par une librairie externe, schéma z.string())",
+        "create() initialise un utilisateur non banni"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Je démarre un nouveau projet TypeScript (zod et uuid installés, src/ vide). Crée la couche domaine pour des organisations : une organisation a un nom et un slug, et des membres avec un rôle (owner, admin, member). Il doit toujours rester au moins un owner.",
+      "expected_output": "Classes de base common/ créées depuis la skill, feature organization (et member) avec ids préfixés, VO nom/slug, enum de rôle, invariant 'au moins un owner' dans l'entité avec BusinessRuleError codée, port de repository ; tsc passe.",
+      "files": [
+        "projet TypeScript vide"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Aucun `throw new Error(` dans le code de domaine écrit",
+        "Les erreurs créées héritent d'une catégorie (NotFound/Conflict/Forbidden/BusinessRule/Validation)",
+        "Chaque erreur créée porte un `code` stable en SCREAMING_SNAKE_CASE",
+        "Les entités ne lisent pas l'heure elles-mêmes (pas de `new Date()` / `Date.now()`)",
+        "Le domaine n'importe que du domaine, zod et uuid",
+        "Nommage au singulier pour les fichiers et dossiers de feature",
+        "Les classes de base (Entity, defineValueObject, DomainError, catégories) sont créées dans common/",
+        "OrganizationId est un VO dédié et préfixé, dans organization/value-objects/",
+        "Le slug est un value object avec une regex de format",
+        "Le rôle est un enum `as const` (owner, admin, member)",
+        "L'invariant « au moins un owner » lève une BusinessRuleError dédiée"
+      ]
+    }
+  ]
+}

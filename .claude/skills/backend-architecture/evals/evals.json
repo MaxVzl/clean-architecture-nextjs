@@ -1,0 +1,111 @@
+{
+  "skill_name": "backend-architecture",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Ajoute des tags : un admin peut créer un tag (nom unique), et tout le monde peut lister les tags, paginés, via l'API. Fais toutes les couches.",
+      "expected_output": "Feature tag complète : domaine (entité, TagId, VO nom, erreur Conflict), commande + use case avec vérification d'unicité, read model paginé, schéma Drizzle 'tags', mapper, repository, module câblé dans le container, routes/controller/router montés dans l'API, création réservée aux admins ; tsc et lint passent.",
+      "files": [
+        "copie du projet clean-architecture-nextjs"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Le lint passe, y compris la règle de dépendance entre couches",
+        "Aucun `throw new Error(` dans le domaine ou l'application",
+        "Nommage au singulier pour les fichiers et dossiers de feature",
+        "Domaine tag : entité, TagId préfixé et port TagRepository",
+        "L'unicité du nom est vérifiée dans le use case CreateTag et lève une ConflictError codée",
+        "La liste paginée passe par un read model (port + implémentation Drizzle), pas par le repository",
+        "Infrastructure tag : schéma (table \"tags\"), mapper et repository Drizzle aux bons emplacements",
+        "Le module tag est câblé dans le composition root (module, container, containers dev/prod)",
+        "Routes, controller et router tag exposés et montés dans l'API",
+        "La création de tag est réservée aux admins (quelle que soit la couche qui le vérifie)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Je veux pouvoir supprimer un post, mais seul son auteur peut le faire. Expose ça en server action.",
+      "expected_output": "Règle 'seul l'auteur' dans le domaine (ForbiddenError codée), DeletePostUseCase, PostRepository.findById + delete, implémentation Drizzle, câblage container, server action authClient avec userId tiré de la session ; tsc et lint passent.",
+      "files": [
+        "copie du projet clean-architecture-nextjs"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Le lint passe, y compris la règle de dépendance entre couches",
+        "Aucun `throw new Error(` dans le domaine ou l'application",
+        "Nommage au singulier pour les fichiers et dossiers de feature",
+        "La règle « seul l'auteur » est dans le domaine (méthode de Post qui lève une ForbiddenError codée)",
+        "Un DeletePostUseCase orchestre : findById, règle du domaine, suppression",
+        "PostRepository expose findById et une suppression, implémentées par DrizzlePostRepository",
+        "La server action passe par authClient et tire l'acteur de la session (ctx.session.user.id)",
+        "Le use case est instancié dans le module post et exporté par le container"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Fais une revue d'architecture du backend dans src/core.",
+      "expected_output": "Rapport qui identifie les 6 violations (5 plantées + userId pris dans l'URL) sans modifier le code.",
+      "files": [
+        "copie du projet clean-architecture-nextjs"
+      ],
+      "assertions": [
+        "La revue ne modifie pas le code",
+        "Repère que CreateUserUseCase (application) importe Drizzle / la base",
+        "Repère que UserController (présentation) interroge directement la base",
+        "Repère le fichier au pluriel posts.repository.ts",
+        "Repère la recherche paginée searchByName dans le repository (relève d'un read model)",
+        "Repère le `throw new Error` dans CreatePostUseCase",
+        "Repère que POST /users/:userId/posts prend l'acteur dans l'URL au lieu de la session"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Je démarre une app de gestion de tâches. Next.js est installé avec zod, drizzle (libsql), hono (@hono/zod-openapi) et next-safe-action, mais il n'y a encore aucun backend. Mets en place le backend : des projets qui contiennent des tâches ; on peut créer un projet, ajouter une tâche à un projet, marquer une tâche comme faite, et lister les tâches d'un projet via l'API. Pas d'authentification pour l'instant.",
+      "expected_output": "Backend en 4 couches dans src/core, composition root hors core (modules par feature), use cases pour les écritures, read model pour la liste, ports/implémentations nommés par nature et préfixés par techno, erreurs catégorisées, règle ESLint de couches ajoutée ; tsc passe.",
+      "files": [
+        "projet Next.js vierge"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Le backend est découpé en 4 couches (domain, application, infrastructure, presentation), quel que soit le découpage",
+        "Convention : arborescence : couche d'abord, puis feature (src/core/<couche>/<feature>/)",
+        "Le domaine n'importe que du domaine, zod et uuid",
+        "L'application n'importe ni infrastructure, ni présentation, ni technologie (drizzle, hono, next)",
+        "La présentation n'importe pas l'infrastructure",
+        "Un composition root, hors des couches, assemble les implémentations",
+        "Convention : le composition root est découpé en un module par feature",
+        "Les 3 écritures passent par des use cases (*.use-case.ts)",
+        "La liste des tâches passe par un read model (port dans application, implémentation dans infrastructure)",
+        "Ports de repository déclarés dans le domaine, implémentés par une classe Drizzle dans l'infrastructure",
+        "« Marquer une tâche comme faite » est une méthode métier du domaine Task",
+        "Les erreurs métier portent un code stable",
+        "Convention : suffixes de fichiers (.entity.ts, .vo.ts, .repository.ts, .use-case.ts)",
+        "Convention : un VO d'identifiant préfixé par entité (project-id.vo.ts, task-id.vo.ts)",
+        "Convention : une erreur par fichier dans errors/, héritant d'une catégorie (NotFound, Conflict…)",
+        "Convention : la règle ESLint de dépendance entre couches est ajoutée (import/no-restricted-paths)",
+        "Convention : nommage au singulier pour les fichiers et dossiers de feature"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Ajoute des catégories pour les posts : un admin peut créer une catégorie (nom unique), et on peut lister les catégories, paginées, via l'API.",
+      "expected_output": "Feature category conforme (use case + repository pour l'écriture, read model pour la liste, ConflictError codée, câblage container) sans recopier les violations existantes du projet ; violations existantes signalées sans être modifiées.",
+      "files": [
+        "copie du projet avec violations existantes, sans conventions ni règle ESLint de couches"
+      ],
+      "assertions": [
+        "Le projet compile (tsc --noEmit sans erreur)",
+        "Les fichiers de la feature passent le lint",
+        "La feature ne recopie pas les violations de couches du projet (pas d'import interdit)",
+        "Aucun `throw new Error(` dans le nouveau code de domaine/application",
+        "Création via un use case qui vérifie l'unicité et lève une ConflictError codée",
+        "La liste paginée passe par un read model, pas par le repository",
+        "La feature est câblée dans le composition root",
+        "Le rôle admin est vérifié dans un point d'entrée de la présentation",
+        "Nommage au singulier pour les fichiers de la feature",
+        "Les violations existantes hors périmètre ne sont pas modifiées",
+        "Le compte rendu signale au moins 2 des violations existantes"
+      ]
+    }
+  ]
+}
