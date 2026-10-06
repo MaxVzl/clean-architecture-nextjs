@@ -1,15 +1,13 @@
+import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
+
 import { defineValueObject } from "../../common/value-object.base";
-import {
-  entityIdSchema,
-  generateEntityId,
-} from "../../common/value-objects/entity-id";
 
-export const USER_ID_PREFIX = "user";
-
-export const userIdSchema = entityIdSchema(USER_ID_PREFIX);
+/** Identifiant géré par better-auth : chaîne simple, sans préfixe. */
+export const userIdSchema = z.string();
 
 export class UserId extends defineValueObject(userIdSchema) {
   public static generate(): UserId {
-    return this.make(generateEntityId(USER_ID_PREFIX));
+    return this.make(uuidv4());
   }
 }

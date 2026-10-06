@@ -2,10 +2,8 @@ import { betterAuth, User } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin } from "better-auth/plugins";
 import { headers } from "next/headers";
-import { v4 as uuidv4 } from "uuid";
 
 import { Role } from "@/core/domain/user/enums/role.enum";
-import { UserId } from "@/core/domain/user/value-objects/user-id.vo";
 import {
   account,
   session,
@@ -17,12 +15,6 @@ import { authNotifierService } from "@/lib/container";
 
 export const auth = betterAuth({
   baseURL: "http://localhost:3000/",
-  advanced: {
-    database: {
-      generateId: ({ model }) =>
-        model === "user" ? UserId.generate().value : uuidv4(),
-    },
-  },
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ url, user }) => {

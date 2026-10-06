@@ -51,16 +51,28 @@ export class User extends Entity<UserProps, UserId> {
 
 ## 4. Identifiants
 
-Chaque entité a **son propre value object d'identifiant** (`UserId`, `PostId`…). Il est préfixé et expose une méthode `generate()`.
+Chaque entité a **son propre value object d'identifiant** (`UserId`, `PostId`…), qui expose une méthode `generate()`. Par défaut, il est préfixé par le nom de l'entité, grâce aux helpers de `domain/common/value-objects/entity-id.ts`.
 
 ```ts
-export const userIdSchema = z
-  .string()
-  .regex(/^user-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+export const POST_ID_PREFIX = "post";
+
+export const postIdSchema = entityIdSchema(POST_ID_PREFIX);
+
+export class PostId extends defineValueObject(postIdSchema) {
+  public static generate(): PostId {
+    return this.make(generateEntityId(POST_ID_PREFIX));
+  }
+}
+```
+
+**Exception : les entités dont l'id est géré par une librairie externe.** On garde alors le format de la librairie, et le schéma du VO est une simple `z.string()`. C'est le cas de `UserId`, dont l'id est généré par better-auth. better-auth reste configuré par défaut, sans `generateId` personnalisé.
+
+```ts
+export const userIdSchema = z.string();
 
 export class UserId extends defineValueObject(userIdSchema) {
   public static generate(): UserId {
-    return this.make(`user-${uuidv4()}`);
+    return this.make(uuidv4());
   }
 }
 ```
@@ -159,6 +171,7 @@ La présentation reste dans `src/core/presentation`. Elle contient les routes et
 |---|---|
 | 2026-10-06 | `make()` = construction technique, `create()` = factory métier propre à l'entité |
 | 2026-10-06 | Un VO d'identifiant dédié et préfixé par entité |
+| 2026-10-06 | Exception : `UserId` garde le format better-auth (`z.string()`, sans préfixe), et better-auth n'est pas personnalisé |
 | 2026-10-06 | Exceptions typées par catégorie, traduites à un seul endroit par point d'entrée ; `Result` réservé aux cas exceptionnels |
 | 2026-10-06 | Zod autorisé dans le domaine |
 | 2026-10-06 | Ports nommés selon leur nature : `repositories/`, `services/`, `read-models/` |
