@@ -3,7 +3,7 @@ import { and, asc, count, eq, like, SQL } from "drizzle-orm";
 import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 import { PostDto } from "@/core/application/post/dtos/post.dto";
 import { ListPostQuery } from "@/core/application/post/queries/list-post.query";
-import { PostsQueryService } from "@/core/application/post/query-services/posts-query.service";
+import { PostsReadModel } from "@/core/application/post/read-models/posts.read-model";
 import { Database } from "@/core/infrastructure/database";
 import { DrizzlePostMapper } from "@/core/infrastructure/post/mappers/drizzle-post.mapper";
 import { postsTable } from "@/core/infrastructure/post/schemas/drizzle-post.schema";
@@ -25,12 +25,12 @@ function buildWhere(filter: {
   return and(...parts)!;
 }
 
-export interface DrizzlePostsQueryServiceDeps {
+export interface DrizzlePostsReadModelDeps {
   db: Database;
 }
 
-export class DrizzlePostsQueryService implements PostsQueryService {
-  constructor(private readonly deps: DrizzlePostsQueryServiceDeps) {}
+export class DrizzlePostsReadModel implements PostsReadModel {
+  constructor(private readonly deps: DrizzlePostsReadModelDeps) {}
   async find(query: ListPostQuery): Promise<PaginatedDto<PostDto>> {
     const limit = Math.max(1, query.limit ?? 10);
     const page = Math.max(1, query.offset ?? 1);

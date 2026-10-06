@@ -1,6 +1,6 @@
 import { RouteHandler } from "@hono/zod-openapi";
 
-import { PostsQueryService } from "@/core/application/post/query-services/posts-query.service";
+import { PostsReadModel } from "@/core/application/post/read-models/posts.read-model";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 import { Controller } from "@/core/presentation/common/controller.base";
 import {
@@ -13,13 +13,13 @@ import {
 } from "@/core/presentation/routes/user.routes";
 
 interface PostControllerDeps {
-  postsQueryService: PostsQueryService;
+  postsReadModel: PostsReadModel;
   createPostUseCase: CreatePostUseCase;
 }
 
 export class PostController extends Controller<PostControllerDeps> {
   index: RouteHandler<typeof listPostRoute> = async (c) => {
-    const { data, total } = await this.deps.postsQueryService.find(
+    const { data, total } = await this.deps.postsReadModel.find(
       c.req.valid("query"),
     );
     return c.json(data, 200, {
@@ -28,7 +28,7 @@ export class PostController extends Controller<PostControllerDeps> {
   };
 
   show: RouteHandler<typeof getPostRoute> = async (c) => {
-    const post = await this.deps.postsQueryService.findById(
+    const post = await this.deps.postsReadModel.findById(
       c.req.valid("param").postId,
     );
     return post ? c.json(post, 200) : c.notFound();
@@ -45,7 +45,7 @@ export class PostController extends Controller<PostControllerDeps> {
   };
 
   indexByUser: RouteHandler<typeof listUserPostRoute> = async (c) => {
-    const { data, total } = await this.deps.postsQueryService.findByUserId(
+    const { data, total } = await this.deps.postsReadModel.findByUserId(
       c.req.valid("param").userId,
       c.req.valid("query"),
     );

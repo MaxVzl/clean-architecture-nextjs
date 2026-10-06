@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 import { getSession } from "@/lib/auth";
-import { postsQueryService } from "@/lib/container";
+import { postsReadModel } from "@/lib/container";
 
 export default async function MePostsPage() {
   const session = await getSession();
-  const { data: posts } = await postsQueryService.findByUserId(
+  const { data: posts } = await postsReadModel.findByUserId(
     session.user.id,
     {},
   );

@@ -3,7 +3,7 @@ import { asc, count, eq, like, or, SQL } from "drizzle-orm";
 import { PaginatedDto } from "@/core/application/common/dtos/paginated.dto";
 import { UserDto } from "@/core/application/user/dtos/user.dto";
 import { ListUserQuery } from "@/core/application/user/queries/list-user.query";
-import { UsersQueryService } from "@/core/application/user/query-services/users-query.service";
+import { UsersReadModel } from "@/core/application/user/read-models/users.read-model";
 import { user } from "@/core/infrastructure/auth/schemas/drizzle-auth.schema";
 import { Database } from "@/core/infrastructure/database";
 import { DrizzleUserMapper } from "@/core/infrastructure/user/mappers/drizzle-user.mapper";
@@ -26,12 +26,12 @@ function containsWhere(filter: {
   return or(...parts)!;
 }
 
-export interface DrizzleUsersQueryServiceDeps {
+export interface DrizzleUsersReadModelDeps {
   db: Database;
 }
 
-export class DrizzleUsersQueryService implements UsersQueryService {
-  constructor(private readonly deps: DrizzleUsersQueryServiceDeps) {}
+export class DrizzleUsersReadModel implements UsersReadModel {
+  constructor(private readonly deps: DrizzleUsersReadModelDeps) {}
   async find(query: ListUserQuery): Promise<PaginatedDto<UserDto>> {
     const limit = Math.max(1, query.limit ?? 10);
     const page = Math.max(1, query.offset ?? 1);

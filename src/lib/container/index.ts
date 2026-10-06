@@ -6,8 +6,8 @@ const container =
 
 export const {
   // Services
-  usersQueryService,
-  postsQueryService,
+  usersReadModel,
+  postsReadModel,
   authNotifierService,
   // Controllers
   userController,

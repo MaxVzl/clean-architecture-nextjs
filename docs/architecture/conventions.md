@@ -9,7 +9,7 @@ Tout le backend vit dans `src/core`, découpé en 4 couches :
 ```
 src/core/
 ├── domain/          ← modèle métier : entités, value objects, erreurs, repositories (ports)
-├── application/     ← cas d'usage : use cases, commandes, DTO, ports (services, query-services)
+├── application/     ← cas d'usage : use cases, commandes, DTO, ports (services, read-models)
 ├── infrastructure/  ← implémentations des ports : Drizzle, email, cache…
 └── presentation/    ← points d'entrée : routes et controllers Hono, server actions
 ```
@@ -106,14 +106,22 @@ Un port est **nommé selon sa nature** : le suffixe du nom et le dossier indique
 |---|---|---|---|
 | Repository | `XxxRepository` | `domain/<feature>/repositories/` | Persister et recharger une entité |
 | Service | `XxxService` | `application/<feature>/services/` | Capacité technique ou métier externe (email, cache, notification…) |
-| Query service | `XxxQueryService` | `application/<feature>/query-services/` | Read model : lecture optimisée qui renvoie des DTO |
+| Read model | `XxxReadModel` | `application/<feature>/read-models/` | Lecture optimisée qui renvoie des DTO |
 
-Les implémentations vivent dans `infrastructure/<feature>/<même dossier>/` et sont préfixées par leur technologie : `DrizzleUsersRepository`, `ResendEmailService`, `DrizzlePostsQueryService`.
+Les implémentations vivent dans `infrastructure/<feature>/<même dossier>/` et sont préfixées par leur technologie : `DrizzleUsersRepository`, `ResendEmailService`, `DrizzlePostsReadModel`.
+
+Le nom de fichier reprend la nature du port comme extension :
+
+| Nature | Port (`application` / `domain`) | Implémentation (`infrastructure`) |
+|---|---|---|
+| Repository | `users.repository.ts` | `drizzle-users.repository.ts` |
+| Service | `email.service.ts` | `resend-email.service.ts` |
+| Read model | `posts.read-model.ts` | `drizzle-posts.read-model.ts` |
 
 ## 7. CQRS
 
 - **Écriture (commandes)** : `presentation` appelle un **use case**, qui charge et sauvegarde des **entités** via des **repositories**. L'entrée est une commande (`application/<feature>/commands/`) décrite par un schéma zod.
-- **Lecture (requêtes)** : `presentation` appelle un **query service**, qui renvoie directement des **DTO** sans hydrater le domaine. Les paramètres sont une requête (`application/<feature>/queries/`) décrite par un schéma zod.
+- **Lecture (requêtes)** : `presentation` appelle un **read model**, qui renvoie directement des **DTO** sans hydrater le domaine. Les paramètres sont une requête (`application/<feature>/queries/`) décrite par un schéma zod.
 
 Le côté lecture ne passe jamais par les entités. Le côté écriture ne renvoie jamais de DTO de lecture : il renvoie au plus un identifiant.
 
@@ -131,5 +139,6 @@ La présentation reste dans `src/core/presentation`. Elle contient les routes et
 | 2026-10-06 | Un VO d'identifiant dédié et préfixé par entité |
 | 2026-10-06 | Exceptions typées par catégorie, traduites à un seul endroit par point d'entrée ; `Result` réservé aux cas exceptionnels |
 | 2026-10-06 | Zod autorisé dans le domaine |
-| 2026-10-06 | Ports nommés selon leur nature : `repositories/`, `services/`, `query-services/` |
+| 2026-10-06 | Ports nommés selon leur nature : `repositories/`, `services/`, `read-models/` |
+| 2026-10-06 | Les lectures s'appellent des read models (`XxxReadModel`, fichiers `*.read-model.ts`), et non des query services |
 | 2026-10-06 | La présentation reste dans `src/core` |

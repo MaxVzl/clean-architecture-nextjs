@@ -1,17 +1,17 @@
-import { UsersQueryService } from "@/core/application/user/query-services/users-query.service";
+import { UsersReadModel } from "@/core/application/user/read-models/users.read-model";
 import { CreateUserUseCase } from "@/core/application/user/use-cases/create-user.use-case";
 import { UsersRepository } from "@/core/domain/user/repositories/users.repository";
 import { UserController } from "@/core/presentation/controllers/user.controller";
 
 export type UserModuleDeps = {
   usersRepository: UsersRepository;
-  usersQueryService: UsersQueryService;
+  usersReadModel: UsersReadModel;
 };
 
 export const createUserModule = (deps: UserModuleDeps) => ({
-  usersQueryService: deps.usersQueryService,
+  usersReadModel: deps.usersReadModel,
   userController: new UserController({
-    usersQueryService: deps.usersQueryService,
+    usersReadModel: deps.usersReadModel,
   }),
   createUserUseCase: new CreateUserUseCase({
     usersRepository: deps.usersRepository,

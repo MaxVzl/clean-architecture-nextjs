@@ -1,4 +1,4 @@
-import { PostsQueryService } from "@/core/application/post/query-services/posts-query.service";
+import { PostsReadModel } from "@/core/application/post/read-models/posts.read-model";
 import { PostNotifierService } from "@/core/application/post/services/post-notifier.service";
 import { CreatePostUseCase } from "@/core/application/post/use-cases/create-post.use-case";
 import { PostsRepository } from "@/core/domain/post/repositories/posts.repository";
@@ -7,15 +7,15 @@ import { PostController } from "@/core/presentation/controllers/post.controller"
 
 export type PostModuleDeps = {
   postsRepository: PostsRepository;
-  postsQueryService: PostsQueryService;
+  postsReadModel: PostsReadModel;
   usersRepository: UsersRepository;
   postNotifierService: PostNotifierService;
 };
 
 export const createPostModule = (deps: PostModuleDeps) => ({
-  postsQueryService: deps.postsQueryService,
+  postsReadModel: deps.postsReadModel,
   postController: new PostController({
-    postsQueryService: deps.postsQueryService,
+    postsReadModel: deps.postsReadModel,
     createPostUseCase: new CreatePostUseCase({
       postsRepository: deps.postsRepository,
       usersRepository: deps.usersRepository,
